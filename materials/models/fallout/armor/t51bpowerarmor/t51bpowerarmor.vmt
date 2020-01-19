@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/t51bpowerarmor/t51bpowerarmor"
+	"$bumpmap" 	"models/fallout/armor/t51bpowerarmor/t51bpowerarmor_n"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 6
+	"$phongexponent" 10
+	"$phongtint" "[.75 1.4 .75]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+}

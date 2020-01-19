@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/deathclaw/deathclaw"
+	"$bumpmap" 	"models/fallout/deathclaw/deathclaw_n"
+}

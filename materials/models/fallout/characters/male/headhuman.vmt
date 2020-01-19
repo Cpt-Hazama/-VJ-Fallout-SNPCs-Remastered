@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/male/headhuman"
+	"$bumpmap" 	"models/fallout/characters/male/headhuman_n"
+}

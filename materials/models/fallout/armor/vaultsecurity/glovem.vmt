@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/vaultsecurity/glovem"
+	"$bumpmap" 	"models/fallout/armor/vaultsecurity/glovem_n"
+}

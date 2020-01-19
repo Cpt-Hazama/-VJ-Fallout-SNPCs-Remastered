@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ghoulferal/ghoulferal"
+	"$bumpmap" 	"models/fallout/ghoulferal/ghoulferal_n"
+
+	$phong			1
+	$phongexponent		25
+	$phongboost		4.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/female/upperbodyfemale"
+	"$bumpmap" 	"models/fallout/characters/female/upperbodyfemale_n"
+	"$color2"	"{255 255 200}"
+	
+	$phong			1
+	$phongexponent		100
+	$phongboost		0.4
+	$phongfresnelranges	"[1 1 1]"
+}

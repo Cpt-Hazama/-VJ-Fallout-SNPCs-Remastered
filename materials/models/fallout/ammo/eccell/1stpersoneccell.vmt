@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ammo/eccell/1stpersoneccell"
+	"$normalmap"     "models/fallout/ammo/eccell/1stpersoneccell_n"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ammo/32cartridgebox/32cartridgebox"
+	"$normalmap"     "models/fallout/ammo/32cartridgebox/32cartridgebox_n"
+}

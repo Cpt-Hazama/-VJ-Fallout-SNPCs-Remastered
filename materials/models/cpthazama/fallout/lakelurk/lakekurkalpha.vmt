@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/lakelurk/lakekurkalpha"
+	"$bumpmap" 	"models/cpthazama/fallout/lakelurk/lakekurk_n"
+
+	$emissiveBlendEnabled 1
+    $emissiveBlendTexture    "dev/null"
+    $emissiveBlendBaseTexture    "models/cpthazama/fallout/lakelurk/lakekurkking_g"
+    $emissiveBlendFlowTexture    "dev/null"
+    $emissiveBlendTint "[1 1 1]"
+    $emissiveBlendStrength 10
+    $emissiveBlendScrollVector "[0 0]"
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		6.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

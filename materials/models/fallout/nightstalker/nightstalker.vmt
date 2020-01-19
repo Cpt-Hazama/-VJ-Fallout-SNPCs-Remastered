@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/nightstalker/nightstalker"
+	"$bumpmap" 	"models/fallout/nightstalker/nightstalker_n"
+	"$alphatest" "1"
+}

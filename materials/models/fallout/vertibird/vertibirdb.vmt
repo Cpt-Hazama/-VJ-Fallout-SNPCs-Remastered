@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/vertibird/vertibirdb"
+	"$bumpmap" 	"models/fallout/vertibird/vertibirdb_n"
+}

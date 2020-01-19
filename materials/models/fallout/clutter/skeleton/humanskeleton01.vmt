@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/clutter/skeleton/humanskeleton01"
+	"$bumpmap" 	"models/fallout/clutter/skeleton/humanskeleton01_n"
+	"$translucent" "1"
+}

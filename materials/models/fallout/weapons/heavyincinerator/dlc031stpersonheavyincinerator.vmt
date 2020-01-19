@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/heavyincinerator/dlc031stpersonheavyincinerator"
+	"$normalmap"     "models/fallout/weapons/heavyincinerator/dlc031stpersonheavyincinerator_n"
+	"$translucent" "1"
+	"$selfillum" "1"
+	"$selfillummask" "models/fallout/weapons/heavyincinerator/dlc031stpersonheavyincinerator_g"
+}

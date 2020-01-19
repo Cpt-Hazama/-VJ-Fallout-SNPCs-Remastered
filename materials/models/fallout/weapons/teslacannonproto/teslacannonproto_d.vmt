@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/teslacannonproto/teslacannonproto_d"
+	"$normalmap"     "models/fallout/weapons/teslacannonproto/teslacannonproto_n"
+	"$alphatest" "1"
+}

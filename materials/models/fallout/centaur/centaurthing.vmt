@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/centaur/centaurthing"
+	"$bumpmap" 	"models/fallout/centaur/centaur_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.6
+	$phongfresnelranges	"[0 0.5 1]"
+}

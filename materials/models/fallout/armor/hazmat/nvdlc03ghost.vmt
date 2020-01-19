@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/hazmat/nvdlc03ghost"
+	"$bumpmap" 	"models/fallout/armor/hazmat/nvdlc03ghost_n"
+	"$alphatest" "1"
+}

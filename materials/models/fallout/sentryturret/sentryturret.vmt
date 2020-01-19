@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/sentryturret/sentryturret"
+	"$bumpmap" 	"models/fallout/sentryturret/sentryturret_n"
+	"$selfillum" "1"
+}

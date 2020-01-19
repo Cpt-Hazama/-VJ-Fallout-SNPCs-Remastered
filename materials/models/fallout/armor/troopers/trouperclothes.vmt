@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/troopers/trouperclothes"
+	"$bumpmap" 	"models/fallout/armor/troopers/trouperclothes_n"
+}

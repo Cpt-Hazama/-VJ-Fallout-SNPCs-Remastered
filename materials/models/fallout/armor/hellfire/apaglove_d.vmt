@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/hellfire/apaglove_d"
+	"$bumpmap" 	"models/fallout/armor/hellfire/apaglove_n"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 14
+	"$phongexponent" 20
+	"$phongtint" "[1 0.85 0.75]"
+	"$phongfresnelranges" "[.1 .6 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.09"
+}

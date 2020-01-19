@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/streettrog/dlcpitttrog"
+	"$bumpmap" 	"models/fallout/streettrog/dlcpitttrog_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.3
+	$phongfresnelranges	"[0 0.5 1]"
+}

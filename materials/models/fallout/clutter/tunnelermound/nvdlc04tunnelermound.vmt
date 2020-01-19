@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/clutter/tunnelermound/nvdlc04tunnelermound"
+	"$bumpmap" 	"models/fallout/clutter/tunnelermound/nvdlc04tunnelermound_n"
+	"$alphatest" "1"
+}

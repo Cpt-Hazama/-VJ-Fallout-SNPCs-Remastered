@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/gore/goretorsobits01"
+	"$bumpmap" 	"models/fallout/gore/goretorsobits01_n"
+}

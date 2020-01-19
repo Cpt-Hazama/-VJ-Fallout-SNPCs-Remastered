@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/treebranch/treebranch"
+	"$normalmap"     "models/fallout/weapons/treebranch/treebranch_n"
+	"$selfillum" "1"
+}

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mistergutsy/nvdlc03_whitemrhandy02"
+	"$bumpmap" 	"models/fallout/mistergutsy/mistergutsy_n"
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		8.0
+	$phongfresnelranges	"[0.6 0.3 1]"
+}

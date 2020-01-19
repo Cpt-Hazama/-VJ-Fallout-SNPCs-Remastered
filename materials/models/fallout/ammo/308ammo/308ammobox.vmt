@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ammo/308ammo/308ammobox"
+	"$normalmap"     "models/fallout/ammo/308ammo/308ammobox_n"
+	"$translucent" "1"
+}

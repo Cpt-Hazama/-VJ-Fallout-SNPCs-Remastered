@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/underwear/underwearm"
+	"$bumpmap" 	"models/fallout/armor/underwear/underwearm_n"
+}

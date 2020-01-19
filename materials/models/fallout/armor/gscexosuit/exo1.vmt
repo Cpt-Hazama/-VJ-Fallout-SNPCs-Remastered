@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/gscExosuit/exo1"
+	"$bumpmap" 	"models/fallout/armor/gscExosuit/exo1_n"
+	
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 40
+	"$phongtint" "[0.75 0.75 0.7]"
+	"$phongfresnelranges" "[0.5 0.3 1]"
+}

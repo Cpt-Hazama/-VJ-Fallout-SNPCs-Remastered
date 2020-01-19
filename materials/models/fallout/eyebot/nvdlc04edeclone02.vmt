@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/eyebot/nvdlc04edeclone02"
+	"$bumpmap" 	"models/fallout/eyebot/nvdlc04edeclone_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.6
+	$phongfresnelranges	"[0 0 1]"
+}

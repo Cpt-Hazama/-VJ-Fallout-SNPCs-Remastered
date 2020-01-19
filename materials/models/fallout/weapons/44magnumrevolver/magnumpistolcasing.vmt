@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/44magnumrevolver/magnumpistolcasing"
+	"$normalmap"     "models/fallout/weapons/44magnumrevolver/magnumpistolcasing_n"
+}

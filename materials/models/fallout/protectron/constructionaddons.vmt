@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/protectron/constructionaddons"
+	"$bumpmap" 	"models/fallout/protectron/constructionaddons_n"
+
+	$phong			1
+	$phongexponent		100
+	$phongboost		8.0
+	$phongfresnelranges	"[0.1 0.3 1]"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/wastelandclothingf/wastelandclothing05f"
+	"$alphatest" "1"
+}

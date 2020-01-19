@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/cowboyhat/cowboy_hat_05_d"
+	"$bumpmap" 	"models/fallout/armor/cowboyhat/cowboy_hat_05_n"
+	"$alphatest" "1"
+}

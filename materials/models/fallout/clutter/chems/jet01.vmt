@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/clutter/chems/jet01"
+	"$bumpmap" 	"models/fallout/clutter/chems/jet01_n"
+}

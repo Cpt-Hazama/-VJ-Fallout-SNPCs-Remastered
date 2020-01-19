@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/radroach/glowroach"
+	"$bumpmap" 	"models/fallout/radroach/glowroach_n"
+	"$selfillum" "1"
+}

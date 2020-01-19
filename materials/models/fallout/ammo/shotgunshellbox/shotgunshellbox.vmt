@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ammo/shotgunshellbox/shotgunshellbox"
+	"$normalmap"     "models/fallout/ammo/shotgunshellbox/shotgunshellbox_n"
+}

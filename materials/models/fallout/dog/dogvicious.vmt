@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/dog/dogvicious"
+	"$bumpmap" 	"models/fallout/dog/dogvicious_n"
+}

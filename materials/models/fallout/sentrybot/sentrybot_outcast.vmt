@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/sentrybot/sentrybot_outcast"
+	"$bumpmap" 	"models/fallout/sentrybot/sentrybot_n"
+	"$selfillum" 1
+
+	$phong			1
+	$phongexponent		100
+	$phongboost		2.0
+	$phongfresnelranges	"[0 0.35 1]"
+}

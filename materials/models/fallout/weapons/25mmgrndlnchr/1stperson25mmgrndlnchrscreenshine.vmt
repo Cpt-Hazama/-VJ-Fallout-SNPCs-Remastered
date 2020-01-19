@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/25mmgrndlnchr/1stperson25mmgrndlnchrscreenshine"
+	"$translucent" "1"
+}

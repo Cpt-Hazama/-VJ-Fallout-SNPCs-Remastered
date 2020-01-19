@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/metalarmor/glovef_d"
+	"$bumpmap" 	"models/fallout/armor/metalarmor/glovef_n"
+}

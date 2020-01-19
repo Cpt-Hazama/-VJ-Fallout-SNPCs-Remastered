@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/troopers/trooperhelm"
+	"$bumpmap" 	"models/fallout/armor/troopers/trooperhelm_n"
+	"$nocull"	"1"
+	
+	$phong			1
+	$phongtint			"[1 0.6 0.4]"
+	$phongexponent		10
+	$phongboost		2
+	$phongfresnelranges	"[1 0.4 0]"
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "20"
+	"$rimlightboost" "0.15"		
+}

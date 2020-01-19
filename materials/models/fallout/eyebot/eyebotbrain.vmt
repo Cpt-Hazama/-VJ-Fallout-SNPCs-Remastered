@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/eyebot/eyebotbrain"
+	"$bumpmap" 	"models/fallout/eyebot/eyebotbrain_n"
+}

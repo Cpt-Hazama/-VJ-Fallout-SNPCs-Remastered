@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/supermutant_behemoth/smbehemoth"
+	"$bumpmap" 	"models/fallout/supermutant_behemoth/smbehemoth_n"
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		0.5
+	$phongfresnelranges	"[0.2 0.2 1]"
+}

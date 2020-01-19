@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mirelurk/magmalurk"
+	"$bumpmap" 	"models/fallout/mirelurk/nukalurk_n"
+	"$selfillum" 1
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		6.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

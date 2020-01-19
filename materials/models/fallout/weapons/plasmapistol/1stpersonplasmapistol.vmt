@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/plasmapistol/1stpersonplasmapistol"
+	"$normalmap"     "models/fallout/weapons/plasmapistol/1stpersonplasmapistol_n"
+	"$alphatest" "1"
+}

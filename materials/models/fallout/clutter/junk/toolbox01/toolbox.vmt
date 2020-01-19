@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/clutter/junk/toolbox01/toolbox"
+	"$bumpmap" 	"models/fallout/clutter/junk/toolbox01/toolbox_n"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/freezeray/1stpersonnvdlc03handteleporter"
+	"$normalmap"     "models/fallout/weapons/freezeray/1stpersonnvdlc03handteleporter_n"
+}

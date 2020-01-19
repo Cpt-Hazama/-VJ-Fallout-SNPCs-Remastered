@@ -1,0 +1,54 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"fallout/effects/fxshockparticles02"
+	"$additive" 1
+	"$model" 1
+	"$translucent" 1
+	"$nocull" 	1
+
+	"s-low_var" 	0
+	"s-low_var2" 	313.37
+	"s-low_var3" 	0
+	"s-low_var4" 	27.37
+	"s-low_var5"	0
+
+	"Proxies"
+	{
+		"EntityRandom"
+		{
+			"scale"		"1"
+			"resultVar"	"s-low_var"
+		}
+		"Multiply"
+		{
+			"srcVar1"	"s-low_var"
+			"srcVar2"	"s-low_var2"
+			"resultVar"	"s-low_var3"
+		}
+		"Multiply"
+		{
+			"srcVar1"	"s-low_var"
+			"srcVar2"	"s-low_var4"
+			"resultVar"	"s-low_var5"
+		}
+		"Sine"
+		{
+			"sineperiod"	"s-low_var5"
+			"sinemin"	"0.4"
+			"sinemax"	"1"
+			"resultVar"	"$alpha"
+		}
+		"TextureScroll"
+		{
+			"textureScrollVar"	"$basetexturetransform"
+			"textureScrollRate"	"s-low_var"
+			"textureScrollAngle"	"s-low_var3"
+		}
+		"AnimatedTexture"
+		{
+			"animatedtexturevar" 		"$basetexture"
+			"animatedtextureframenumvar" 	"$frame"
+			"animatedtextureframerate" 	"10"
+		}
+	}
+}

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/eyebot/nvedea"
+	"$bumpmap" 	"models/fallout/eyebot/nvedea_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.6
+	$phongfresnelranges	"[0 0 1]"
+}

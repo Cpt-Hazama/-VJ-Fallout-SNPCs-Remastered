@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/robcojumpsuit/robcojumpsuitfemale"
+	"$bumpmap" 	"models/fallout/armor/robcojumpsuit/robcojumpsuitfemale_n"
+}

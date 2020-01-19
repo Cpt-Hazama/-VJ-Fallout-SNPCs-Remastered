@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/ghoul/headghoul2"
+	"$bumpmap" 	"models/fallout/characters/ghoul/headghoul2_n"
+	
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 20
+	"$phongtint" "[0.9 1 0.75]"
+	"$phongfresnelranges" "[.2 .2 1]"
+}

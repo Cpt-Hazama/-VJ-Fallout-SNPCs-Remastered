@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/giantantqueen/giantfireantqueenabdomen"
+	"$bumpmap" 	"models/fallout/giantantqueen/giantantqueenabdomen_n"
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		6.0
+	$phongfresnelranges	"[0 0.6 1]"
+}

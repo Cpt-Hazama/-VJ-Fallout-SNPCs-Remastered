@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/huntingrifle/1stpersonhuntingrifle"
+	"$normalmap"     "models/fallout/weapons/huntingrifle/1stpersonhuntingrifle_n"
+}

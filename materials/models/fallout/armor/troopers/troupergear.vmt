@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/troopers/trouperGear"
+	"$bumpmap" 	"models/fallout/armor/troopers/trouperGear_n"
+	"$nocull"	"1"
+	"$alphatest"	"1"
+	
+	$phong			1
+	$phongtint			"[1 1 1.5]"
+	$phongexponent		5
+	$phongboost		0.5
+	$phongfresnelranges	"[0.2 0.4 0]"
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"	
+}

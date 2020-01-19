@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/cazadore/cazadores_wing_d"
+	"$bumpmap" 	"models/fallout/cazadore/cazadores_wing_n"
+	"$alphatest" "1"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/leadpipe/1stpersonleadpipe"
+	"$normalmap"     "models/fallout/weapons/leadpipe/1stpersonleadpipe_n"
+}

@@ -1,0 +1,13 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 	"models/fallout/armor/GSCSevaSuit/stalker_nauchnyu"
+	"$bumpmap" "models/fallout/armor/GSCSevaSuit/stalker_nauchnyu_n"
+	"$halflambert"	"1"
+	"$surfaceprop" 	"flesh"
+	"$phong" 1
+	"$phongboost" 10
+	"$phongexponent" 20
+	"$phongtint" "[0.7 1.2 0.5]"
+	"$phongfresnelranges" "[.1 .5 1]"
+	
+}

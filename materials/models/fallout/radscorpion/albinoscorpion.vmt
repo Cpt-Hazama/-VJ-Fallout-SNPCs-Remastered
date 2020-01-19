@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/radscorpion/albinoscorpion"
+	"$bumpmap" 	"models/fallout/radscorpion/radscorpion_n"
+
+	$phong			1
+	$phongexponent		100
+	$phongboost		2.0
+	$phongfresnelranges	"[0.05 0.5 1]"
+}

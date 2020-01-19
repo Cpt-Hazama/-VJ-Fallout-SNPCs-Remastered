@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/deathclaw/deathclaw_alphamale1"
+	"$bumpmap" 	"models/fallout/deathclaw/deathclaw_n"
+
+	$phong			1
+	$phongexponent		50
+	$phongboost		1.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

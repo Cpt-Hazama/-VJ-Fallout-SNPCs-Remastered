@@ -1,0 +1,9 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ghoulferal/glowingone"
+	"$bumpmap" 	"models/fallout/ghoulferal/glowingone_n"
+	//"$selfillum" "1"
+	//"$selfillummask" "models/fallout/ghoulferal/glowingone_g"
+
+	"$alphatest" "1"
+}

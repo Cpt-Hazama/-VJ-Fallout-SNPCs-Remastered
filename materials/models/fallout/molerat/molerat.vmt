@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/molerat/molerat"
+	"$bumpmap" 	"models/fallout/molerat/molerat_n"
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		1.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

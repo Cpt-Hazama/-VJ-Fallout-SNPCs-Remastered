@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/sporeplant/sporepant"
+	"$bumpmap" 	"models/fallout/sporeplant/sporepant_n"
+}

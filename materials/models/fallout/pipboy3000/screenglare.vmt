@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/pipboy3000/screenglare"
+	"$bumpmap" 	"models/fallout/pipboy3000/screen_n"
+	
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 100
+	"$phongtint" "[0.7 0.7 1.1]"
+	"$phongfresnelranges" "[.1 4 1]"
+	
+}

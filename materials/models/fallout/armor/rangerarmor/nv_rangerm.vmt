@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/rangerarmor/nv_rangerm"
+	"$bumpmap" 	"models/fallout/armor/rangerarmor/nv_rangerm_n"
+}

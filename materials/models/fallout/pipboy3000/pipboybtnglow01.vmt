@@ -1,0 +1,7 @@
+"UnLitGeneric"
+{
+	"$baseTexture" "models/fallout/pipboy3000/pipboybtnglow01"
+	"$translucent"	"1"
+	"$nocull"	"1"
+	
+}

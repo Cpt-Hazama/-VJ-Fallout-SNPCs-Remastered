@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "Models/dog/eyeglass"
+
+	"$phong" 1
+	"$phongboost" 40
+	"$phongexponent" 5
+	"$phongtint" "[1 0.2 0]"
+	"$phongfresnelranges" "[0.2 .6 1]"
+	
+
+	"$model" 1
+}

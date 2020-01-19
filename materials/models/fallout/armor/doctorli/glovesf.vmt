@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/doctorli/glovesf"
+	"$bumpmap" 	"models/fallout/armor/doctorli/glovesf_n"
+	"$nocull"	"1"
+	"$phong" 1
+	"$phongboost" 7
+	"$phongexponent" 10
+	"$phongtint" "[0.6 0.8 0.7]"
+	"$phongfresnelranges" "[.2 .2 1]"
+}

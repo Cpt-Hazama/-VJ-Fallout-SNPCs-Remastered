@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/drone/dlc05maintenancerobotwithgun"
+	"$bumpmap" 	"models/fallout/drone/dlc05maintenancerobotwithgun_n"
+	"$selfillum" "1"
+}

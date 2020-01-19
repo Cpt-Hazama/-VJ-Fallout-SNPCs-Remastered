@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ghoulferal/undead"
+	"$bumpmap" 	"models/fallout/ghoulferal/undead_n"
+}

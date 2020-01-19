@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/powerarmortribal/outfitaddons"
+	"$bumpmap" 	"models/fallout/armor/powerarmortribal/outfitaddons_n"
+}

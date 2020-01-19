@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mantis/mantis"
+	"$bumpmap" 	"models/fallout/mantis/mantis_n"
+}

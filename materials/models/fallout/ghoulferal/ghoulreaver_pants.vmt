@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ghoulferal/ghoulreaver"
+	"$bumpmap" 	"models/fallout/ghoulferal/ghoulreaver_n"
+	"$alphatest" "1"
+}

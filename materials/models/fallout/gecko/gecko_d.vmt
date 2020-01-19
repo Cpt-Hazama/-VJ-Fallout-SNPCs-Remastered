@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/gecko/gecko_d"
+	"$bumpmap" 	"models/fallout/gecko/gecko_fire_n"
+}

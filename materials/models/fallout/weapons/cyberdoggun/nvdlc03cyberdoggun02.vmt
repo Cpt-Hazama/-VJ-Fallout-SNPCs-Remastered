@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/cyberdoggun/nvdlc03cyberdoggun02"
+	"$normalmap"     "models/fallout/weapons/cyberdoggun/nvdlc03cyberdoggun02_n"
+	"$translucent" "1"
+}

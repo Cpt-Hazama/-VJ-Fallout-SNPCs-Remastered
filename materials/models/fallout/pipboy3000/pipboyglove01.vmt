@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/pipboy3000/pipboyglove01"
+	"$bumpmap" 	"models/fallout/pipboy3000/pipboyglove01_n"
+}

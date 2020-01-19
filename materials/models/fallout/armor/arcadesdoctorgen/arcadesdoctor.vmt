@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/arcadesdoctorgen/arcadesdoctor"
+	"$bumpmap" 	"models/fallout/armor/arcadesdoctorgen/arcadesdoctor_n"
+}

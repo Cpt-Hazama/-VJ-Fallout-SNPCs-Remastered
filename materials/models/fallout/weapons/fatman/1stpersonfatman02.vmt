@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/fatman/1stpersonfatman02"
+	"$normalmap"     "models/fallout/weapons/fatman/1stpersonfatman02_n"
+	"$selfillum" "1"
+}

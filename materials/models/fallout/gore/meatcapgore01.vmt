@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/gore/meatcapgore01"
+	"$bumpmap" 	"models/fallout/gore/meatcapgore01_n"
+	"$alphatest" "1"
+}

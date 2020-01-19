@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/wastelandsettler02/outfitm"
+	"$bumpmap" 	"models/fallout/armor/wastelandsettler02/outfitm_n"
+	"$alphatest" "1"
+}

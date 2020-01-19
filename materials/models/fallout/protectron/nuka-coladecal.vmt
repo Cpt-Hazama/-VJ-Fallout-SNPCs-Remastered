@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/protectron/nuka-coladecal"
+	"$bumpmap" 	"models/fallout/protectron/nuka-coladecal_n"
+	"$translucent" "1"
+}

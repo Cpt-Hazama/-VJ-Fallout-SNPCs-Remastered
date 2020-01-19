@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/bandana/bandanared"
+	"$bumpmap" 	"models/fallout/armor/bandana/bandanared_n"
+}

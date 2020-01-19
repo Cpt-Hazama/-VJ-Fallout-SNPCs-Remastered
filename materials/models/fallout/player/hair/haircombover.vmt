@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/player/hair/haircombover"
+	"$translucent" "1"
+}
