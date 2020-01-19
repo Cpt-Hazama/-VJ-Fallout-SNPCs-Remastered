@@ -13,3 +13,5 @@ Cpt. Hazama (me) - Coding everything, porting some stuff, texting creation/edits
 Bizzclaw - Female human models
 
 Silverlan - Original particles/models
+
+Darken - Sonic particles
