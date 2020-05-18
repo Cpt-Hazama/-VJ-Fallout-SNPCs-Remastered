@@ -225,6 +225,7 @@ if VJExists == true then
 	VJ.AddParticle("particles/radiation_shockwave.pcf",{})
 	VJ.AddParticle("particles/sporecarrier_glow.pcf",{})
 	VJ.AddParticle("particles/sporecarrier_radiation.pcf",{})
+	VJ.AddParticle("particles/plasmapistol.pcf",{})
 	VJ.AddParticle("particles/fo3_fx.pcf",{})
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------

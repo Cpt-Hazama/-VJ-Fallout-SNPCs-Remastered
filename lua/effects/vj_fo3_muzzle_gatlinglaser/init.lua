@@ -19,7 +19,7 @@ function EFFECT:Init(data)
 
 
 			local particle = emitter:Add("effects/redflare", self.Position + 8 * self.Forward)
-			particle:SetVelocity(350 * self.Forward + 1.1 * self.WeaponEnt:GetOwner():GetVelocity())
+			particle:SetVelocity(350 * self.Forward + 1.1 * (self.WeaponEnt:IsWeapon() && self.WeaponEnt:GetOwner() or self.WeaponEnt):GetVelocity())
 			particle:SetAirResistance(160)
 
 			particle:SetDieTime(0.04)
@@ -37,7 +37,7 @@ function EFFECT:Init(data)
 			
 								local particle = emitter:Add("effects/redflare", self.Position + 8 * self.Forward)
 
-			particle:SetVelocity(350 * self.Forward + 1.1 * self.WeaponEnt:GetOwner():GetVelocity())
+			particle:SetVelocity(350 * self.Forward + 1.1 * (self.WeaponEnt:IsWeapon() && self.WeaponEnt:GetOwner() or self.WeaponEnt):GetVelocity())
 			particle:SetAirResistance(160)
 
 			particle:SetDieTime(0.04)

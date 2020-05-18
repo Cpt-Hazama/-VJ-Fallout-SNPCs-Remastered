@@ -31,7 +31,7 @@ SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
 SWEP.PrimaryEffects_SpawnDynamicLight = false
-SWEP.HoldType 					= "normal"
+SWEP.HoldType 					= "2hl"
 SWEP.Primary.DisableBulletCode	= true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomBulletSpawnPosition()

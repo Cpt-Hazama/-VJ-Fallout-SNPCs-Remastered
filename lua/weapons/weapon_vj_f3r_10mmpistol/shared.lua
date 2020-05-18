@@ -33,4 +33,4 @@ SWEP.WorldModel_CustomPositionOrigin = Vector(-1,11.3,1)
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
-SWEP.HoldType 					= "normal"
+SWEP.HoldType 					= "1hp"

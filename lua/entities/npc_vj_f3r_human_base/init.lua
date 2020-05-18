@@ -17,7 +17,6 @@ ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calcula
 ENT.MeleeAttackDamage = 8
 ENT.MeleeAttackAnimationAllowOtherTasks = true
 ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
-ENT.Immune_AcidPoisonRadiation = true
 ENT.BecomeEnemyToPlayer = true
 ENT.BecomeEnemyToPlayerLevel = 2
 
@@ -33,11 +32,11 @@ ENT.FootStepTimeWalk = 0.55
 ENT.HasCallForHelpAnimation = false
 
 	-- ====== Animations ====== --
-ENT.AnimTbl_TakingCover = {}
-ENT.AnimTbl_MoveOrHideOnDamageByEnemy = {}
-ENT.AnimTbl_AlertFriendsOnDeath = {}
-ENT.AnimTbl_WeaponAttackCrouch = {}
-ENT.AnimTbl_WeaponReloadBehindCover = {}
+-- ENT.AnimTbl_TakingCover = {}
+-- ENT.AnimTbl_MoveOrHideOnDamageByEnemy = {}
+-- ENT.AnimTbl_AlertFriendsOnDeath = {}
+-- ENT.AnimTbl_WeaponAttackCrouch = {}
+-- ENT.AnimTbl_WeaponReloadBehindCover = {}
 ENT.AnimTbl_ScaredBehaviorStand = {ACT_IDLE}
 ENT.AnimTbl_ScaredBehaviorMovement = {ACT_RUN}
 
@@ -276,9 +275,15 @@ function ENT:CustomOnInitialize()
 		if IsValid(self) then
 			if IsValid(self:GetActiveWeapon()) then
 				local wep = self:GetActiveWeapon()
-				if wep.AnimationType == nil then self:Remove() end
-				if wep.AnimationType then
-					self:SetupHoldTypes(wep,wep.AnimationType)
+				-- if wep.AnimationType == nil then self:Remove() end
+				-- if wep.AnimationType then
+					-- self:SetupHoldTypes(wep,wep.AnimationType)
+				-- end
+
+				if self.CanHolsterWeapon && !self.Human_GuardMode then
+					if !IsValid(self:GetEnemy()) && !self.IsHolstered then
+						self:Unequip()
+					end
 				end
 				self:SetupInventory(self:GetActiveWeapon())
 			end
@@ -349,6 +354,184 @@ function ENT:ItemThink()
 			self.NextStealthBoyT = CurTime() +math.Rand(25,30)
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
+	self.WeaponAnimTranslations[ACT_IDLE] 							= ACT_IDLE
+	self.WeaponAnimTranslations[ACT_WALK] 							= ACT_WALK
+	self.WeaponAnimTranslations[ACT_RUN] 							= ACT_RUN
+	if htype == "1gt" then
+		local aim = VJ_SequenceToActivity(self,"1gtaim")
+		local walk = VJ_SequenceToActivity(self,"1gtaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"1gtaim_sneak")
+		local run = VJ_SequenceToActivity(self,"1gtaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"1gtaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"1gtattackthrow")
+		local crouch = VJ_SequenceToActivity(self,"sneak1gtaim")
+		local reload = "1gtequip"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "1hp" then
+		local aim = VJ_SequenceToActivity(self,"1hpaim")
+		local walk = VJ_SequenceToActivity(self,"1hpaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"1hpaim_sneak")
+		local run = VJ_SequenceToActivity(self,"1hpaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"1hpaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"1hpattackright")
+		local crouch = VJ_SequenceToActivity(self,"sneak1hpaim")
+		local reload = "1hpreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2ha" then
+		local aim = VJ_SequenceToActivity(self,"2haaim")
+		local walk = VJ_SequenceToActivity(self,"2haaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2haaim_sneak")
+		local run = VJ_SequenceToActivity(self,"2haaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2haaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2haattackloop")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hraim")
+		local reload = "2hareloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hh" then
+		local aim = VJ_SequenceToActivity(self,"2hhaim")
+		local walk = VJ_SequenceToActivity(self,"2hhaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hhaim_sneak")
+		local run = VJ_SequenceToActivity(self,"2hhaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hhaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hhattackloop")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hhaim")
+		local reload = "2hhreloade"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hl" then
+		local aim = VJ_SequenceToActivity(self,"2hlaim")
+		local walk = VJ_SequenceToActivity(self,"2hlaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hlaim_sneak")
+		local run = VJ_SequenceToActivity(self,"2hlaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hlaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hlattack3")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hlaim")
+		local reload = "2hlreloade"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hm" then
+		local aim = VJ_SequenceToActivity(self,"2hmaim")
+		local walk = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hmaim_sneak")
+		local run = VJ_SequenceToActivity(self,"2hmaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hmaim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hmattackleft_a")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hmaim")
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= ACT_RELOAD
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hr" then
+		local aim = VJ_SequenceToActivity(self,"2hraim")
+		local walk = ACT_GESTURE_RANGE_ATTACK_SMG2
+		local walk_crouch = VJ_SequenceToActivity(self,"2hraim_sneak")
+		local run = ACT_GESTURE_RANGE_ATTACK_SMG1_LOW
+		local run_crouch = VJ_SequenceToActivity(self,"2hraim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hrattack4")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hraim")
+		local reload = "2hrreloadb"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hr_bolt" then
+		local aim = VJ_SequenceToActivity(self,"2hraim")
+		local walk = ACT_GESTURE_RANGE_ATTACK_SMG2
+		local walk_crouch = VJ_SequenceToActivity(self,"2hraim_sneak")
+		local run = ACT_GESTURE_RANGE_ATTACK_SMG1_LOW
+		local run_crouch = VJ_SequenceToActivity(self,"2hraim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hrattack3")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hraim")
+		local reload = "2hrreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	end
+	self.WeaponAnimTranslations[ACT_WALK_CROUCH] = self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM]
+	self.WeaponAnimTranslations[ACT_RUN_CROUCH] = self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM]
+
+	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupHoldTypes(wep,htype)
@@ -465,8 +648,8 @@ function ENT:SetupHoldTypes(wep,htype)
 	-- table.insert(wep.NPC_AnimationTbl_Custom,self.AnimTbl_Walk[1])
 	-- table.insert(wep.NPC_AnimationTbl_Custom,self.AnimTbl_Run[1])
 	-- if #self.AnimTbl_WeaponReload > 0 then table.insert(wep.NPC_ReloadAnimationTbl_Custom,VJ_SequenceToActivity(self,string.Replace(self.AnimTbl_WeaponReload[1],"vjges_ ",""))) end
-	table.insert(self.CustomWalkActivites,self.AnimTbl_Walk[1])
-	table.insert(self.CustomRunActivites,self.AnimTbl_Run[1])
+	-- table.insert(self.CustomWalkActivites,self.AnimTbl_Walk[1])
+	-- table.insert(self.CustomRunActivites,self.AnimTbl_Run[1])
 	if self.CanHolsterWeapon && !self.Human_GuardMode then
 		if !IsValid(self:GetEnemy()) && !self.IsHolstered then
 			self:Unequip()
@@ -476,9 +659,12 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Equip()
 	self.IsHolstered = false
-	self.AnimTbl_IdleStand = {self.Weapon_Idle}
-	self.AnimTbl_Walk = {self.Weapon_Walk}
-	self.AnimTbl_Run = {self.Weapon_Run}
+	self.WeaponAnimTranslations[ACT_IDLE] = self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
+	self.WeaponAnimTranslations[ACT_WALK] = self.WeaponAnimTranslations[ACT_WALK_AIM]
+	self.WeaponAnimTranslations[ACT_RUN] = self.WeaponAnimTranslations[ACT_RUN_AIM]
+	-- self.AnimTbl_IdleStand = {self.Weapon_Idle}
+	-- self.AnimTbl_Walk = {self.Weapon_Walk}
+	-- self.AnimTbl_Run = {self.Weapon_Run}
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(false)
 		if self:GetActiveWeapon().NPC_EquipSound then
@@ -489,12 +675,15 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Unequip()
 	self.IsHolstered = true
-	self.Weapon_Idle = self.AnimTbl_IdleStand[1]
-	self.Weapon_Walk = self.AnimTbl_Walk[1]
-	self.Weapon_Run = self.AnimTbl_Run[1]
-	self.AnimTbl_IdleStand = {ACT_IDLE}
-	self.AnimTbl_Walk = {ACT_WALK}
-	self.AnimTbl_Run = {ACT_RUN}
+	self.WeaponAnimTranslations[ACT_IDLE] = ACT_IDLE
+	self.WeaponAnimTranslations[ACT_WALK] = ACT_WALK
+	self.WeaponAnimTranslations[ACT_RUN] = ACT_RUN
+	-- self.Weapon_Idle = self.AnimTbl_IdleStand[1]
+	-- self.Weapon_Walk = self.AnimTbl_Walk[1]
+	-- self.Weapon_Run = self.AnimTbl_Run[1]
+	-- self.AnimTbl_IdleStand = {ACT_IDLE}
+	-- self.AnimTbl_Walk = {ACT_WALK}
+	-- self.AnimTbl_Run = {ACT_RUN}
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(true)
 		if self:GetActiveWeapon().NPC_UnequipSound then
@@ -540,13 +729,6 @@ function ENT:CustomOnThink()
 		end
 	elseif self.IsHolstered && self.Human_GuardMode then
 		self:Equip()
-	end
-	if !IsValid(self:GetActiveWeapon()) then
-		self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"h2haim")}
-		self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"h2haim_walk")}
-		self.AnimTbl_Run = {VJ_SequenceToActivity(self,"h2haim_run")}
-		if !self.CustomWalkActivites[self.AnimTbl_Walk[1]] then table.insert(self.CustomWalkActivites,self.AnimTbl_Walk[1]) end
-		if !self.CustomRunActivites[self.AnimTbl_Run[1]] then table.insert(self.CustomRunActivites,self.AnimTbl_Run[1]) end
 	end
 	if CurTime() < self.NPC_NextMouthMove then
 		if self.NPC_NextMouthDistance == 0 then

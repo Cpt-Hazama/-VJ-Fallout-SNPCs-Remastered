@@ -18,7 +18,7 @@ if VJExists == true then
 			if !IsValid(ent) then return false end
 			if !ent:IsNPC() then return false end
 			if !ent.IsVJBaseSNPC then return false end
-			if ent.Base == "npc_vj_f3r_human_base" then
+			if ent.VJ_FalloutHumanoid or ent.VJ_FalloutCanGuard then
 				return true
 			end
 		end,
@@ -45,7 +45,7 @@ if VJExists == true then
 			if !IsValid(ent) then return false end
 			if !ent:IsNPC() then return false end
 			if !ent.IsVJBaseSNPC then return false end
-			if ent.Base == "npc_vj_f3r_human_base" then
+			if ent.VJ_FalloutHumanoid or ent.VJ_FalloutCanGuard then
 				return true
 			end
 		end,
@@ -72,7 +72,7 @@ if VJExists == true then
 			if !IsValid(ent) then return false end
 			if !ent:IsNPC() then return false end
 			if !ent.IsVJBaseSNPC then return false end
-			if ent.Base == "npc_vj_f3r_human_base" then
+			if ent.VJ_FalloutHumanoid or ent.VJ_FalloutCanGuard then
 				return true
 			end
 		end,
