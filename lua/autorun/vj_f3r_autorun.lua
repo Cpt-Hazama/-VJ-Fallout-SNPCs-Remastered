@@ -190,7 +190,7 @@ if VJExists == true then
 	},vHum)
 	VJ.AddNPC_HUMAN("Wastelander (Engineer)","npc_vj_f3r_waste_eng",{},vHum)
 	VJ.AddNPC_HUMAN("Wastelander (Lab Coat)","npc_vj_f3r_waste_lab",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Leather Armor)","npc_vj_f3r_waste_lea",{},vHum)
+	VJ.AddNPC_HUMAN("Wastelander (Leather Armor)","npc_vj_f3r_waste_lea",{"weapon_vj_f3r_huntingrifle","weapon_vj_f3r_10mmpistol"},vHum)
 	VJ.AddNPC_HUMAN("Talon Merc Company","npc_vj_f3r_talon",{},vHum) -- Mark 2 combat
 	VJ.AddNPC_HUMAN("Raider (Metal Armor)","npc_vj_f3r_raider_met",{},vHum)
 	VJ.AddNPC_HUMAN("Raider (Power Armor)","npc_vj_f3r_raider_pow",{},vHum)
@@ -227,6 +227,8 @@ if VJExists == true then
 	VJ.AddParticle("particles/sporecarrier_radiation.pcf",{})
 	VJ.AddParticle("particles/plasmapistol.pcf",{})
 	VJ.AddParticle("particles/fo3_fx.pcf",{})
+	VJ.AddParticle("particles/vman_explosion.pcf",{})
+	VJ.AddParticle("particles/rpg_firetrail.pcf",{})
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
 	AddCSLuaFile(AutorunFile)

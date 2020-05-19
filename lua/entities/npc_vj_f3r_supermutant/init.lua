@@ -20,6 +20,7 @@ ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
 ENT.Immune_AcidPoisonRadiation = true
 ENT.DisableFootStepSoundTimer = true
 ENT.BecomeEnemyToPlayer = false
+ENT.AnimTbl_ShootWhileMovingRun = {ACT_WALK_AIM}
 
 ENT.HasCallForHelpAnimation = false
 
@@ -303,15 +304,7 @@ function ENT:CustomOnInitialize()
 	self.NPC_NextMouthDistance = 0
 	self.NextStimPackT = CurTime()
 	self.NextStealthBoyT = CurTime()
-	self.OriginalClass = self.VJ_NPC_Class
-	self.OriginalFriendly = self.PlayerFriendly
-	self.OriginalBecomeEnemyToPlayerLevel = self.BecomeEnemyToPlayerLevel
-	self.OriginalPlayerSightDistance = self.OnPlayerSightDistance
-	self.OriginalPlayerSightTime1 = self.OnPlayerSightNextTime1
-	self.OriginalPlayerSightTime2 = self.OnPlayerSightNextTime2
-	if self.Human_GuardMode then
-		self:OnGuardEnabled(true)
-	end
+	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)
@@ -337,23 +330,6 @@ function ENT:ItemThink()
 			self.NextStealthBoyT = CurTime() +math.Rand(25,30)
 		end
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardEnabled(pos)
-	self.PlayerFriendly = true
-	self.BecomeEnemyToPlayerLevel = 1
-	self.OnPlayerSightDistance = self.Human_GuardWarnDistance
-	self.OnPlayerSightNextTime1 = 10
-	self.OnPlayerSightNextTime2 = 12
-	if pos then self.Human_GuardPosition = self:GetPos() end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardDisabled()
-	self.PlayerFriendly = self.OriginalFriendly
-	self.BecomeEnemyToPlayerLevel = OriginalBecomeEnemyToPlayerLevel
-	self.OnPlayerSightDistance = self.OriginalPlayerSightDistance
-	self.OnPlayerSightNextTime1 = self.OriginalPlayerSightTime1
-	self.OnPlayerSightNextTime2 = self.OriginalPlayerSightTime2
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
@@ -627,31 +603,18 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self.NextHolsterT = self.NextHolsterT or CurTime()
-	if self.Human_GuardMode then
-		if !self.Human_RanGuardStatusChange then
-			self:OnGuardEnabled(false)
-			self.Human_RanGuardStatusChange = true
-		end
-		if !IsValid(self:GetEnemy()) && self:GetPos():Distance(self.Human_GuardPosition) >= self.Human_MaxGuardDistance then
-			self:SetLastPosition(self.Human_GuardPosition +Vector(math.Rand(-100,100),math.Rand(-100,100),0))
-			self:VJ_TASK_GOTO_LASTPOS("TASK_WALK_PATH")
-		end
-	else
-		if self.Human_RanGuardStatusChange then
-			self:OnGuardDisabled()
-			self.Human_RanGuardStatusChange = false
-		end
-	end
+	self:GuardAI()
 	if IsValid(self:GetEnemy()) then
 		self.NextHolsterT = CurTime() +15
 	end
-	if self.CanHolsterWeapon && !self.Human_GuardMode then
+	if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
 		if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
 			self:Unequip()
+			-- self.NextHolsterT = CurTime() +5
 		elseif IsValid(self:GetEnemy()) && self.IsHolstered then
 			self:Equip()
 		end
-	elseif self.IsHolstered && self.Human_GuardMode then
+	elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
 		self:Equip()
 	end
 	-- if CurTime() < self.NPC_NextMouthMove then

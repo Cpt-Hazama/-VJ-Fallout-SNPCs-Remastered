@@ -111,6 +111,8 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_emit FootLeft" then
 		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	elseif key == "event_emit FootRight" then
+		ParticleEffect("blood_impact_red_01",self:GetBonePosition(8),Angle(0,0,0),nil)
+		VJ_EmitSound(self,"physics/body/body_medium_break" .. math.random(2,3) .. ".wav",self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	elseif string.find(key,"event_mattack") then
 		local atk = string.Replace(key,"event_mattack ","")

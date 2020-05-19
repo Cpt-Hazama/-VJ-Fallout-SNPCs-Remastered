@@ -2,4 +2,9 @@
 {
 	"$baseTexture" "models/fallout/armor/leatherarmor/leatherarmor_gloves"
 	"$bumpmap" 	"models/fallout/armor/leatherarmor/leatherarmor_gloves_n"
+
+	$phong			1
+	$phongexponent		75
+	$phongboost		0.1
+	$phongfresnelranges	"[1 1 1]"
 }

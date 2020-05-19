@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/fallout/sentrybot.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
+ENT.Model = {"models/fallout/sentrybot_edit.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ENT.StartHealth = 500
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ ENT.Immune_AcidPoisonRadiation = true
 ENT.Immune_Fire = true
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
-ENT.RangeAttackEntityToSpawn = "obj_vj_tank_shell" -- The entity that is spawned when range attacking
+ENT.RangeAttackEntityToSpawn = "obj_vj_f3r_missile" -- The entity that is spawned when range attacking
 ENT.AnimTbl_RangeAttack = {"vjges_2hlattackleft"} -- Range Attack Animations
 ENT.RangeAttackAnimationStopMovement = false -- Should it stop moving when performing a range attack?
 ENT.RangeAttackAnimationFaceEnemy = false
@@ -188,29 +188,11 @@ ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when
 ENT.NoChaseAfterCertainRange_FarDistance = 1200 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
 ENT.NoChaseAfterCertainRange_CloseDistance = 0
 
-	//===== Humanoid Base variables for Guarding =====\\
-ENT.Human_GuardMode = false
-ENT.Human_GuardWarnDistance = 800
-ENT.Human_RanGuardStatusChange = false
-ENT.Human_GuardPosition = Vector(0,0,0)
-ENT.Human_MaxGuardDistance = 550
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardEnabled(pos)
-	self.PlayerFriendly = true
-	self.BecomeEnemyToPlayerLevel = 1
-	self.OnPlayerSightDistance = self.Human_GuardWarnDistance
-	self.OnPlayerSightNextTime1 = 10
-	self.OnPlayerSightNextTime2 = 12
-	if pos then self.Human_GuardPosition = self:GetPos() end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardDisabled()
-	self.PlayerFriendly = self.OriginalFriendly
-	self.BecomeEnemyToPlayerLevel = OriginalBecomeEnemyToPlayerLevel
-	self.OnPlayerSightDistance = self.OriginalPlayerSightDistance
-	self.OnPlayerSightNextTime1 = self.OriginalPlayerSightTime1
-	self.OnPlayerSightNextTime2 = self.OriginalPlayerSightTime2
-end
+ENT.VJ_F3R_InGuardMode = false
+ENT.VJ_F3R_GuardWarnDistance = 800
+ENT.VJ_F3R_RanGuardStatusChange = false
+ENT.VJ_F3R_GuardPosition = Vector(0,0,0)
+ENT.VJ_F3R_MaxGuardDistance = 550
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPlayerSight(argent)
 	if self.Human_GuardMode then
@@ -290,8 +272,11 @@ function ENT:CustomOnInitialize()
 	self.DefaultDistance = self.MeleeAttackDistance
 	
 	self.IdleLoopSound = CreateSound(self,"vj_fallout/sentrybot/sentrybot_idle_lp.wav")
+	self.IdleLoopSound:SetSoundLevel(70)
 	self.MoveLoopSound = CreateSound(self,"vj_fallout/sentrybot/sentrybot_movement_lp.wav")
 	self.SpinLoop = CreateSound(self,self.Weapon == 0 && "vj_fallout/weapons/minigun/wpn_minigun_fire_loop-old1.wav" or "vj_fallout/weapons/gatlinglaser/gatlinglaser_fire_lp.wav")
+	self.SpinLoop:SetSoundLevel(self.Weapon == 0 && 150 or 95)
+
 	self:PlayIdleLoop()
 
 	self.HasSpunUp = false
@@ -302,6 +287,7 @@ function ENT:CustomOnInitialize()
 	
 	self:SetSkin(self.Skin)
 	self:SetBodygroup(1,self.Weapon)
+	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SpinUp()
@@ -314,6 +300,7 @@ function ENT:SpinUp()
 				self.HasSpunUp = true
 				self.NextFireT = CurTime() +0.1
 				self.SpinLoop:Play()
+				self.SpinLoop:ChangeVolume(self.Weapon == 0 && 120 or 90)
 			end
 		end)
 	end
@@ -418,21 +405,7 @@ function ENT:CustomAttack()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self.Human_GuardMode then
-		if !self.Human_RanGuardStatusChange then
-			self:OnGuardEnabled(false)
-			self.Human_RanGuardStatusChange = true
-		end
-		if !IsValid(self:GetEnemy()) && self:GetPos():Distance(self.Human_GuardPosition) >= self.Human_MaxGuardDistance then
-			self:SetLastPosition(self.Human_GuardPosition +Vector(math.Rand(-100,100),math.Rand(-100,100),0))
-			self:VJ_TASK_GOTO_LASTPOS("TASK_WALK_PATH")
-		end
-	else
-		if self.Human_RanGuardStatusChange then
-			self:OnGuardDisabled()
-			self.Human_RanGuardStatusChange = false
-		end
-	end
+	self:GuardAI()
 	if self:Health() <= self:GetMaxHealth() *0.35 then
 		self.AnimTbl_Walk = {ACT_WALK_HURT}
 		self.AnimTbl_Run = {ACT_RUN_HURT}
@@ -456,11 +429,16 @@ function ENT:CustomOnThink()
 		self:PlayIdleLoop()
 		self.bMoveLoopPlaying = false
 	end
+	if self.SpinningUp && CurTime() > self.NextGestT then
+		self:RestartGesture(ACT_GESTURE_RANGE_ATTACK1)
+		self.NextGestT = CurTime() +0.3
+	end
 	if CurTime() > self.NextFireT +0.2 && self.HasSpunUp then
 		self.NextCanSpinT = CurTime() +SoundDuration("vj_fallout/weapons/minigun/wpn_minigun_spindown.wav") +1
 		self.HasSpunUp = false
 		self.SpinningUp = false
 		self.SpinLoop:Stop()
+		self:RestartGesture(ACT_GESTURE_RANGE_ATTACK2)
 		VJ_EmitSound(self,"vj_fallout/weapons/minigun/wpn_minigun_spindown.wav",85)
 	end
 end

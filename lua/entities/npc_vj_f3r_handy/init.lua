@@ -111,6 +111,12 @@ ENT.SoundTbl_Death = {
 	"vj_fallout/mrhandy/genericrobot_death4.mp3",
 }
 
+ENT.VJ_F3R_InGuardMode = false
+ENT.VJ_F3R_GuardWarnDistance = 800
+ENT.VJ_F3R_RanGuardStatusChange = false
+ENT.VJ_F3R_GuardPosition = Vector(0,0,0)
+ENT.VJ_F3R_MaxGuardDistance = 550
+
 ENT.Skin = 1
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = 2000 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
@@ -147,6 +153,7 @@ function ENT:CustomOnInitialize()
 	
 	self:SetBodygroup(1,1)
 	self:SetBodygroup(2,1)
+	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PlayIdleLoop()
@@ -236,6 +243,7 @@ function ENT:CustomOnRangeAttack_AfterStartTimer()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
+	self:GuardAI()
 	if self:IsMoving() then
 		if !self.bMoveLoopPlaying then
 			self.bMoveLoopPlaying = true

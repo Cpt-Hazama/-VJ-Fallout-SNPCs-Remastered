@@ -10,6 +10,53 @@ if VJExists == true then
 	local ENT = FindMetaTable("Entity")
 	local NPC = FindMetaTable("NPC")
 
+	function NPC:OnGuardEnabled(pos)
+		self.PlayerFriendly = true
+		self.BecomeEnemyToPlayerLevel = 1
+		self.OnPlayerSightDistance = self.VJ_F3R_GuardWarnDistance
+		self.OnPlayerSightNextTime1 = 10
+		self.OnPlayerSightNextTime2 = 12
+		if pos then self.VJ_F3R_GuardPosition = self:GetPos() end
+	end
+	
+	function NPC:OnGuardDisabled()
+		self.PlayerFriendly = self.OriginalFriendly
+		self.BecomeEnemyToPlayerLevel = OriginalBecomeEnemyToPlayerLevel
+		self.OnPlayerSightDistance = self.OriginalPlayerSightDistance
+		self.OnPlayerSightNextTime1 = self.OriginalPlayerSightTime1
+		self.OnPlayerSightNextTime2 = self.OriginalPlayerSightTime2
+	end
+	
+	function NPC:GuardInit()
+		self.OriginalClass = self.VJ_NPC_Class
+		self.OriginalFriendly = self.PlayerFriendly
+		self.OriginalBecomeEnemyToPlayerLevel = self.BecomeEnemyToPlayerLevel
+		self.OriginalPlayerSightDistance = self.OnPlayerSightDistance
+		self.OriginalPlayerSightTime1 = self.OnPlayerSightNextTime1
+		self.OriginalPlayerSightTime2 = self.OnPlayerSightNextTime2
+		if self.VJ_F3R_InGuardMode then
+			self:OnGuardEnabled(true)
+		end
+	end
+	
+	function NPC:GuardAI()
+		if self.VJ_F3R_InGuardMode then
+			if !self.VJ_F3R_RanGuardStatusChange then
+				self:OnGuardEnabled(false)
+				self.VJ_F3R_RanGuardStatusChange = true
+			end
+			if !IsValid(self:GetEnemy()) && self:GetPos():Distance(self.VJ_F3R_GuardPosition) >= self.VJ_F3R_MaxGuardDistance then
+				self:SetLastPosition(self.VJ_F3R_GuardPosition +Vector(math.Rand(-100,100),math.Rand(-100,100),0))
+				self:VJ_TASK_GOTO_LASTPOS("TASK_WALK_PATH")
+			end
+		else
+			if self.VJ_F3R_RanGuardStatusChange then
+				self:OnGuardDisabled()
+				self.VJ_F3R_RanGuardStatusChange = false
+			end
+		end
+	end
+
 	function NPC:Item_Stealthboy()
 		self:SetMaterial("cpthazama/cloak")
 		self.VJ_NoTarget = true

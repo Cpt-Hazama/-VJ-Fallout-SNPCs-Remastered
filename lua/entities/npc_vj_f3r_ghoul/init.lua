@@ -130,6 +130,17 @@ function ENT:CustomInitialize()
 		for _,v in pairs(self.tbl_Caps) do
 			if self:LookupAttachment(v) then ParticleEffectAttach("glowingone_testc",PATTACH_POINT_FOLLOW,self,self:LookupAttachment(v)) end
 		end
+		self.Glow = ents.Create("light_dynamic")
+		self.Glow:SetKeyValue("brightness","1")
+		self.Glow:SetKeyValue("distance","150")
+		self.Glow:SetLocalPos(self:GetPos() +self:OBBCenter())
+		self.Glow:SetLocalAngles(self:GetAngles())
+		self.Glow:Fire("Color", "127 255 0")
+		self.Glow:SetParent(self)
+		self.Glow:Spawn()
+		self.Glow:Activate()
+		self.Glow:Fire("TurnOn","",0)
+		self:DeleteOnRemove(self.Glow)
 	end
 	self:SetSkin(math.random(self.Skin[1],self.Skin[2]))
 end

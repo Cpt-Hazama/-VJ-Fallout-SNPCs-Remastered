@@ -132,11 +132,13 @@ ENT.GeneralSoundPitch1 = 100
 ENT.MouthParameter = "mouth"
 ENT.Human_IsAggressive = false
 ENT.Human_IsSoldier = false
-ENT.Human_GuardMode = false
-ENT.Human_GuardWarnDistance = 800
-ENT.Human_RanGuardStatusChange = false
-ENT.Human_GuardPosition = Vector(0,0,0)
-ENT.Human_MaxGuardDistance = 550
+
+ENT.VJ_F3R_InGuardMode = false
+ENT.VJ_F3R_GuardWarnDistance = 800
+ENT.VJ_F3R_RanGuardStatusChange = false
+ENT.VJ_F3R_GuardPosition = Vector(0,0,0)
+ENT.VJ_F3R_MaxGuardDistance = 550
+
 ENT.HairColor = Color(255,255,255)
 ENT.CantHaveHairWithApparel = false
 ENT.SpawnWithApparelChance = 1
@@ -235,8 +237,8 @@ function ENT:CustomOnPlayerSight(argent)
 			end
 		end)
 	end
-	if self.Human_GuardMode then
-		if argent:GetPos():Distance(self:GetPos()) <= self.Human_GuardWarnDistance then
+	if self.VJ_F3R_InGuardMode then
+		if argent:GetPos():Distance(self:GetPos()) <= self.VJ_F3R_GuardWarnDistance then
 			VJ_EmitSound(self,self.SoundTbl_Guard_Warn,78,100)
 			local time = math.random(5,8)
 			for i = 1,time *2 do
@@ -245,7 +247,7 @@ function ENT:CustomOnPlayerSight(argent)
 			timer.Simple(time,function()
 				if IsValid(self) then
 					if IsValid(argent) then 
-						if argent:GetPos():Distance(self:GetPos()) <= self.Human_GuardWarnDistance then
+						if argent:GetPos():Distance(self:GetPos()) <= self.VJ_F3R_GuardWarnDistance then
 							table.insert(self.VJ_AddCertainEntityAsEnemy,argent)
 							self:VJ_DoSetEnemy(argent,true,true)
 							self:SetEnemy(argent)
@@ -280,7 +282,7 @@ function ENT:CustomOnInitialize()
 					-- self:SetupHoldTypes(wep,wep.AnimationType)
 				-- end
 
-				if self.CanHolsterWeapon && !self.Human_GuardMode then
+				if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
 					if !IsValid(self:GetEnemy()) && !self.IsHolstered then
 						self:Unequip()
 					end
@@ -299,32 +301,7 @@ function ENT:CustomOnInitialize()
 	self.NPC_NextMouthDistance = 0
 	self.NextStimPackT = CurTime()
 	self.NextStealthBoyT = CurTime()
-	self.OriginalClass = self.VJ_NPC_Class
-	self.OriginalFriendly = self.PlayerFriendly
-	self.OriginalBecomeEnemyToPlayerLevel = self.BecomeEnemyToPlayerLevel
-	self.OriginalPlayerSightDistance = self.OnPlayerSightDistance
-	self.OriginalPlayerSightTime1 = self.OnPlayerSightNextTime1
-	self.OriginalPlayerSightTime2 = self.OnPlayerSightNextTime2
-	if self.Human_GuardMode then
-		self:OnGuardEnabled(true)
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardEnabled(pos)
-	self.PlayerFriendly = true
-	self.BecomeEnemyToPlayerLevel = 1
-	self.OnPlayerSightDistance = self.Human_GuardWarnDistance
-	self.OnPlayerSightNextTime1 = 10
-	self.OnPlayerSightNextTime2 = 12
-	if pos then self.Human_GuardPosition = self:GetPos() end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnGuardDisabled()
-	self.PlayerFriendly = self.OriginalFriendly
-	self.BecomeEnemyToPlayerLevel = OriginalBecomeEnemyToPlayerLevel
-	self.OnPlayerSightDistance = self.OriginalPlayerSightDistance
-	self.OnPlayerSightNextTime1 = self.OriginalPlayerSightTime1
-	self.OnPlayerSightNextTime2 = self.OriginalPlayerSightTime2
+	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)
@@ -650,7 +627,7 @@ function ENT:SetupHoldTypes(wep,htype)
 	-- if #self.AnimTbl_WeaponReload > 0 then table.insert(wep.NPC_ReloadAnimationTbl_Custom,VJ_SequenceToActivity(self,string.Replace(self.AnimTbl_WeaponReload[1],"vjges_ ",""))) end
 	-- table.insert(self.CustomWalkActivites,self.AnimTbl_Walk[1])
 	-- table.insert(self.CustomRunActivites,self.AnimTbl_Run[1])
-	if self.CanHolsterWeapon && !self.Human_GuardMode then
+	if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
 		if !IsValid(self:GetEnemy()) && !self.IsHolstered then
 			self:Unequip()
 		end
@@ -702,32 +679,18 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self.NextHolsterT = self.NextHolsterT or CurTime()
-	if self.Human_GuardMode then
-		if !self.Human_RanGuardStatusChange then
-			self:OnGuardEnabled(false)
-			self.Human_RanGuardStatusChange = true
-		end
-		if !IsValid(self:GetEnemy()) && self:GetPos():Distance(self.Human_GuardPosition) >= self.Human_MaxGuardDistance then
-			self:SetLastPosition(self.Human_GuardPosition +Vector(math.Rand(-100,100),math.Rand(-100,100),0))
-			self:VJ_TASK_GOTO_LASTPOS("TASK_WALK_PATH")
-		end
-	else
-		if self.Human_RanGuardStatusChange then
-			self:OnGuardDisabled()
-			self.Human_RanGuardStatusChange = false
-		end
-	end
+	self:GuardAI()
 	if IsValid(self:GetEnemy()) then
 		self.NextHolsterT = CurTime() +15
 	end
-	if self.CanHolsterWeapon && !self.Human_GuardMode then
+	if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
 		if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
 			self:Unequip()
 			-- self.NextHolsterT = CurTime() +5
 		elseif IsValid(self:GetEnemy()) && self.IsHolstered then
 			self:Equip()
 		end
-	elseif self.IsHolstered && self.Human_GuardMode then
+	elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
 		self:Equip()
 	end
 	if CurTime() < self.NPC_NextMouthMove then
