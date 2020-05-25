@@ -181,8 +181,10 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 		self.MeleeAttackDamageDistance = self.atkData[atk].dist
 		if atk == "power" || atk == "forwardpower" then
 			VJ_EmitSound(self,"vj_fallout/radscorpion/radscorpion_attacksting0" .. math.random(1,3) .. ".mp3",65,100)
+			self.MeleeAttackDamageType = bit.bor(DMG_DIRECT,DMG_POISON)
 		else
 			VJ_EmitSound(self,"vj_fallout/radscorpion/radscorpion_clawatk0" .. math.random(1,3) .. ".mp3",65,100)
+			self.MeleeAttackDamageType = DMG_SLASH
 		end
 		self:MeleeAttackCode()
 	end

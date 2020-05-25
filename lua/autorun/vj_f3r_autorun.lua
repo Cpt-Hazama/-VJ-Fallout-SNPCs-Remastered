@@ -16,9 +16,13 @@ if VJExists == true then
 	include('autorun/vj_controls.lua')
 
 	local vCre = "Fallout - Creatures"
+	VJ.AddCategoryInfo(vCre, {Icon = "vj_icons/f3r_creatures16.png"})
 	local vHum = "Fallout - Humans"
+	VJ.AddCategoryInfo(vHum, {Icon = "vj_icons/f3r_humans16.png"})
 	local vRob = "Fallout - Robots"
+	VJ.AddCategoryInfo(vRob, {Icon = "vj_icons/f3r_robots16.png"})
 	local vFEV = "Fallout - Super Mutants"
+	VJ.AddCategoryInfo(vFEV, {Icon = "vj_icons/f3r_mutants16.png"})
 
 		-- Creatures --
 			-- Animals --
@@ -174,8 +178,9 @@ if VJExists == true then
 		"weapon_vj_f3r_10mmpistol",
 		"weapon_vj_f3r_huntingrifle",
 	},vHum)
-	VJ.AddNPC_HUMAN("Enclave Soldier (NV)","npc_vj_f3r_enclave_nv",{},vHum)
-	VJ.AddNPC_HUMAN("Enclave Soldier","npc_vj_f3r_enclave",{},vHum)
+	VJ.AddNPC_HUMAN("Enclave Soldier (NV)","npc_vj_f3r_enclave_nv",{"weapon_vj_f3r_plasmapistol","weapon_vj_f3r_plasmarifle"},vHum)
+	VJ.AddNPC_HUMAN("Enclave Soldier","npc_vj_f3r_enclave",{"weapon_vj_f3r_plasmapistol","weapon_vj_f3r_plasmarifle"},vHum)
+	VJ.AddNPC_HUMAN("Enclave Tesla Soldier","npc_vj_f3r_enclave_tesla",{"weapon_vj_f3r_plasmarifle"},vHum)
 	VJ.AddNPC_HUMAN("Brother Hood Initiate","npc_vj_f3r_bos",{},vHum)
 	VJ.AddNPC_HUMAN("Wastelander (Casual)","npc_vj_f3r_waste_casu",{},vHum)
 	VJ.AddNPC_HUMAN("Wastelander (Combat Armor)","npc_vj_f3r_waste_comb",{},vHum)

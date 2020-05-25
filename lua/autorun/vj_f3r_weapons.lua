@@ -14,4 +14,6 @@ if VJExists == true then
 	VJ.AddNPCWeapon("VJ_F3R_Fatman","weapon_vj_f3r_fatman")
 	VJ.AddNPCWeapon("VJ_F3R_10mmPistol","weapon_vj_f3r_10mmpistol")
 	VJ.AddNPCWeapon("VJ_F3R_HuntingRifle","weapon_vj_f3r_huntingrifle")
+	VJ.AddNPCWeapon("VJ_F3R_PlasmaPistol","weapon_vj_f3r_plasmapistol")
+	VJ.AddNPCWeapon("VJ_F3R_PlasmaRifle","weapon_vj_f3r_plasmarifle")
 end

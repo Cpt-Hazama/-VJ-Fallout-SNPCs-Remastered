@@ -320,85 +320,105 @@ function ENT:GetMuzzle()
 	return self:GetBodygroup(1) +1
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomAttack()
-	if IsValid(self:GetEnemy()) then
-		local dist = self.NearestPointToEnemyDistance
-		if !self.HasSpunUp && dist <= 2000 && !self.SpinningUp then
-			self:SpinUp()
+function ENT:FireWeapon(rad)
+	if (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(rad))) then
+		local start = self:GetAttachment(self.Weapon +1).Pos
+		if self.Weapon == 0 then
+			local bullet = {}
+			bullet.Num = 1
+			bullet.Src = start
+			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *12
+			bullet.Spread = 4
+			bullet.Tracer = 1
+			bullet.Force = 5
+			bullet.Damage = 5
+			bullet.AmmoType = "SMG1"
+			self:FireBullets(bullet)
+			
+			ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,1)
+			
+			local FireLight1 = ents.Create("light_dynamic")
+			FireLight1:SetKeyValue("brightness", "4")
+			FireLight1:SetKeyValue("distance", "120")
+			FireLight1:SetPos(start)
+			FireLight1:SetLocalAngles(self:GetAngles())
+			FireLight1:Fire("Color", "255 150 60")
+			FireLight1:SetParent(self)
+			FireLight1:Spawn()
+			FireLight1:Activate()
+			FireLight1:Fire("TurnOn","",0)
+			FireLight1:Fire("Kill","",0.07)
+			self:DeleteOnRemove(FireLight1)
+		else
+			local bullet = {}
+			bullet.Num = 1
+			bullet.Src = start
+			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *10
+			bullet.Spread = 4
+			bullet.Tracer = 1
+			bullet.TracerName = "vj_fo3_laser"
+			bullet.Force = 7
+			bullet.Damage = 7
+			bullet.AmmoType = "SMG1"
+			bullet.Callback = function(attacker,tr,dmginfo)
+				local vjeffectmuz = EffectData()
+				vjeffectmuz:SetOrigin(tr.HitPos)
+				util.Effect("vj_fo3_laserhit",vjeffectmuz)
+				dmginfo:SetDamageType(bit.bor(DMG_BULLET,DMG_BURN,DMG_DISSOLVE))
+			end
+			self:FireBullets(bullet)
+			
+			local vjeffectmuz = EffectData()
+			vjeffectmuz:SetOrigin(start)
+			vjeffectmuz:SetEntity(self)
+			vjeffectmuz:SetStart(start)
+			vjeffectmuz:SetNormal(bullet.Dir)
+			vjeffectmuz:SetAttachment(self.Weapon +1)
+			util.Effect("vj_fo3_muzzle_gatlinglaser",vjeffectmuz)
+			
+			local FireLight1 = ents.Create("light_dynamic")
+			FireLight1:SetKeyValue("brightness", "4")
+			FireLight1:SetKeyValue("distance", "120")
+			FireLight1:SetPos(start)
+			FireLight1:SetLocalAngles(self:GetAngles())
+			FireLight1:Fire("Color", "255 255 255")
+			FireLight1:SetParent(self)
+			FireLight1:Spawn()
+			FireLight1:Activate()
+			FireLight1:Fire("TurnOn","",0)
+			FireLight1:Fire("Kill","",0.07)
+			self:DeleteOnRemove(FireLight1)
 		end
-		if self.HasSpunUp then
-			self:SpinLoopGesture()
-			if CurTime() > self.NextFireT && dist <= 2000 && self:Visible(self:GetEnemy()) then
-				local start = self:GetAttachment(self.Weapon +1).Pos
-				
-				if self.Weapon == 0 then
-					local bullet = {}
-					bullet.Num = 1
-					bullet.Src = start
-					bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *12
-					bullet.Spread = 4
-					bullet.Tracer = 1
-					bullet.Force = 5
-					bullet.Damage = 5
-					bullet.AmmoType = "SMG1"
-					self:FireBullets(bullet)
-					
-					ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,1)
-					
-					local FireLight1 = ents.Create("light_dynamic")
-					FireLight1:SetKeyValue("brightness", "4")
-					FireLight1:SetKeyValue("distance", "120")
-					FireLight1:SetPos(start)
-					FireLight1:SetLocalAngles(self:GetAngles())
-					FireLight1:Fire("Color", "255 150 60")
-					FireLight1:SetParent(self)
-					FireLight1:Spawn()
-					FireLight1:Activate()
-					FireLight1:Fire("TurnOn","",0)
-					FireLight1:Fire("Kill","",0.07)
-					self:DeleteOnRemove(FireLight1)
-				else
-					local bullet = {}
-					bullet.Num = 1
-					bullet.Src = start
-					bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *10
-					bullet.Spread = 4
-					bullet.Tracer = 1
-					bullet.TracerName = "vj_fo3_laser"
-					bullet.Force = 7
-					bullet.Damage = 7
-					bullet.AmmoType = "SMG1"
-					bullet.Callback = function(attacker,tr,dmginfo)
-						local vjeffectmuz = EffectData()
-						vjeffectmuz:SetOrigin(tr.HitPos)
-						util.Effect("vj_fo3_laserhit",vjeffectmuz)
-						dmginfo:SetDamageType(bit.bor(DMG_BULLET,DMG_BURN,DMG_DISSOLVE))
-					end
-					self:FireBullets(bullet)
-					
-					local vjeffectmuz = EffectData()
-					vjeffectmuz:SetOrigin(start)
-					vjeffectmuz:SetEntity(self)
-					vjeffectmuz:SetStart(start)
-					vjeffectmuz:SetNormal(bullet.Dir)
-					vjeffectmuz:SetAttachment(self.Weapon +1)
-					util.Effect("vj_fo3_muzzle_gatlinglaser",vjeffectmuz)
-					
-					local FireLight1 = ents.Create("light_dynamic")
-					FireLight1:SetKeyValue("brightness", "4")
-					FireLight1:SetKeyValue("distance", "120")
-					FireLight1:SetPos(start)
-					FireLight1:SetLocalAngles(self:GetAngles())
-					FireLight1:Fire("Color", "255 255 255")
-					FireLight1:SetParent(self)
-					FireLight1:Spawn()
-					FireLight1:Activate()
-					FireLight1:Fire("TurnOn","",0)
-					FireLight1:Fire("Kill","",0.07)
-					self:DeleteOnRemove(FireLight1)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack()
+	if !self.VJ_IsBeingControlled then
+		if IsValid(self:GetEnemy()) then
+			local dist = self.NearestPointToEnemyDistance
+			if !self.HasSpunUp && dist <= 2000 && !self.SpinningUp then
+				self:SpinUp()
+			end
+			if self.HasSpunUp then
+				self:SpinLoopGesture()
+				if CurTime() > self.NextFireT && dist <= 2000 && self:Visible(self:GetEnemy()) && (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(90))) then
+					self:FireWeapon(70)
+					self.NextFireT = CurTime() +0.03
 				end
-				
-				self.NextFireT = CurTime() +0.03
+			end
+		end
+	else
+		local ply = self.VJ_TheController
+		if ply:KeyDown(IN_ATTACK) then
+			if !self.HasSpunUp && !self.SpinningUp then
+				self:SpinUp()
+			end
+			if self.HasSpunUp then
+				self:SpinLoopGesture()
+				if CurTime() > self.NextFireT then
+					self:FireWeapon(80)
+					self.NextFireT = CurTime() +0.03
+				end
 			end
 		end
 	end
@@ -410,13 +430,19 @@ function ENT:CustomOnThink()
 		self.AnimTbl_Walk = {ACT_WALK_HURT}
 		self.AnimTbl_Run = {ACT_RUN_HURT}
 	end
-	if IsValid(self:GetEnemy()) then
-		self.NoChaseAfterCertainRange = self.NearestPointToEnemyDistance < 200
-		self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
-		if self.NearestPointToEnemyDistance < 200 then
-			self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
-			self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
+	if !self.VJ_IsBeingControlled then
+		self.ConstantlyFaceEnemy = true
+		if IsValid(self:GetEnemy()) then
+			self.NoChaseAfterCertainRange = self.NearestPointToEnemyDistance < 200
+			self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
+			if self.NearestPointToEnemyDistance < 200 then
+				self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
+				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
+			end
 		end
+	else
+		self.NoChaseAfterCertainRange = false
+		self.ConstantlyFaceEnemy = false
 	end
 	self.MoveLoopSound:ChangePitch((self:GetMovementActivity() == ACT_RUN || self:GetMovementActivity() == ACT_RUN_HURT) && 100 or 70)
 	if self:IsMoving() then
@@ -434,7 +460,7 @@ function ENT:CustomOnThink()
 		self.NextGestT = CurTime() +0.3
 	end
 	if CurTime() > self.NextFireT +0.2 && self.HasSpunUp then
-		self.NextCanSpinT = CurTime() +SoundDuration("vj_fallout/weapons/minigun/wpn_minigun_spindown.wav") +1
+		self.NextCanSpinT = CurTime() +SoundDuration("vj_fallout/weapons/minigun/wpn_minigun_spindown.wav") +0.3
 		self.HasSpunUp = false
 		self.SpinningUp = false
 		self.SpinLoop:Stop()
