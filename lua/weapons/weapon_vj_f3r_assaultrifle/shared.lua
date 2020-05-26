@@ -23,19 +23,29 @@ SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"
 SWEP.Instructions				= "Controls are like a regular weapon."
 SWEP.Category					= "VJ Base - Fallout: Remastered"
+SWEP.Spawnable = true
+SWEP.ViewModelFOV = 55
+SWEP.BobScale = 0.25
+SWEP.SwayScale = 0.5
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.MadeForNPCsOnly 			= false -- Is tihs weapon meant to be for NPCs only?
 	-- World Model ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.WorldModel_UseCustomPosition = false -- Should the gun use custom position? This can be used to fix guns that are in the crotch
-SWEP.WorldModel_CustomPositionAngle = Vector(80,5,268)
-SWEP.WorldModel_CustomPositionOrigin = Vector(-4.2,0,-1)
+SWEP.WorldModel_CustomPositionAngle = Vector(80,5,270)
+SWEP.WorldModel_CustomPositionOrigin = Vector(-3.6,0,-0.2)
 	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
 SWEP.HoldType 					= "2ha"
+SWEP.PHoldType 					= "ar2"
 SWEP.ViewModel 					= "models/fallout/weapons/v_arms.mdl"
 SWEP.CMuzzle = "muzzle"
+
+SWEP.AnimTbl_Deploy = {ACT_GESTURE_RANGE_ATTACK_HMG1}
+SWEP.AnimTbl_Idle = {ACT_GESTURE_RANGE_ATTACK_AR2_GRENADE}
+SWEP.AnimTbl_PrimaryFire = {ACT_GESTURE_RANGE_ATTACK_AR1}
+SWEP.AnimTbl_Reload = {ACT_GESTURE_BARNACLE_STRANGLE}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:SetupDataTables()
 	self:NetworkVar("Entity",0,"CModel")
@@ -240,6 +250,7 @@ end
 function SWEP:CustomOnThink()
 	if IsValid(self:GetOwner()) then
 		self.WorldModel_UseCustomPosition = self:GetOwner():IsPlayer()
+		self:SetHoldType(self:GetOwner():IsPlayer() && self.PHoldType or self.HoldType)
 	else
 		self.WorldModel_UseCustomPosition = false
 	end

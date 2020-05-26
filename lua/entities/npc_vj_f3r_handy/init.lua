@@ -242,6 +242,10 @@ function ENT:CustomOnRangeAttack_AfterStartTimer()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:InFront(vec,ene,rad)
+	return (vec:Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self:GuardAI()
 	if self:IsMoving() then
