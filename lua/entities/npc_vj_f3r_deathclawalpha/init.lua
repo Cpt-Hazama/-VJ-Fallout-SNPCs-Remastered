@@ -22,6 +22,23 @@ function ENT:CustomOnInitialize()
 	self.Height = v2.z
 	self.DefaultDistance = self.MeleeAttackDistance
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:MultipleMeleeAttacks()
+	local time = self:GetPathTimeToGoal()
+	if !(self:Health() <= self:GetMaxHealth() *0.35) && self.NearestPointToEnemyDistance > self.DefaultDistance && time > 0.23 && time < 2 then
+		self.MeleeAttackDistance = self.DefaultDistance *2
+		self.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK2}
+		self.HasMeleeAttackKnockBack = true
+		self.MeleeAttackKnockBack_Forward1 = 270
+		self.MeleeAttackKnockBack_Forward2 = 290
+		self.MeleeAttackKnockBack_Up1 = self.Height +(self.Height *0.8)
+		self.MeleeAttackKnockBack_Up2 = self.Height +(self.Height *0.9)
+	else
+		self.MeleeAttackDistance = self.DefaultDistance
+		self.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1}
+		self.HasMeleeAttackKnockBack = false
+	end
+end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,

@@ -133,10 +133,6 @@ function ENT:CustomOnInitialize()
 	if self.GeckoInit then self:GeckoInit() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:InFront(ene,rad)
-	return (self:GetForward():Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_emit FootLeft" then
 		if CurTime() > self.NextPflupSoundT then
@@ -166,7 +162,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 			self.SpitLP:Play()
 		end
 		if atk == "spit" then
-			local spit = ents.Create("obj_vj_f3r_centaurspit")
+			local spit = ents.Create("obj_vj_f3r_spit")
 			spit:SetPos(self:GetAttachment(1).Pos)
 			spit:SetAngles(self:GetAttachment(1).Ang)
 			spit:Spawn()
@@ -219,22 +215,6 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 			self.FlameLP:Stop()
 			self.SpitLP:Stop()
 			SafeRemoveEntity(self.Flame)
-		end
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:DoFlameDamage(dist,dmg,attacker)
-	for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
-		if ((self:Disposition(ent) == D_HT) && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
-			if self:InFront(ent,45) then
-				ent:Ignite(4,0)
-				local dmginfo = DamageInfo()
-				dmginfo:SetDamageType(DMG_BURN)
-				dmginfo:SetDamage(dmg)
-				dmginfo:SetAttacker(attacker || self)
-				dmginfo:SetInflictor(self)
-				ent:TakeDamageInfo(dmginfo)
-			end
 		end
 	end
 end
