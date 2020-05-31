@@ -10,6 +10,25 @@ if VJExists == true then
 	local ENT = FindMetaTable("Entity")
 	local NPC = FindMetaTable("NPC")
 
+	function NPC:CustomPoseParameter(ent,ResetPoses)
+		ResetPoses = ResetPoses or false
+		local p_enemy = 0 -- Pitch
+		local y_enemy = 0 -- Yaw
+		local r_enemy = 0 -- Roll
+		if IsValid(ent) && ResetPoses == false then
+			local enemy_pos = ent:GetPos() +ent:OBBCenter()
+			local self_ang = self:GetAngles()
+			local enemy_ang = (enemy_pos - (self:GetPos() + self:OBBCenter())):Angle()
+			p_enemy = math.AngleDifference(enemy_ang.p, self_ang.p)
+			y_enemy = math.AngleDifference(enemy_ang.y, self_ang.y)
+			r_enemy = math.AngleDifference(enemy_ang.z, self_ang.z)
+		end
+		
+		local ang_app = math.ApproachAngle
+		self:SetPoseParameter("aim_pitch", ang_app(self:GetPoseParameter("aim_pitch"), p_enemy, self.PoseParameterLooking_TurningSpeed))
+		self:SetPoseParameter("aim_yaw", ang_app(self:GetPoseParameter("aim_yaw"), y_enemy, self.PoseParameterLooking_TurningSpeed))
+	end
+
 	function NPC:OnGuardEnabled(pos)
 		self.PlayerFriendly = true
 		self.BecomeEnemyToPlayerLevel = 1

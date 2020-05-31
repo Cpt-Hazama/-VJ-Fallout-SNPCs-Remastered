@@ -5,82 +5,78 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/alyx.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
-ENT.StartHealth = 1
-ENT.HullType = HULL_HUMAN
----------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_"} -- NPCs with the same class with be allied to each other
-ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
-ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
-ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
-ENT.MeleeAttackDistance = 80
-ENT.MeleeAttackDamageDistance = 110
-ENT.MeleeAttackDamage = 25
+ENT.Model = {"models/fallout/tunneler.mdl"}
+ENT.StartHealth = 125
 
-ENT.HasRangeAttack = false -- Should the SNPC have a range attack?
-ENT.RangeAttackEntityToSpawn = "obj_vj_f3r_centaurspit" -- The entity that is spawned when range attacking
-ENT.AnimTbl_RangeAttack = {"vjges_2hlattackleft"} -- Range Attack Animations
-ENT.RangeAttackAnimationStopMovement = false -- Should it stop moving when performing a range attack?
-ENT.RangeAttackAnimationFaceEnemy = false
-ENT.RangeDistance = 2000 -- This is how far away it can shoot
-ENT.RangeToMeleeDistance = 300 -- How close does it have to be until it uses melee?
-ENT.TimeUntilRangeAttackProjectileRelease = 0.95 -- How much time until the projectile code is ran?
-ENT.NextRangeAttackTime = math.random(2,3) -- How much time until it can use a range attack?
-ENT.RangeAttackExtraTimers = {/* Ex: 1,1.4 */} -- Extra range attack timers | it will run the projectile code after the given amount of seconds
-ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
-ENT.RangeUseAttachmentForPosID = "mouth" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
+ENT.VJ_NPC_Class = {"CLASS_TUNNELER"}
 
-	-- ====== Flinching Code ====== --
-ENT.CanFlinch = 0 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
-ENT.AnimTbl_Flinch = {ACT_FLINCH_HEAD,ACT_FLINCH_CHEST} -- If it uses normal based animation, use this
+ENT.BloodColor = "Red"
 
-	-- ====== File Path Variables ====== --
-	-- Leave blank if you don't want any sounds to play
-ENT.SoundTbl_FootStep = {}
-ENT.SoundTbl_Idle = {}
-ENT.SoundTbl_Alert = {}
-ENT.SoundTbl_BeforeMeleeAttack = {}
-ENT.SoundTbl_Pain = {}
-ENT.SoundTbl_Death = {}
+ENT.MeleeAttackDamage = 35
+
+ENT.Glow = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupInventory(opWep)
 	if self.CustomInventory then self:CustomInventory() end
+	self.OutsideT = CurTime() +math.Rand(30,60)
+	self.DamageT = CurTime() +5
+	self.IsHiding = false
+	self:SetSkin(0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
-	self.tbl_Inventory = {}
-	self:SetupInventory()
-	self:SetCollisionBounds(Vector(26,26,65),Vector(-26,-26,0))
-	local v1,v2 = self:GetCollisionBounds()
-	self.Height = v2.z
-	self.DefaultDistance = self.MeleeAttackDistance
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:RangeAttackCode_GetShootPos(TheProjectile)
-	return (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() -(self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos)) *1.3 +self:GetUp() *220
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
-	if key == "event_emit FootLeft" then
-		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
-	elseif key == "event_emit FootRight" then
-		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
-	elseif string.find(key,"event_mattack") then
-		local atk = string.Replace(key,"event_mattack ","")
-		self:MeleeAttackCode()
+function ENT:Dig()
+	if self:GetActivity() != ACT_CLIMB_DOWN then
+		self:VJ_ACT_PLAYACTIVITY(ACT_CLIMB_DOWN,true,false,false)
+		VJ_EmitSound(self,"vj_fallout/sporecarrier/sporecarrier_rise0" .. math.random(1,2) .. ".mp3")
+		timer.Simple(self:DecideAnimationLength(ACT_CLIMB_DOWN,false),function()
+			self.IsHiding = true
+			timer.Simple(math.Rand(15,30),function()
+				if IsValid(self) then
+					self.DamageT = CurTime() +15
+					self:VJ_ACT_PLAYACTIVITY(ACT_CLIMB_UP,true,false,false)
+					self.OutsideT = CurTime() +math.Rand(30,60)
+					self.IsHiding = false
+					
+					VJ_EmitSound(self,"vj_fallout/sporecarrier/sporecarrier_risevox0" .. math.random(1,3) .. ".mp3")
+					VJ_EmitSound(self,"vj_fallout/sporecarrier/sporecarrier_rise0" .. math.random(1,2) .. ".mp3")
+				end
+			end)
+		end)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self:Health() <= self:GetMaxHealth() *0.35 then
-		self.AnimTbl_Walk = {ACT_WALK_HURT}
-		self.AnimTbl_Run = {ACT_RUN_HURT}
+	self.AnimTbl_Walk = {self:Health() <= self:GetMaxHealth() *0.35 && ACT_WALK_HURT or ACT_WALK}
+	self.AnimTbl_Run = {self:Health() <= self:GetMaxHealth() *0.35 && ACT_RUN_HURT or ACT_RUN}
+	self.AnimTbl_IdleStand = {self.Alerted && ACT_IDLE_STIMULATED or ACT_IDLE}
+
+	self:SetCollisionGroup(self.IsHiding && COLLISION_GROUP_IN_VEHICLE or COLLISION_GROUP_NPC)
+	self:SetNoDraw(self.IsHiding)
+	self:DrawShadow(!self.IsHiding)
+	self.DisableFindEnemy = self.IsHiding
+	self.DisableSelectSchedule = self.IsHiding
+	self.DisableTakeDamageFindEnemy = self.IsHiding
+	self.DisableTouchFindEnemy = self.IsHiding
+	self.DisableMakingSelfEnemyToNPCs = self.IsHiding
+	self.DisableWandering = self.IsHiding
+	self.DisableChasingEnemy = self.IsHiding
+	self.HasMeleeAttack = !self.IsHiding
+	self.HasSounds = !self.IsHiding
+	
+	if CurTime() < self.OutsideT then self.DamageT = CurTime() +15 end
+	
+	if CurTime() > self.DamageT && !self.IsHiding then
+		self:TakeDamage(1,self,self)
+		if math.random(1,10) == 1 && IsValid(self:GetEnemy()) then
+			self:Dig()
+		end
 	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
-	GetCorpse.tbl_Inventory = self.tbl_Inventory
+
+	if !IsValid(self:GetEnemy()) then
+		if !self.IsHiding && CurTime() > self.OutsideT then
+			self:Dig()
+		end
+	end
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***

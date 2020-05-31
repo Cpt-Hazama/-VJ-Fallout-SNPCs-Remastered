@@ -168,7 +168,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 			spit:Spawn()
 			spit:SetOwner(self)
 			spit:SetPhysicsAttacker(self)
-			local vel = self:CalculateProjectile("Curve",spit:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),900)
+			local vel = self:CalculateProjectile("Curve",spit:GetPos(),(IsValid(self:GetEnemy()) && self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) or self:GetPos() +self:GetForward() *1000,900)
 			local phys = spit:GetPhysicsObject()
 			if (phys:IsValid()) then
 				phys:Wake()

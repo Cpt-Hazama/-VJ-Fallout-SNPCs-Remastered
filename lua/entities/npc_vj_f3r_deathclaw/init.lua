@@ -59,9 +59,13 @@ ENT.SoundTbl_FootStepL = {
 	"vj_fallout/deathclaw/foot/deathclaw_foot_run_l02.mp3",
 }
 ENT.SoundTbl_FootStepR = {
-	"vj_fallout/deathclaw/foot/deathclaw_foot_run_r01.mp3",
-	"vj_fallout/deathclaw/foot/deathclaw_foot_run_r02.mp3",
+	"vj_fallout/deathclaw/foot/deathclaw_foot_run_l01.mp3",
+	"vj_fallout/deathclaw/foot/deathclaw_foot_run_l02.mp3",
 }
+-- ENT.SoundTbl_FootStepR = {
+	-- "vj_fallout/deathclaw/foot/deathclaw_foot_run_r01.mp3",
+	-- "vj_fallout/deathclaw/foot/deathclaw_foot_run_r02.mp3",
+-- }
 ENT.SoundTbl_Idle = {
 	"vj_fallout/deathclaw/deathclaw_idle01.mp3",
 	"vj_fallout/deathclaw/deathclaw_idle02.mp3",
