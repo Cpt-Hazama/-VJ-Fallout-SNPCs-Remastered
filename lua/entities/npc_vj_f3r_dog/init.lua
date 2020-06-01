@@ -117,6 +117,24 @@ function ENT:DogInit()
 	self:SetSkin(math.random(0,math.random(0,1)))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnInvestigate(argent)
+	self.NextBarkT = self.NextBarkT or CurTime() -1
+	if CurTime() > self.NextBarkT then
+		self:VJ_ACT_PLAYACTIVITY("vjseq_specialidle_barksingle",true,false,true)
+		timer.Simple(0.5,function() if IsValid(self) then VJ_EmitSound(self,"vj_fallout/dog/dog_bark0" .. math.random(1,9) .. ".mp3",80) end end)
+		self.NextBarkT = CurTime() +math.Rand(4,6)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnAlert(argent)
+	self.NextBarkT = self.NextBarkT or CurTime() -1
+	if self.FollowingPlayer && CurTime() > self.NextBarkT then
+		self:VJ_ACT_PLAYACTIVITY("vjseq_specialidle_barksingle",true,false,true)
+		timer.Simple(0.5,function() if IsValid(self) then VJ_EmitSound(self,"vj_fallout/dog/dog_bark0" .. math.random(1,9) .. ".mp3",80) end end)
+		self.NextBarkT = CurTime() +math.Rand(3,6)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
 	self:SetupInventory()

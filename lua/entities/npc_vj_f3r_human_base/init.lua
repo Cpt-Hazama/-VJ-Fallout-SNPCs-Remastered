@@ -302,6 +302,10 @@ function ENT:CustomOnInitialize()
 	self.NextStimPackT = CurTime()
 	self.NextStealthBoyT = CurTime()
 	self:GuardInit()
+	if self.Gender && self.Gender == 2 then
+		self:ManipulateBoneJiggle(92,1)
+		self:ManipulateBoneJiggle(93,1)
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)

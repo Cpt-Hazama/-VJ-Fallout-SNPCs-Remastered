@@ -5,7 +5,7 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/fallout/mirelurk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
+ENT.Model = {"models/cpthazama/fallout/mirelurk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ENT.StartHealth = 120
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -185,10 +185,13 @@ function ENT:MultipleMeleeAttacks()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	if self:Health() <= self:GetMaxHealth() *0.35 then
-		self.AnimTbl_Walk = {ACT_WALK_HURT}
-		self.AnimTbl_Run = {ACT_RUN_HURT}
-	end
+	local idle = self.Alerted && ACT_IDLE_STIMULATED or ACT_IDLE
+	local walk = self.Alerted && ACT_WALK_AIM or ACT_WALK
+	local run = self.Alerted && ACT_RUN_AIM or ACT_RUN
+	if (self:Health() <= self:GetMaxHealth() *0.35) then idle = ACT_IDLE; walk = ACT_WALK_HURT; run = ACT_RUN_HURT end
+	self.AnimTbl_IdleStand = {idle}
+	self.AnimTbl_Walk = {walk}
+	self.AnimTbl_Run = {run}
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)

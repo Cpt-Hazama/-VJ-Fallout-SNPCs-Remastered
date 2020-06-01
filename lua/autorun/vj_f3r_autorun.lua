@@ -67,7 +67,7 @@ if VJExists == true then
 		VJ.AddNPC("Feral Ghoul (Armored)","npc_vj_f3r_ghoul_armor",vCre)
 		VJ.AddNPC("Feral Ghoul (Swamp)","npc_vj_f3r_ghoul_swamp",vCre)
 		VJ.AddNPC("Feral Ghoul","npc_vj_f3r_ghoul",vCre)
-		VJ.AddNPC("Feral Ghoul (Vault)","npc_vj_f3r_ghoul_vault",vCre)
+		VJ.AddNPC("Feral Ghoul (RobCo)","npc_vj_f3r_ghoul_vault",vCre)
 		VJ.AddNPC("Feral Ghoul (Mutated)","npc_vj_f3r_ghoul_mutant",vCre)
 		VJ.AddNPC("Feral Ghoul (Ravager)","npc_vj_f3r_ghoul_ravager",vCre)
 		VJ.AddNPC("Feral Ghoul (NCR)","npc_vj_f3r_ghoul_ncr",vCre)
