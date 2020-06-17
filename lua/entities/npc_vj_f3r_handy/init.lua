@@ -154,6 +154,8 @@ function ENT:CustomOnInitialize()
 	self:SetBodygroup(1,1)
 	self:SetBodygroup(2,1)
 	self:GuardInit()
+	
+	if self.GustyInit then self:GustyInit() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PlayIdleLoop()

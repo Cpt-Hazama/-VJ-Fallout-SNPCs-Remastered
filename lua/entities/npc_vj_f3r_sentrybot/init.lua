@@ -381,7 +381,7 @@ function ENT:FireWeapon(rad)
 			FireLight1:SetKeyValue("distance", "120")
 			FireLight1:SetPos(start)
 			FireLight1:SetLocalAngles(self:GetAngles())
-			FireLight1:Fire("Color", "255 255 255")
+			FireLight1:Fire("Color", "255 0 0")
 			FireLight1:SetParent(self)
 			FireLight1:Spawn()
 			FireLight1:Activate()
@@ -439,6 +439,8 @@ function ENT:CustomOnThink()
 				self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
 				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
 			end
+		else
+			self.NoChaseAfterCertainRange = false
 		end
 	else
 		self.NoChaseAfterCertainRange = false
