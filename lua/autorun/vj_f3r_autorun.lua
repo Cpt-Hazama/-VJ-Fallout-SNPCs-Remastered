@@ -114,7 +114,7 @@ if VJExists == true then
 		VJ.AddNPC("Tunneler Queen","npc_vj_f3r_tunnelerqueen",vCre)
 
 		-- Robots --
-	VJ.AddNPC("Support Drone","npc_vj_f3r_drone",vRob)
+	VJ.AddNPC("Zeta Support Drone","npc_vj_f3r_drone",vRob)
 	VJ.AddNPC("Eye Bot","npc_vj_f3r_eyebot",vRob)
 	VJ.AddNPC("Ede","npc_vj_f3r_eyebot_ede",vRob)
 	VJ.AddNPC("Protectron","npc_vj_f3r_protectron",vRob)
@@ -136,9 +136,9 @@ if VJExists == true then
 	VJ.AddNPC("Sentrybot (Outcast)","npc_vj_f3r_sentrybot_out",vRob)
 	VJ.AddNPC("Sentrybot (Brother Hood)","npc_vj_f3r_sentrybot",vRob)
 	VJ.AddNPC("Sentrybot (Brother Hood Winter)","npc_vj_f3r_sentrybot_bosw",vRob)
-	VJ.AddNPC("Sentry Turret (Laser)","npc_vj_f3r_sentryturret",vRob)
-	VJ.AddNPC("Sentry Turret (Flamethrower)","npc_vj_f3r_sentryturret_flame",vRob)
-	VJ.AddNPC("Sentry Turret (Plasma)","npc_vj_f3r_sentryturret_plasma",vRob)
+	VJ.AddNPC("Sentry Turret (Brother Hood)","npc_vj_f3r_sentryturret",vRob)
+	-- VJ.AddNPC("Sentry Turret (Raiders)","npc_vj_f3r_sentryturret_flame",vRob)
+	VJ.AddNPC("Sentry Turret (Enclave)","npc_vj_f3r_sentryturret_plasma",vRob)
 	VJ.AddNPC("Chinese Spider Mine","npc_vj_f3r_spidermine",vRob)
 
 		-- FEV Mutants --

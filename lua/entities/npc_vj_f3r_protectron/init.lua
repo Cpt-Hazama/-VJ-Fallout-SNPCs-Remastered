@@ -6,10 +6,18 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/fallout/protectron.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
-ENT.StartHealth = 350
+ENT.StartHealth = 150
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_PROTECTRON"} -- NPCs with the same class with be allied to each other
+ENT.BecomeEnemyToPlayer = true
+
 ENT.Bleeds = false
+
+ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
+ENT.OnPlayerSightDistance = 325 -- How close should the player be until it runs the code?
+ENT.OnPlayerSightOnlyOnce = false -- Should it only run the code once?
+ENT.OnPlayerSightNextTime1 = 20 -- How much time should it pass until it runs the code again? | First number in math.random
+ENT.OnPlayerSightNextTime2 = 30 -- How much time should it pass until it runs the code again? | Second number in math.random
 
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
@@ -76,6 +84,15 @@ ENT.SoundTbl_Alert = {
 	"vj_fallout/protectron/genericrobot_alerttocombat1.mp3",
 	"vj_fallout/protectron/genericrobot_alerttocombat2.mp3",
 	"vj_fallout/protectron/genericrobot_alerttocombat3.mp3",
+	"vj_fallout/protectron/genericrobot_losttocombat1.mp3",
+	"vj_fallout/protectron/genericrobot_losttocombat2.mp3",
+	"vj_fallout/protectron/genericrobot_losttocombat3.mp3",
+	"vj_fallout/protectron/genericrobot_normaltoalert1.mp3",
+	"vj_fallout/protectron/genericrobot_normaltoalert2.mp3",
+	"vj_fallout/protectron/genericrobot_normaltoalert3.mp3",
+}
+ENT.SoundTbl_BeforeMeleeAttack = {
+	"vj_fallout/protectron/robotprotectron_attackwindup.mp3",
 }
 ENT.SoundTbl_CombatIdle = {
 	"vj_fallout/protectron/genericrobot_attack_00015a36_1.mp3",
@@ -117,11 +134,30 @@ ENT.SoundTbl_LostEnemy = {
 	"vj_fallout/protectron/genericrobot_combattolost1.mp3",
 	"vj_fallout/protectron/genericrobot_combattolost2.mp3",
 	"vj_fallout/protectron/genericrobot_combattolost3.mp3",
+	"vj_fallout/protectron/genericrobot_lostidle1.mp3",
+	"vj_fallout/protectron/genericrobot_lostidle2.mp3",
+	"vj_fallout/protectron/genericrobot_lostidle3.mp3",
+	"vj_fallout/protectron/genericrobot_losttonormal1.mp3",
+	"vj_fallout/protectron/genericrobot_losttonormal2.mp3",
+	"vj_fallout/protectron/genericrobot_losttonormal3.mp3",
+}
+ENT.SoundTbl_AllyDeath = {
+	"vj_fallout/protectron/genericrobot_murder1.mp3",
+	"vj_fallout/protectron/genericrobot_murder2.mp3",
+	"vj_fallout/protectron/genericrobot_murder3.mp3",
 }
 ENT.SoundTbl_DamageByPlayer = {
 	"vj_fallout/protectron/genericrobot_assault01.mp3",
 	"vj_fallout/protectron/genericrobot_assault02.mp3",
 	"vj_fallout/protectron/genericrobot_assault03.mp3",
+}
+ENT.SoundTbl_Pain = {
+	"vj_fallout/protectron/genericrobot_hit1.mp3",
+	"vj_fallout/protectron/genericrobot_hit2.mp3",
+	"vj_fallout/protectron/genericrobot_hit3.mp3",
+	"vj_fallout/protectron/genericrobot_hit4.mp3",
+	"vj_fallout/protectron/genericrobot_hit5.mp3",
+	"vj_fallout/protectron/genericrobot_hit6.mp3",
 }
 ENT.SoundTbl_Death = {
 	"vj_fallout/protectron/genericrobot_death1.mp3",
@@ -131,9 +167,24 @@ ENT.SoundTbl_Death = {
 	"vj_fallout/protectron/genericrobot_death5.mp3",
 	"vj_fallout/protectron/genericrobot_death6.mp3",
 }
+ENT.SoundTbl_Guard_Warn = {
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819f7_1.mp3",
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819f8_1.mp3",
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819f9_1.mp3",
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819fa_1.mp3",
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819fb_1.mp3",
+	"vj_fallout/protectron/genericrobot_guardtrespass_000819fc_1.mp3",
+}
+ENT.SoundTbl_Guard_Angry = {
+	"vj_fallout/protectron/ms05nukaro_alerttocombat1.mp3",
+	"vj_fallout/protectron/ms05nukaro_alerttocombat5.mp3",
+}
+ENT.SoundTbl_Guard_Calmed = {"vj_fallout/protectron/genericrobot_hello_00081a18_1.mp3"}
 
-ENT.LaserDamage = 9
+ENT.LaserDamage = 15
 ENT.LaserAttachment = 1
+
+ENT.Skin = 0
 
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = 1100 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
@@ -154,9 +205,11 @@ function ENT:CustomOnInitialize()
 	self.NextFireT = 0
 	
 	self.bMoveLoopPlaying = false
-	self.IdleLoopSound = CreateSound(self,"vj_fallout/mrhandy/robotmisterhandy_idle_lp.wav")
-	self.MoveLoopSound = CreateSound(self,"vj_fallout/mrhandy/robotmrhandy_movement_lp.wav")
+	self.IdleLoopSound = CreateSound(self,"vj_fallout/protectron/robot_protectron_idle_lp.wav")
 	self:PlayIdleLoop()
+	
+	self:SetSkin(self.Skin)
+	if self.ProtectronInit then self:ProtectronInit() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireWeapon(rad)
@@ -232,32 +285,8 @@ function ENT:CustomAttack()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:PlayIdleLoop()
-	self.IdleLoopSound:Stop()
-	self.MoveLoopSound:Stop()
-	self.IdleLoopSound = CreateSound(self,"vj_fallout/eyebot/roboteyebot_idle_lp.wav")
 	self.IdleLoopSound:Play()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:PlayMoveLoop()
-	self.MoveLoopSound:Stop()
-	self.IdleLoopSound:Stop()
-	self.MoveLoopSound = CreateSound(self,"vj_fallout/eyebot/roboteyebot_movement_lp.wav")
-	self.MoveLoopSound:Play()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:StopMovementSound()
-	self.IdleLoopSound:Stop()
-	self.MoveLoopSound:Stop()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:PlayMovementSound()
-	if self:IsMoving() then
-		self.bMoveLoopPlaying = true
-		self:PlayMoveLoop()
-	else
-		self:PlayIdleLoop()
-		self.bMoveLoopPlaying = false
-	end
+	self.IdleLoopSound:ChangeVolume(75,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
@@ -268,16 +297,6 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self:GuardAI()
-	if self:IsMoving() then
-		if !self.bMoveLoopPlaying then
-			self.bMoveLoopPlaying = true
-			self:PlayMoveLoop()
-		end
-	elseif self.bMoveLoopPlaying then
-		self:EmitSound("vj_fallout/eyebot/roboteyebot_movement_end.wav",75,100)
-		self:PlayIdleLoop()
-		self.bMoveLoopPlaying = false
-	end
 
 	local idle = self.Alerted && ACT_IDLE_AIM_AGITATED or ACT_IDLE
 	local walk = self.Alerted && ACT_WALK_AGITATED or ACT_WALK
@@ -292,7 +311,6 @@ function ENT:CustomOnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
-	self.MoveLoopSound:Stop()
 	self.IdleLoopSound:Stop()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

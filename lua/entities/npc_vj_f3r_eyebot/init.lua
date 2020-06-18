@@ -11,6 +11,7 @@ ENT.StartHealth = 30
 ENT.VJ_NPC_Class = {"CLASS_ENCLAVE"} -- NPCs with the same class with be allied to each other
 ENT.Bleeds = false
 ENT.Behavior = VJ_BEHAVIOR_NEUTRAL
+ENT.HasMeleeAttack = false
 
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = 1100 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
