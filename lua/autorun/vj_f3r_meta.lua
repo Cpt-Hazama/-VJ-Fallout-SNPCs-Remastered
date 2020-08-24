@@ -119,10 +119,14 @@ if VJExists == true then
 	end
 
 	function ENT:DoFlameDamage(dist,dmg,attacker,rad,ign)
+		local dispCheck = self:IsNPC() && true or false
 		for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
-			if ((self:Disposition(ent) == D_HT) && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
+			if (ent != self && ent != attacker && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
+				if self:IsNPC() && self:Disposition(ent) != D_HT then return end
 				if self:InFront(ent,rad or 45) then
-					ent:Ignite(ign or 4,0)
+					if ent:IsNPC() or ent:IsPlayer() then
+						ent:Ignite(ign or 4)
+					end
 					local dmginfo = DamageInfo()
 					dmginfo:SetDamageType(DMG_BURN)
 					dmginfo:SetDamage(dmg)
@@ -134,21 +138,21 @@ if VJExists == true then
 		end
 	end
 
-	function ENT:DoFlameDamage(dist,dmg,attacker,ign)
-		for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
-			if ((self:Disposition(ent) == D_HT) && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
-				if self:InFront(ent,45) then
-					ent:Ignite(ign or 4,0)
-					local dmginfo = DamageInfo()
-					dmginfo:SetDamageType(DMG_BURN)
-					dmginfo:SetDamage(dmg)
-					dmginfo:SetAttacker(attacker || self)
-					dmginfo:SetInflictor(self)
-					ent:TakeDamageInfo(dmginfo)
-				end
-			end
-		end
-	end
+	-- function ENT:DoFlameDamage(dist,dmg,attacker,ign)
+		-- for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
+			-- if ((self:Disposition(ent) == D_HT) && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
+				-- if self:InFront(ent,45) then
+					-- ent:Ignite(ign or 4,0)
+					-- local dmginfo = DamageInfo()
+					-- dmginfo:SetDamageType(DMG_BURN)
+					-- dmginfo:SetDamage(dmg)
+					-- dmginfo:SetAttacker(attacker || self)
+					-- dmginfo:SetInflictor(self)
+					-- ent:TakeDamageInfo(dmginfo)
+				-- end
+			-- end
+		-- end
+	-- end
 
 	function ENT:FindInventoryItem(itemID)
 		local rTbl = {}
@@ -184,6 +188,7 @@ if VJExists == true then
 	end
 
 	function ENT:AddToInventory(itemID,itemClass,itemCount)
+		if itemID == nil then return end
 		if self:GetInventory()[index] then
 			local index = self:FindInventoryItem(itemID).index
 			local class = self:FindInventoryItem(itemID).class

@@ -646,6 +646,7 @@ function ENT:Equip()
 	-- self.AnimTbl_IdleStand = {self.Weapon_Idle}
 	-- self.AnimTbl_Walk = {self.Weapon_Walk}
 	-- self.AnimTbl_Run = {self.Weapon_Run}
+	self.NextIdleStandTime = 0
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(false)
 		if self:GetActiveWeapon().NPC_EquipSound then
@@ -665,6 +666,7 @@ function ENT:Unequip()
 	-- self.AnimTbl_IdleStand = {ACT_IDLE}
 	-- self.AnimTbl_Walk = {ACT_WALK}
 	-- self.AnimTbl_Run = {ACT_RUN}
+	self.NextIdleStandTime = 0
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(true)
 		if self:GetActiveWeapon().NPC_UnequipSound then

@@ -1,4 +1,4 @@
-EFFECT.Mat = Material( "cable/redlaser" )
+EFFECT.Mat = Material( "cable/greenlaser" )
 
 function EFFECT:Init(data)
 	self.texcoord = math.Rand(0,20)/3
@@ -34,5 +34,5 @@ function EFFECT:Render()
 	self.Length = (self.StartPos -self.EndPos):Length()
 	local texcoord = self.texcoord
 	render.SetMaterial(self.Mat)
-	render.DrawBeam(self.StartPos,self.EndPos,20,texcoord,texcoord +self.Length /256,Color(255,255,255,math.Clamp(self.Alpha,0,255)))
+	render.DrawBeam(self.StartPos,self.EndPos,20,texcoord,texcoord +self.Length /256,Color(0,255,0,math.Clamp(self.Alpha,0,255)))
 end

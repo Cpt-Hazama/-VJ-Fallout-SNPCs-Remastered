@@ -7,7 +7,7 @@
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
-	
+
 	VJ.AddNPCWeapon("VJ_F3R_AssaultRifle","weapon_vj_f3r_assaultrifle")
 	VJ.AddNPCWeapon("VJ_F3R_CombatShotgun","weapon_vj_f3r_combatshotgun")
 	VJ.AddNPCWeapon("VJ_F3R_GatlingLaser","weapon_vj_f3r_gatlinglaser")
@@ -16,4 +16,27 @@ if VJExists == true then
 	VJ.AddNPCWeapon("VJ_F3R_HuntingRifle","weapon_vj_f3r_huntingrifle")
 	VJ.AddNPCWeapon("VJ_F3R_PlasmaPistol","weapon_vj_f3r_plasmapistol")
 	VJ.AddNPCWeapon("VJ_F3R_PlasmaRifle","weapon_vj_f3r_plasmarifle")
+
+	VJ.AddNPCWeapon("VJ_F3R_10mmSubMachineGun","weapon_vj_f3r_10mmsmg")
+	VJ.AddNPCWeapon("VJ_F3R_25mmGrenadeLauncher","weapon_vj_f3r_25mmlauncher")
+	VJ.AddNPCWeapon("VJ_F3R_.44Magnum","weapon_vj_f3r_44magnum")
+	VJ.AddNPCWeapon("VJ_F3R_AlienBlaster","weapon_vj_f3r_alienblaster")
+	VJ.AddNPCWeapon("VJ_F3R_CyberDogGun","weapon_vj_f3r_cyberdoggun")
+	VJ.AddNPCWeapon("VJ_F3R_Flamer","weapon_vj_f3r_flamer")
+	VJ.AddNPCWeapon("VJ_F3R_HeavyIncinerator","weapon_vj_f3r_heavyincinerator")
+	VJ.AddNPCWeapon("VJ_F3R_LaserPistol","weapon_vj_f3r_laserpistol")
+	VJ.AddNPCWeapon("VJ_F3R_LaserRifle","weapon_vj_f3r_laserrifle")
+	VJ.AddNPCWeapon("VJ_F3R_LaserRifleUnique","weapon_vj_f3r_laserrifleunique")
+	VJ.AddNPCWeapon("VJ_F3R_LaserScatterGun","weapon_vj_f3r_laserscattergun")
+	VJ.AddNPCWeapon("VJ_F3R_MauserPistol","weapon_vj_f3r_mauserpistol")
+	VJ.AddNPCWeapon("VJ_F3R_MissileLauncher","weapon_vj_f3r_missilelauncher")
+	VJ.AddNPCWeapon("VJ_F3R_MultiPlasmaRifle","weapon_vj_f3r_multiplasmarifle")
+	VJ.AddNPCWeapon("VJ_F3R_PlasmaCaster","weapon_vj_f3r_plasmacaster")
+	-- VJ.AddNPCWeapon("VJ_F3R_RailwayRifle","weapon_vj_f3r_railwayrifle")
+	VJ.AddNPCWeapon("VJ_F3R_RechargerPistol","weapon_vj_f3r_rechargerpistol")
+	VJ.AddNPCWeapon("VJ_F3R_RechargerRifle","weapon_vj_f3r_rechargerrifle")
+	VJ.AddNPCWeapon("VJ_F3R_SawedOffShotgun","weapon_vj_f3r_sawedoffshotgun")
+	-- VJ.AddNPCWeapon("VJ_F3R_ScatterGun","weapon_vj_f3r_scattergun")
+	VJ.AddNPCWeapon("VJ_F3R_SniperRifle","weapon_vj_f3r_sniperrifle")
+	VJ.AddNPCWeapon("VJ_F3R_ProtoTypeTeslaCannon","weapon_vj_f3r_teslacannon")
 end

@@ -1,7 +1,8 @@
-EFFECT.Mat = Material( "cable/redlaser" )
+EFFECT.Mat = Material("effects/fallout/protonlaser01")
+EFFECT.MatB = Material("particle/dlc03plasmaeffect01")
 
 function EFFECT:Init(data)
-	self.texcoord = math.Rand(0,20)/3
+	self.texcoord = math.Rand(0,20) /3
 	self.Position = data:GetStart()
 	self.WeaponEnt = data:GetEntity()
 	self.Attachment = data:GetAttachment()
@@ -33,6 +34,9 @@ end
 function EFFECT:Render()
 	self.Length = (self.StartPos -self.EndPos):Length()
 	local texcoord = self.texcoord
+	render.SetMaterial(self.MatB)
+	render.DrawBeam(self.StartPos,self.EndPos,15,texcoord,texcoord +self.Length /256,Color(255,255,255,math.Clamp(self.Alpha,0,255)))
+
 	render.SetMaterial(self.Mat)
-	render.DrawBeam(self.StartPos,self.EndPos,20,texcoord,texcoord +self.Length /256,Color(255,255,255,math.Clamp(self.Alpha,0,255)))
+	render.DrawBeam(self.StartPos,self.EndPos,15,texcoord,texcoord +self.Length /256,Color(255,255,255,math.Clamp(self.Alpha,0,255)))
 end

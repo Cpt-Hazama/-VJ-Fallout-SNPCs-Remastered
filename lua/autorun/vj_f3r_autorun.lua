@@ -216,16 +216,23 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",{},vHum)
 	VJ.AddNPC_HUMAN("Wastelander (Merchant)","npc_vj_f3r_waste_merch",{},vHum)
 
+	VJ.AddParticle("particles/alienblaster.pcf",{
+		"alienblaster_projectile",
+	})
 	VJ.AddParticle("particles/centaur_spit.pcf",{
 		"centaur_spit",
 	})
 	VJ.AddParticle("particles/magmalurk_flame.pcf",{
 		"magmalurk_flame",
 	})
+	VJ.AddParticle("particles/flamer.pcf",{
+		"flamer",
+	})
 	VJ.AddParticle("particles/glowingone.pcf",{})
 	VJ.AddParticle("particles/flame_gargantua.pcf",{})
 	VJ.AddParticle("particles/flame_gojira.pcf",{})
 	VJ.AddParticle("particles/flamer.pcf",{})
+	VJ.AddParticle("particles/incinerator.pcf",{})
 	VJ.AddParticle("particles/goregrenade.pcf",{})
 	VJ.AddParticle("particles/radiation_shockwave.pcf",{})
 	VJ.AddParticle("particles/sporecarrier_glow.pcf",{})
