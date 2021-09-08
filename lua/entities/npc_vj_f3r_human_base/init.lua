@@ -231,7 +231,12 @@ function ENT:SetVoice(voice)
 			"vj_fallout/human/femaleadult01/b_hit04.wav",
 			"vj_fallout/human/femaleadult01/b_hit05.wav",
 			"vj_fallout/human/femaleadult01/b_hit06.wav",
-			"vj_fallout/human/femaleadult01/b_hit07.wav"
+			"vj_fallout/human/femaleadult01/b_hit07.wav",
+			"vj_fallout/human/femaleadult01/hit01.wav",
+			"vj_fallout/human/femaleadult01/hit02.wav",
+			"vj_fallout/human/femaleadult01/hit03.wav",
+			"vj_fallout/human/femaleadult01/hit04.wav",
+			"vj_fallout/human/femaleadult01/hit05.wav",
 		}
 		self.SoundTbl_Death = {
 			"vj_fallout/human/femaleadult01/death01.wav",
@@ -250,6 +255,414 @@ function ENT:SetVoice(voice)
 		self.SoundTbl_Guard_Warn = {}
 		self.SoundTbl_Guard_Angry = {}
 		self.SoundTbl_Guard_Calmed = {}
+	elseif voice == "female06" then
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/femaleadult06/b_alerttocombat01.wav",
+			"vj_fallout/human/femaleadult06/b_alerttocombat02.wav",
+			"vj_fallout/human/femaleadult06/b_alerttocombat03.wav",
+			"vj_fallout/human/femaleadult06/b_alerttocombat04.wav",
+			"vj_fallout/human/femaleadult06/b_alerttocombat05.wav",
+			"vj_fallout/human/femaleadult06/b_normaltocombat01.wav",
+			"vj_fallout/human/femaleadult06/b_normaltocombat02.wav",
+			"vj_fallout/human/femaleadult06/b_normaltocombat03.wav",
+			"vj_fallout/human/femaleadult06/b_normaltocombat04.wav"
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/femaleadult06/b_alertidle01.wav",
+			"vj_fallout/human/femaleadult06/b_alertidle02.wav",
+			"vj_fallout/human/femaleadult06/b_alertidle03.wav",
+			"vj_fallout/human/femaleadult06/b_alertidle04.wav",
+			"vj_fallout/human/femaleadult06/b_alertidle05.wav",
+			"vj_fallout/human/femaleadult06/b_alertidle06.wav"
+		}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/femaleadult06/b_normaltoalert01.wav",
+			"vj_fallout/human/femaleadult06/b_normaltoalert02.wav",
+			"vj_fallout/human/femaleadult06/b_normaltoalert03.wav",
+			"vj_fallout/human/femaleadult06/b_normaltoalert04.wav",
+			"vj_fallout/human/femaleadult06/b_normaltoalert05.wav"
+		}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/femaleadult06/b_alerttonormal01.wav",
+			"vj_fallout/human/femaleadult06/b_alerttonormal02.wav",
+			"vj_fallout/human/femaleadult06/b_alerttonormal03.wav",
+			"vj_fallout/human/femaleadult06/b_alerttonormal04.wav",
+			"vj_fallout/human/femaleadult06/b_alerttonormal05.wav",
+			"vj_fallout/human/femaleadult06/b_alerttonormal06.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost01.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost02.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost03.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost04.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost05.wav",
+			"vj_fallout/human/femaleadult06/b_combattolost06.wav"
+		}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/femaleadult06/b_attack01.wav",
+			"vj_fallout/human/femaleadult06/b_attack02.wav",
+			"vj_fallout/human/femaleadult06/b_attack03.wav",
+			"vj_fallout/human/femaleadult06/b_attack04.wav",
+			"vj_fallout/human/femaleadult06/b_attack05.wav",
+			"vj_fallout/human/femaleadult06/b_attack06.wav",
+			"vj_fallout/human/femaleadult06/b_attack07.wav",
+			"vj_fallout/human/femaleadult06/b_attack08.wav",
+			"vj_fallout/human/femaleadult06/b_attack09.wav",
+			"vj_fallout/human/femaleadult06/b_attack10.wav",
+			"vj_fallout/human/femaleadult06/b_attack11.wav"
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_CallForHelp = {}
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/femaleadult06/b_avoidthreat01.wav",
+			"vj_fallout/human/femaleadult06/b_avoidthreat02.wav",
+			"vj_fallout/human/femaleadult06/b_avoidthreat03.wav",
+			"vj_fallout/human/femaleadult06/b_avoidthreat04.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/femaleadult06/b_deathresponse01.wav",
+			"vj_fallout/human/femaleadult06/b_deathresponse02.wav",
+			"vj_fallout/human/femaleadult06/b_deathresponse03.wav",
+			"vj_fallout/human/femaleadult06/b_deathresponse04.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/femaleadult06/b_hit01.wav",
+			"vj_fallout/human/femaleadult06/b_hit02.wav",
+			"vj_fallout/human/femaleadult06/b_hit03.wav",
+			"vj_fallout/human/femaleadult06/b_hit04.wav",
+			"vj_fallout/human/femaleadult06/b_hit05.wav",
+			"vj_fallout/human/femaleadult06/b_hit06.wav",
+			"vj_fallout/human/femaleadult06/b_hit07.wav",
+			"vj_fallout/human/femaleadult06/hit01.wav",
+			"vj_fallout/human/femaleadult06/hit02.wav",
+			"vj_fallout/human/femaleadult06/hit03.wav",
+			"vj_fallout/human/femaleadult06/hit04.wav",
+			"vj_fallout/human/femaleadult06/hit05.wav",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/femaleadult06/death01.wav",
+			"vj_fallout/human/femaleadult06/death02.wav",
+			"vj_fallout/human/femaleadult06/death03.wav"
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/femaleadult06/b_combattonormal01.wav",
+			"vj_fallout/human/femaleadult06/b_combattonormal02.wav",
+			"vj_fallout/human/femaleadult06/b_combattonormal03.wav",
+			"vj_fallout/human/femaleadult06/b_combattonormal04.wav",
+			"vj_fallout/human/femaleadult06/b_combattonormal05.wav",
+			"vj_fallout/human/femaleadult06/b_combattonormal06.wav"
+		}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Calmed = {}
+	elseif voice == "female07" then
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/femaleadult07/b_alerttocombat01.wav",
+			"vj_fallout/human/femaleadult07/b_alerttocombat02.wav",
+			"vj_fallout/human/femaleadult07/b_alerttocombat03.wav",
+			"vj_fallout/human/femaleadult07/b_alerttocombat04.wav",
+			"vj_fallout/human/femaleadult07/b_alerttocombat05.wav",
+			"vj_fallout/human/femaleadult07/b_normaltocombat01.wav",
+			"vj_fallout/human/femaleadult07/b_normaltocombat02.wav",
+			"vj_fallout/human/femaleadult07/b_normaltocombat03.wav",
+			"vj_fallout/human/femaleadult07/b_normaltocombat04.wav"
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/femaleadult07/b_alertidle01.wav",
+			"vj_fallout/human/femaleadult07/b_alertidle02.wav",
+			"vj_fallout/human/femaleadult07/b_alertidle03.wav",
+			"vj_fallout/human/femaleadult07/b_alertidle04.wav",
+			"vj_fallout/human/femaleadult07/b_alertidle05.wav",
+			"vj_fallout/human/femaleadult07/b_alertidle06.wav"
+		}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/femaleadult07/b_normaltoalert01.wav",
+			"vj_fallout/human/femaleadult07/b_normaltoalert02.wav",
+			"vj_fallout/human/femaleadult07/b_normaltoalert03.wav",
+			"vj_fallout/human/femaleadult07/b_normaltoalert04.wav",
+			"vj_fallout/human/femaleadult07/b_normaltoalert05.wav"
+		}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/femaleadult07/b_alerttonormal01.wav",
+			"vj_fallout/human/femaleadult07/b_alerttonormal02.wav",
+			"vj_fallout/human/femaleadult07/b_alerttonormal03.wav",
+			"vj_fallout/human/femaleadult07/b_alerttonormal04.wav",
+			"vj_fallout/human/femaleadult07/b_alerttonormal05.wav",
+			"vj_fallout/human/femaleadult07/b_alerttonormal06.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost01.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost02.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost03.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost04.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost05.wav",
+			"vj_fallout/human/femaleadult07/b_combattolost06.wav"
+		}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/femaleadult07/b_attack01.wav",
+			"vj_fallout/human/femaleadult07/b_attack02.wav",
+			"vj_fallout/human/femaleadult07/b_attack03.wav",
+			"vj_fallout/human/femaleadult07/b_attack04.wav",
+			"vj_fallout/human/femaleadult07/b_attack05.wav",
+			"vj_fallout/human/femaleadult07/b_attack06.wav",
+			"vj_fallout/human/femaleadult07/b_attack07.wav",
+			"vj_fallout/human/femaleadult07/b_attack08.wav",
+			"vj_fallout/human/femaleadult07/b_attack09.wav",
+			"vj_fallout/human/femaleadult07/b_attack10.wav",
+			"vj_fallout/human/femaleadult07/b_attack11.wav"
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_CallForHelp = {}
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/femaleadult07/b_avoidthreat01.wav",
+			"vj_fallout/human/femaleadult07/b_avoidthreat02.wav",
+			"vj_fallout/human/femaleadult07/b_avoidthreat03.wav",
+			"vj_fallout/human/femaleadult07/b_avoidthreat04.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/femaleadult07/b_deathresponse01.wav",
+			"vj_fallout/human/femaleadult07/b_deathresponse02.wav",
+			"vj_fallout/human/femaleadult07/b_deathresponse03.wav",
+			"vj_fallout/human/femaleadult07/b_deathresponse04.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/femaleadult07/b_hit01.wav",
+			"vj_fallout/human/femaleadult07/b_hit02.wav",
+			"vj_fallout/human/femaleadult07/b_hit03.wav",
+			"vj_fallout/human/femaleadult07/b_hit04.wav",
+			"vj_fallout/human/femaleadult07/b_hit05.wav",
+			"vj_fallout/human/femaleadult07/b_hit06.wav",
+			"vj_fallout/human/femaleadult07/b_hit07.wav",
+			"vj_fallout/human/femaleadult07/hit01.wav",
+			"vj_fallout/human/femaleadult07/hit02.wav",
+			"vj_fallout/human/femaleadult07/hit03.wav",
+			"vj_fallout/human/femaleadult07/hit04.wav",
+			"vj_fallout/human/femaleadult07/hit05.wav",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/femaleadult07/death01.wav",
+			"vj_fallout/human/femaleadult07/death02.wav",
+			"vj_fallout/human/femaleadult07/death03.wav"
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/femaleadult07/b_combattonormal01.wav",
+			"vj_fallout/human/femaleadult07/b_combattonormal02.wav",
+			"vj_fallout/human/femaleadult07/b_combattonormal03.wav",
+			"vj_fallout/human/femaleadult07/b_combattonormal04.wav",
+			"vj_fallout/human/femaleadult07/b_combattonormal05.wav",
+			"vj_fallout/human/femaleadult07/b_combattonormal06.wav"
+		}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Calmed = {}
+	elseif voice == "femaleraider" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/femaleraider/genericrai_avoidthreatresp_000853a9_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_avoidthreatresp_000853ab_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_00028d45_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_00028d46_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_00028d47_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_0004834f_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_00048791_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_000853bf_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_avoidthreat_000853c0_1.mp3",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00028d69_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00029a93_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085377_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085378_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085379_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_0008537a_1.mp3",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/femaleraider/genericraider_alertidle_0008539d_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_alertidle_0008539e_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_alertidle_0008539f_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_alertidle_000853a0_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_alertidle_000853a1_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_alertidle_000853a2_1.mp3",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/femaleraider/generic_normaltocombat_000208e5_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00028d3f_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00028d40_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00029a80_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085386_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085387_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085388_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_startcombatresp_000853ad_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_startcombatresp_000853b0_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_startcombatresp_000853b1_1.mp3",
+		}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/femaleraider/genericraider_attack_00028d39_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00029a75_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00029a76_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048354_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048355_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048356_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048357_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048358_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_00048793_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c1_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c2_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c4_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c5_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c6_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c8_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853c9_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853ca_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853cb_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853cd_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853ce_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853cf_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000853d0_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000c73c6_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000c73c7_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_attack_000cadf0_1.mp3",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/femaleraider/generic_normaltoalert_0002fc23_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_00028d49_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_00029a94_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_0008537b_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_0008537c_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_0008537d_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalert_0008537e_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalertre_000819c3_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalertre_000819c4_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalertre_00085381_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltoalertre_00085382_1.mp3",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00028d69_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00029a93_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085377_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085378_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_00085379_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_combattonormal_0008537a_1.mp3",
+		}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d6f_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d70_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d71_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d72_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d73_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d74_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d75_1.mp3",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_00028d58_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_00029a7b_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_0004834c_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_0004834d_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_0008537f_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_deathresponse_00085380_1.mp3",
+		}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/femaleraider/generic_normaltocombat_000208e5_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_00028d6a_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_00028d6b_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_00028d6c_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_000853d2_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_000853d3_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttocombat_000853d4_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00028d3f_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00028d40_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00029a80_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085386_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085387_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_normaltocombat_00085388_1.mp3",
+		}
+		self.SoundTbl_DamageByPlayer = {
+			"vj_fallout/human/femaleraider/genericraider_assault_00085370_1.mp3",
+		}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d6f_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d70_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d71_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d72_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d73_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d74_1.mp3",
+			"vj_fallout/human/femaleraider/genericrai_alerttonormal_00028d75_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_00028d6d_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_00028d6e_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_00029a83_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_000853d5_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_000853d6_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_combattolost_000853d7_1.mp3",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/femaleraider/generic_hit_00015122_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_00015123_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_00015124_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_00015125_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_00015126_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_00015127_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208d8_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208da_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208dc_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208de_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208e0_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208e1_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208e2_1.mp3",
+			"vj_fallout/human/femaleraider/generic_hit_000208e3_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_0002892e_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00028d4d_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00028d4e_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00028d4f_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00029a72_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00048796_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_hit_00048798_1.mp3",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/femaleraider/generic_powerattack_00022aaf_1.mp3",
+			"vj_fallout/human/femaleraider/generic_powerattack_00022ab1_1.mp3",
+			"vj_fallout/human/femaleraider/generic_powerattack_00051ffa_1.mp3",
+			"vj_fallout/human/femaleraider/generic_powerattack_00051ffb_1.mp3",
+			"vj_fallout/human/femaleraider/genericraider_powerattack_00085383_1.mp3",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/femaleraider/generic_death_0001fb58_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_0001fb59_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_0001fb5a_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_00020712_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_00020713_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_000208d3_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_000208d4_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_000208d5_1.mp3",
+			"vj_fallout/human/femaleraider/generic_death_000208d6_1.mp3",
+		}
+	else
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Alert = {}
+		self.SoundTbl_CombatIdle = {}
+		self.SoundTbl_Investigate = {}
+		self.SoundTbl_LostEnemy = {}
+		self.SoundTbl_Suppressing = {}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_OnGrenadeSight = {}
+		self.SoundTbl_AllyDeath = {}
+		self.SoundTbl_Pain = {}
+		self.SoundTbl_Death = {}
+		self.SoundTbl_OnClearedArea = {}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Calmed = {}
+		self.SoundTbl_Swing = {}
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -405,6 +818,7 @@ function ENT:CustomOnInitialize()
 		self:ManipulateBoneJiggle(92,1)
 		self:ManipulateBoneJiggle(93,1)
 	end
+	if self.AfterInit then self:AfterInit() end
 	
 	-- self:SetVoice("female01")
 end

@@ -15,18 +15,132 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
-	function devGetSounds(dir,keyword)
+	function devGetSounds(dir,keyword,incl)
 		local tbl = {}
 		local dir = dir or "vj_fallout/human/femaleadult01/"
 		local keyword = keyword or "alertidle"
-		for _,file in pairs(file.Find("sound/" .. dir .. "*","GAME")) do
-			if string.find(file,keyword) then
-				table.insert(tbl,dir .. file)
+		if istable(keyword) then
+			for _,file in pairs(file.Find("sound/" .. dir .. "*","GAME")) do
+				for _,v in pairs(keyword) do
+					if string.find(file,v) then
+						if incl && !string.find(file,incl) then continue end
+						table.insert(tbl,dir .. file)
+					end
+				end
+			end
+		else
+			for _,file in pairs(file.Find("sound/" .. dir .. "*","GAME")) do
+				if string.find(file,keyword) then
+					if incl && !string.find(file,incl) then continue end
+					table.insert(tbl,dir .. file)
+				end
 			end
 		end
-		for _,v in pairs(tbl) do
-			print('"' .. v .. '",')
+		-- for _,v in pairs(tbl) do
+		-- 	print('"' .. v .. '",')
+		-- end
+		return tbl
+	end
+
+	function devMimicTables(dir,requested,useENT)
+		local sounds = devSetTables(dir)
+		if requested then
+			for i,v in pairs(sounds[requested]) do
+				print('"' .. v .. '",')
+			end
+		else
+			for name,tbl in pairs(sounds) do
+				if #tbl == 0 then
+					print(useENT && 'ENT' or 'self' ..'.SoundTbl_' .. name .. ' = {}')
+					continue
+				end
+				print(useENT && 'ENT' or 'self' ..'.SoundTbl_' .. name .. ' = {')
+				for i,v in pairs(tbl) do
+					print('	"' .. v .. '",')
+				end
+				print('}')
+			end
 		end
+	end
+
+	function devSetTables(dir)
+		local foundData = {}
+		local tbl = {
+			["IdleDialogue"] = {},
+			["IdleDialogueAnswer"] = {},
+			["Idle"] = {},
+			["FollowPlayer"] = {},
+			["UnFollowPlayer"] = {},
+			["Investigate"] = {},
+			["OnPlayerSight"] = {},
+			["Suppressing"] = {},
+			["Alert"] = {},
+			["OnGrenadeSight"] = {},
+			["OnKilledEnemy"] = {},
+			["Guard_Warn"] = {},
+			["Guard_Angry"] = {},
+			["Guard_Calmed"] = {},
+			["AllyDeath"] = {},
+			["OnClearedArea"] = {},
+			["DamageByPlayer"] = {},
+			["LostEnemy"] = {},
+			["CombatIdle"] = {},
+			["Pain"] = {},
+			["Death"] = {},
+			["Swing"] = {},
+		}
+		dir = dir or "vj_fallout/human/femaleadult01/"
+		for name,stored in pairs(tbl) do
+			local keyword = name
+			if name == "IdleDialogue" then
+				keyword = {"hello","greeting"}
+			elseif name == "IdleDialogueAnswer" then
+				keyword = {"hello","greeting","goodbye"}
+			elseif name == "Idle" then
+				keyworld = "wehavenoidlelol"
+			elseif name == "FollowPlayer" then
+				keyword = {"hello","greeting"}
+			elseif name == "UnFollowPlayer" then
+				keyword = "goodbye"
+			elseif name == "Investigate" then
+				keyword = "normaltoalert"
+			elseif name == "OnPlayerSight" then
+				keyword = "wehavenosightlol"
+			elseif name == "Suppressing" then
+				keyword = "_attack"
+			elseif name == "CombatIdle" then
+				keyword = "alertidle"
+			elseif name == "Alert" then
+				keyword = {"normaltocombat","alerttocombat"}
+			elseif name == "OnGrenadeSight" then
+				keyword = "avoidthreat"
+			elseif name == "OnKilledEnemy" then
+				keyword = "combattonormal"
+			elseif name == "OnClearedArea" then
+				keyword = "combattonormal"
+			elseif name == "Guard_Warn" then
+				keyword = "guardtrespass"
+			elseif name == "Guard_Angry" then
+				keyword = {"startcombatresp","normaltocombat"}
+			elseif name == "Guard_Calmed" then
+				keyword = {"alerttonormal","acceptyield"}
+			elseif name == "AllyDeath" then
+				keyword = "deathresponse"
+			elseif name == "DamageByPlayer" then
+				keyword = "assault"
+			elseif name == "LostEnemy" then
+				keyword = {"alerttonormal","combattolost"}
+			elseif name == "Pain" then
+				keyword = "hit"
+			elseif name == "Death" then
+				keyword = "death"
+			elseif name == "Swing" then
+				keyword = "powerattack"
+			end
+			local foundFiles = devGetSounds(dir,keyword) or {}
+			foundData[name] = foundFiles
+		end
+		return foundData
 	end
 	
 	local vCre = "Fallout - Creatures"
