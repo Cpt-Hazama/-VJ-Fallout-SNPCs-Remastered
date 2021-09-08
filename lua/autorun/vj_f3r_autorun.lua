@@ -15,6 +15,21 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
+	/*
+		-- Human Voice Types --
+		female01
+		female06
+		female07
+		femaleraider
+		malefiend
+		maleraider
+		maleclone
+		male01
+		male02
+		male03 -- This is technically the actual fiend voice lines, the other is a raider/fiend mix
+		male08
+	*/
+
 	function devGetSounds(dir,keyword,incl)
 		local tbl = {}
 		local dir = dir or "vj_fallout/human/femaleadult01/"
@@ -24,6 +39,7 @@ if VJExists == true then
 				for _,v in pairs(keyword) do
 					if string.find(file,v) then
 						if incl && !string.find(file,incl) then continue end
+						if v == "death" && string.find(file,"deathresponse") then continue end
 						table.insert(tbl,dir .. file)
 					end
 				end
@@ -32,6 +48,7 @@ if VJExists == true then
 			for _,file in pairs(file.Find("sound/" .. dir .. "*","GAME")) do
 				if string.find(file,keyword) then
 					if incl && !string.find(file,incl) then continue end
+					if keyword == "death" && string.find(file,"deathresponse") then continue end
 					table.insert(tbl,dir .. file)
 				end
 			end
@@ -42,13 +59,14 @@ if VJExists == true then
 		return tbl
 	end
 
-	function devMimicTables(dir,requested,useENT)
-		local sounds = devSetTables(dir)
+	function devMimicTables(dir,requested,incl,useENT)
+		local sounds = devSetTables(dir,incl)
 		if requested then
 			for i,v in pairs(sounds[requested]) do
 				print('"' .. v .. '",')
 			end
 		else
+			print("[Writing Sound Tables]")
 			for name,tbl in pairs(sounds) do
 				if #tbl == 0 then
 					print(useENT && 'ENT' or 'self' ..'.SoundTbl_' .. name .. ' = {}')
@@ -60,10 +78,11 @@ if VJExists == true then
 				end
 				print('}')
 			end
+			print("[Finished Writing Sound Tables]")
 		end
 	end
 
-	function devSetTables(dir)
+	function devSetTables(dir,incl)
 		local foundData = {}
 		local tbl = {
 			["IdleDialogue"] = {},
@@ -137,7 +156,7 @@ if VJExists == true then
 			elseif name == "Swing" then
 				keyword = "powerattack"
 			end
-			local foundFiles = devGetSounds(dir,keyword) or {}
+			local foundFiles = devGetSounds(dir,keyword,incl) or {}
 			foundData[name] = foundFiles
 		end
 		return foundData

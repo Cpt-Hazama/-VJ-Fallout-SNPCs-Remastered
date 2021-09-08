@@ -641,6 +641,961 @@ function ENT:SetVoice(voice)
 			"vj_fallout/human/femaleraider/generic_death_000208d5_1.mp3",
 			"vj_fallout/human/femaleraider/generic_death_000208d6_1.mp3",
 		}
+	elseif voice == "malefiend" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult01/fiend_avoidthreat01.wav",
+			"vj_fallout/human/maleadult01/fiend_avoidthreat02.wav",
+		}
+		self.SoundTbl_OnClearedArea = {}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult01/fiend_alertidle01.wav",
+			"vj_fallout/human/maleadult01/fiend_alertidle02.wav",
+		}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult01/fiend_attack01.wav",
+			"vj_fallout/human/maleadult01/fiend_attack02.wav",
+			"vj_fallout/human/maleadult01/fiend_attack03.wav",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult01/fiend_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/fiend_normaltoalert02.wav",
+			"vj_fallout/human/maleadult01/fiend_normaltoalert03.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult01/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal03.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult01/fiend_deathresponse01.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse02.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse03.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse04.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse05.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse06.wav",
+		}
+		self.SoundTbl_IdleDialogue = {
+			"vj_fallout/human/maleadult01/generic_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_greeting01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello02.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello03.wav",
+		}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult01/fiend_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttocombat03.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult01/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost01.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost02.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost03.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/maleadult01/b_hit01.wav",
+			"vj_fallout/human/maleadult01/b_hit02.wav",
+			"vj_fallout/human/maleadult01/b_hit03.wav",
+			"vj_fallout/human/maleadult01/b_hit04.wav",
+			"vj_fallout/human/maleadult01/b_hit05.wav",
+			"vj_fallout/human/maleadult01/b_hit06.wav",
+			"vj_fallout/human/maleadult01/b_hit07.wav",
+			"vj_fallout/human/maleadult01/generic_hit01.wav",
+			"vj_fallout/human/maleadult01/generic_hit02.wav",
+			"vj_fallout/human/maleadult01/generic_hit03.wav",
+			"vj_fallout/human/maleadult01/generic_hit04.wav",
+			"vj_fallout/human/maleadult01/generic_hit05.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_hit01.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_hit02.wav",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult01/generic_powerattack01.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack02.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack03.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack04.wav",
+			"vj_fallout/human/maleadult01/powerattack01.wav",
+			"vj_fallout/human/maleadult01/powerattack02.wav",
+			"vj_fallout/human/maleadult01/powerattack03.wav",
+			"vj_fallout/human/maleadult01/powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {
+			"vj_fallout/human/maleadult01/generic_goodbye01.wav",
+			"vj_fallout/human/maleadult01/generic_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye02.wav",
+			"vj_fallout/human/maleadult01/genericadult_greeting01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello02.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello03.wav",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult01/death01.wav",
+			"vj_fallout/human/maleadult01/death02.wav",
+			"vj_fallout/human/maleadult01/death03.wav",
+			"vj_fallout/human/maleadult01/generic_death01.wav",
+			"vj_fallout/human/maleadult01/generic_death02.wav",
+			"vj_fallout/human/maleadult01/generic_death03.wav",
+		}
+	elseif voice == "male01" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult01/b_generic_avoidthreat01.wav",
+			"vj_fallout/human/maleadult01/b_generic_avoidthreat02.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult01/b_generic_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal04.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult01/b_generic_alertidle01.wav",
+			"vj_fallout/human/maleadult01/b_generic_alertidle02.wav",
+			"vj_fallout/human/maleadult01/b_generic_alertidle03.wav",
+			"vj_fallout/human/maleadult01/b_generic_alertidle04.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat04.wav",
+		}
+		self.SoundTbl_Guard_Warn = {
+			"vj_fallout/human/maleadult01/b_generic_guardtrespass01.wav",
+			"vj_fallout/human/maleadult01/b_generic_guardtrespass02.wav",
+			"vj_fallout/human/maleadult01/b_generic_guardtrespass03.wav",
+		}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult01/b_generic_attack01.wav",
+			"vj_fallout/human/maleadult01/b_generic_attack02.wav",
+			"vj_fallout/human/maleadult01/b_generic_attack03.wav",
+		}
+		self.SoundTbl_FollowPlayer = {
+			"vj_fallout/human/maleadult01/b_generic_greeting01.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting02.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting03.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting04.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello01.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello02.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello03.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello04.wav",
+		}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult01/b_generic_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltoalert02.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltoalert03.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltoalert04.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult01/b_generic_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattonormal04.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {
+			"vj_fallout/human/maleadult01/b_generic_goodbye01.wav",
+			"vj_fallout/human/maleadult01/b_generic_goodbye02.wav",
+		}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult01/b_generic_acceptyield01.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal04.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult01/b_generic_deathresponse01.wav",
+			"vj_fallout/human/maleadult01/b_generic_deathresponse02.wav",
+			"vj_fallout/human/maleadult01/b_generic_deathresponse03.wav",
+			"vj_fallout/human/maleadult01/b_generic_deathresponse04.wav",
+			"vj_fallout/human/maleadult01/b_generic_deathresponse05.wav",
+		}
+		self.SoundTbl_IdleDialogue = {
+			"vj_fallout/human/maleadult01/b_generic_greeting01.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting02.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting03.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting04.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello01.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello02.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello03.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello04.wav",
+		}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult01/b_generic_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttocombat03.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttocombat04.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttocombat05.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/b_generic_normaltocombat04.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {
+			"vj_fallout/human/maleadult01/b_generic_assault01.wav",
+			"vj_fallout/human/maleadult01/b_generic_assault02.wav",
+			"vj_fallout/human/maleadult01/b_generic_assault03.wav",
+		}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/b_generic_alerttonormal04.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattolost01.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattolost02.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattolost03.wav",
+			"vj_fallout/human/maleadult01/b_generic_combattolost04.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/maleadult01/b_generic_hit01.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit02.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit03.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit04.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit05.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit06.wav",
+			"vj_fallout/human/maleadult01/b_generic_hit07.wav",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult01/b_generic_powerattack01.wav",
+			"vj_fallout/human/maleadult01/b_generic_powerattack02.wav",
+			"vj_fallout/human/maleadult01/b_generic_powerattack03.wav",
+			"vj_fallout/human/maleadult01/b_generic_powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {
+			"vj_fallout/human/maleadult01/b_generic_goodbye01.wav",
+			"vj_fallout/human/maleadult01/b_generic_goodbye02.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting01.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting02.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting03.wav",
+			"vj_fallout/human/maleadult01/b_generic_greeting04.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello01.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello02.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello03.wav",
+			"vj_fallout/human/maleadult01/b_generic_hello04.wav",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult01/b_generic_death01.wav",
+			"vj_fallout/human/maleadult01/b_generic_death02.wav",
+			"vj_fallout/human/maleadult01/b_generic_death03.wav",
+		}
+	elseif voice == "maleraider" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult01/b_avoidthreat01.wav",
+			"vj_fallout/human/maleadult01/b_avoidthreat02.wav",
+			"vj_fallout/human/maleadult01/b_avoidthreat03.wav",
+			"vj_fallout/human/maleadult01/b_avoidthreat04.wav",
+			"vj_fallout/human/maleadult01/b_avoidthreatresp01.wav",
+			"vj_fallout/human/maleadult01/b_avoidthreatresp02.wav",
+			"vj_fallout/human/maleadult01/fiend_avoidthreat01.wav",
+			"vj_fallout/human/maleadult01/fiend_avoidthreat02.wav",
+			"vj_fallout/human/maleadult01/genericadu_avoidthreat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_avoidthreat02.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult01/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal06.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/generic_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal03.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult01/b_alertidle01.wav",
+			"vj_fallout/human/maleadult01/b_alertidle02.wav",
+			"vj_fallout/human/maleadult01/b_alertidle03.wav",
+			"vj_fallout/human/maleadult01/b_alertidle04.wav",
+			"vj_fallout/human/maleadult01/b_alertidle05.wav",
+			"vj_fallout/human/maleadult01/b_alertidle06.wav",
+			"vj_fallout/human/maleadult01/fiend_alertidle01.wav",
+			"vj_fallout/human/maleadult01/fiend_alertidle02.wav",
+			"vj_fallout/human/maleadult01/generic_alertidle01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alertidle01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alertidle02.wav",
+			"vj_fallout/human/maleadult01/genericadu_alertidle03.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult01/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat04.wav",
+			"vj_fallout/human/maleadult01/b_startcombatresp01.wav",
+			"vj_fallout/human/maleadult01/b_startcombatresp02.wav",
+			"vj_fallout/human/maleadult01/b_startcombatresp03.wav",
+			"vj_fallout/human/maleadult01/b_startcombatresp04.wav",
+			"vj_fallout/human/maleadult01/b_startcombatresp05.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/generic_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat03.wav",
+		}
+		self.SoundTbl_Guard_Warn = {
+			"vj_fallout/human/maleadult01/genericadu_guardtrespass01.wav",
+			"vj_fallout/human/maleadult01/genericadu_guardtrespass02.wav",
+			"vj_fallout/human/maleadult01/genericadu_guardtrespass03.wav",
+		}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult01/b_attack01.wav",
+			"vj_fallout/human/maleadult01/b_attack02.wav",
+			"vj_fallout/human/maleadult01/b_attack03.wav",
+			"vj_fallout/human/maleadult01/b_attack04.wav",
+			"vj_fallout/human/maleadult01/b_attack05.wav",
+			"vj_fallout/human/maleadult01/b_attack06.wav",
+			"vj_fallout/human/maleadult01/b_attack07.wav",
+			"vj_fallout/human/maleadult01/b_attack08.wav",
+			"vj_fallout/human/maleadult01/b_attack09.wav",
+			"vj_fallout/human/maleadult01/b_attack10.wav",
+			"vj_fallout/human/maleadult01/b_attack11.wav",
+			"vj_fallout/human/maleadult01/fiend_attack01.wav",
+			"vj_fallout/human/maleadult01/fiend_attack02.wav",
+			"vj_fallout/human/maleadult01/fiend_attack03.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_attack01.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_attack02.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_attack03.wav",
+		}
+		self.SoundTbl_FollowPlayer = {
+			"vj_fallout/human/maleadult01/generic_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_greeting01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello02.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello03.wav",
+		}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult01/b_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/b_normaltoalert02.wav",
+			"vj_fallout/human/maleadult01/b_normaltoalert03.wav",
+			"vj_fallout/human/maleadult01/b_normaltoalert04.wav",
+			"vj_fallout/human/maleadult01/b_normaltoalert05.wav",
+			"vj_fallout/human/maleadult01/fiend_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/fiend_normaltoalert02.wav",
+			"vj_fallout/human/maleadult01/fiend_normaltoalert03.wav",
+			"vj_fallout/human/maleadult01/generic_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltoalert01.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltoalert02.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltoalert03.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult01/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult01/b_combattonormal06.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/fie_combattonormal03.wav",
+			"vj_fallout/human/maleadult01/generic_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattonormal03.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {
+			"vj_fallout/human/maleadult01/generic_goodbye01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye02.wav",
+		}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult01/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal06.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/generic_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_acceptyield01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal03.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult01/b_deathresponse01.wav",
+			"vj_fallout/human/maleadult01/b_deathresponse02.wav",
+			"vj_fallout/human/maleadult01/b_deathresponse03.wav",
+			"vj_fallout/human/maleadult01/b_deathresponse04.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse01.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse02.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse03.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse04.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse05.wav",
+			"vj_fallout/human/maleadult01/fiend_deathresponse06.wav",
+			"vj_fallout/human/maleadult01/genericadu_deathresponse01.wav",
+			"vj_fallout/human/maleadult01/genericadu_deathresponse02.wav",
+			"vj_fallout/human/maleadult01/genericadu_deathresponse03.wav",
+			"vj_fallout/human/maleadult01/genericadu_deathresponse04.wav",
+			"vj_fallout/human/maleadult01/genericadu_deathresponse05.wav",
+		}
+		self.SoundTbl_IdleDialogue = {
+			"vj_fallout/human/maleadult01/generic_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_greeting01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello02.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello03.wav",
+		}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult01/b_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/b_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/b_alerttocombat03.wav",
+			"vj_fallout/human/maleadult01/b_alerttocombat04.wav",
+			"vj_fallout/human/maleadult01/b_alerttocombat05.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/b_normaltocombat04.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/fie_normaltocombat03.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttocombat03.wav",
+			"vj_fallout/human/maleadult01/generic_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/generic_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttocombat03.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttocombat04.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat02.wav",
+			"vj_fallout/human/maleadult01/genericadu_normaltocombat03.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {
+			"vj_fallout/human/maleadult01/genericadultcombat_assault01.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_assault02.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_assault03.wav",
+		}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult01/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult01/b_alerttonormal06.wav",
+			"vj_fallout/human/maleadult01/b_combattolost01.wav",
+			"vj_fallout/human/maleadult01/b_combattolost02.wav",
+			"vj_fallout/human/maleadult01/b_combattolost03.wav",
+			"vj_fallout/human/maleadult01/b_combattolost04.wav",
+			"vj_fallout/human/maleadult01/b_combattolost05.wav",
+			"vj_fallout/human/maleadult01/b_combattolost06.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/fiend_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost01.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost02.wav",
+			"vj_fallout/human/maleadult01/fiend_combattolost03.wav",
+			"vj_fallout/human/maleadult01/generic_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/generic_combattolost01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/genericadu_alerttonormal03.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattolost01.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattolost02.wav",
+			"vj_fallout/human/maleadult01/genericadu_combattolost03.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/maleadult01/b_hit01.wav",
+			"vj_fallout/human/maleadult01/b_hit02.wav",
+			"vj_fallout/human/maleadult01/b_hit03.wav",
+			"vj_fallout/human/maleadult01/b_hit04.wav",
+			"vj_fallout/human/maleadult01/b_hit05.wav",
+			"vj_fallout/human/maleadult01/b_hit06.wav",
+			"vj_fallout/human/maleadult01/b_hit07.wav",
+			"vj_fallout/human/maleadult01/generic_hit01.wav",
+			"vj_fallout/human/maleadult01/generic_hit02.wav",
+			"vj_fallout/human/maleadult01/generic_hit03.wav",
+			"vj_fallout/human/maleadult01/generic_hit04.wav",
+			"vj_fallout/human/maleadult01/generic_hit05.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_hit01.wav",
+			"vj_fallout/human/maleadult01/genericadultcombat_hit02.wav",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult01/generic_powerattack01.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack02.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack03.wav",
+			"vj_fallout/human/maleadult01/generic_powerattack04.wav",
+			"vj_fallout/human/maleadult01/powerattack01.wav",
+			"vj_fallout/human/maleadult01/powerattack02.wav",
+			"vj_fallout/human/maleadult01/powerattack03.wav",
+			"vj_fallout/human/maleadult01/powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {
+			"vj_fallout/human/maleadult01/generic_goodbye01.wav",
+			"vj_fallout/human/maleadult01/generic_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye01.wav",
+			"vj_fallout/human/maleadult01/genericadult_goodbye02.wav",
+			"vj_fallout/human/maleadult01/genericadult_greeting01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello01.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello02.wav",
+			"vj_fallout/human/maleadult01/genericadult_hello03.wav",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult01/death01.wav",
+			"vj_fallout/human/maleadult01/death02.wav",
+			"vj_fallout/human/maleadult01/death03.wav",
+			"vj_fallout/human/maleadult01/generic_death01.wav",
+			"vj_fallout/human/maleadult01/generic_death02.wav",
+			"vj_fallout/human/maleadult01/generic_death03.wav",
+		}
+	elseif voice == "maleclone" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult01/vault108_avoidthreat01.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult01/vault108_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/vault108_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/vault108_combattonormal03.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult01/vault108_alertidle01.wav",
+			"vj_fallout/human/maleadult01/vault108_alertidle02.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult01/vault108_normaltocombat01.wav",
+			"vj_fallout/human/maleadult01/vault108_startcombatresp01.wav",
+		}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult01/vault108_attack01.wav",
+			"vj_fallout/human/maleadult01/vault108_attack02.wav",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult01/vault108_normaltoalert01.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult01/vault108_combattonormal01.wav",
+			"vj_fallout/human/maleadult01/vault108_combattonormal02.wav",
+			"vj_fallout/human/maleadult01/vault108_combattonormal03.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult01/vault108_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/vault108_alerttonormal02.wav",
+		}
+		self.SoundTbl_AllyDeath = {}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult01/vault108_alerttocombat01.wav",
+			"vj_fallout/human/maleadult01/vault108_alerttocombat02.wav",
+			"vj_fallout/human/maleadult01/vault108_alerttocombat03.wav",
+			"vj_fallout/human/maleadult01/vault108_normaltocombat01.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult01/vault108_alerttonormal01.wav",
+			"vj_fallout/human/maleadult01/vault108_alerttonormal02.wav",
+			"vj_fallout/human/maleadult01/vault108_combattolost01.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/player/player_hit1.mp3",
+			"vj_fallout/player/player_hit2.mp3",
+			"vj_fallout/player/player_hit3.mp3",
+			"vj_fallout/player/player_hit4.mp3",
+			"vj_fallout/player/player_hit5.mp3",
+			"vj_fallout/player/player_hit6.mp3",
+			"vj_fallout/player/player_hit7.mp3",
+			"vj_fallout/player/player_hit8.mp3",
+			"vj_fallout/player/player_hit9.mp3",
+			"vj_fallout/player/player_hit10.mp3",
+			"vj_fallout/player/player_hit11.mp3",
+			"vj_fallout/player/player_hit12.mp3",
+			"vj_fallout/player/player_hit13.mp3",
+			"vj_fallout/player/player_hit14.mp3",
+			"vj_fallout/player/player_hit15.mp3",
+			"vj_fallout/player/player_hit16.mp3",
+			"vj_fallout/player/player_hit17.mp3",
+			"vj_fallout/player/player_hit18.mp3",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/player/player_powerattack01.mp3",
+			"vj_fallout/player/player_powerattack02.mp3",
+			"vj_fallout/player/player_powerattack03.mp3",
+			"vj_fallout/player/player_powerattack04.mp3",
+			"vj_fallout/player/player_powerattack05.mp3",
+			"vj_fallout/player/player_powerattack06.mp3"
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/player/player_death01.mp3",
+			"vj_fallout/player/player_death02.mp3",
+			"vj_fallout/player/player_death03.mp3",
+			"vj_fallout/player/player_death04.mp3",
+			"vj_fallout/player/player_death05.mp3",
+			"vj_fallout/player/player_death06.mp3",
+		}
+	elseif voice == "male02" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult02/b_avoidthreat01.wav",
+			"vj_fallout/human/maleadult02/b_avoidthreat02.wav",
+			"vj_fallout/human/maleadult02/b_avoidthreat03.wav",
+			"vj_fallout/human/maleadult02/b_avoidthreat04.wav",
+			"vj_fallout/human/maleadult02/b_avoidthreatresp01.wav",
+			"vj_fallout/human/maleadult02/b_avoidthreatresp02.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult02/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal06.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult02/b_alertidle01.wav",
+			"vj_fallout/human/maleadult02/b_alertidle02.wav",
+			"vj_fallout/human/maleadult02/b_alertidle03.wav",
+			"vj_fallout/human/maleadult02/b_alertidle04.wav",
+			"vj_fallout/human/maleadult02/b_alertidle05.wav",
+			"vj_fallout/human/maleadult02/b_alertidle06.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult02/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat04.wav",
+			"vj_fallout/human/maleadult02/b_startcombatresp01.wav",
+			"vj_fallout/human/maleadult02/b_startcombatresp02.wav",
+			"vj_fallout/human/maleadult02/b_startcombatresp03.wav",
+			"vj_fallout/human/maleadult02/b_startcombatresp04.wav",
+			"vj_fallout/human/maleadult02/b_startcombatresp05.wav",
+		}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult02/b_attack01.wav",
+			"vj_fallout/human/maleadult02/b_attack02.wav",
+			"vj_fallout/human/maleadult02/b_attack03.wav",
+			"vj_fallout/human/maleadult02/b_attack04.wav",
+			"vj_fallout/human/maleadult02/b_attack05.wav",
+			"vj_fallout/human/maleadult02/b_attack06.wav",
+			"vj_fallout/human/maleadult02/b_attack07.wav",
+			"vj_fallout/human/maleadult02/b_attack08.wav",
+			"vj_fallout/human/maleadult02/b_attack09.wav",
+			"vj_fallout/human/maleadult02/b_attack10.wav",
+			"vj_fallout/human/maleadult02/b_attack11.wav",
+			"vj_fallout/human/maleadult02/b_attackresponse01.wav",
+			"vj_fallout/human/maleadult02/b_attackresponse02.wav",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult02/b_normaltoalert01.wav",
+			"vj_fallout/human/maleadult02/b_normaltoalert02.wav",
+			"vj_fallout/human/maleadult02/b_normaltoalert03.wav",
+			"vj_fallout/human/maleadult02/b_normaltoalert04.wav",
+			"vj_fallout/human/maleadult02/b_normaltoalert05.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult02/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult02/b_combattonormal06.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult02/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal06.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult02/b_deathresponse01.wav",
+			"vj_fallout/human/maleadult02/b_deathresponse02.wav",
+			"vj_fallout/human/maleadult02/b_deathresponse03.wav",
+			"vj_fallout/human/maleadult02/b_deathresponse04.wav",
+		}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult02/b_alerttocombat01.wav",
+			"vj_fallout/human/maleadult02/b_alerttocombat02.wav",
+			"vj_fallout/human/maleadult02/b_alerttocombat03.wav",
+			"vj_fallout/human/maleadult02/b_alerttocombat04.wav",
+			"vj_fallout/human/maleadult02/b_alerttocombat05.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult02/b_normaltocombat04.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult02/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult02/b_alerttonormal06.wav",
+			"vj_fallout/human/maleadult02/b_combattolost01.wav",
+			"vj_fallout/human/maleadult02/b_combattolost02.wav",
+			"vj_fallout/human/maleadult02/b_combattolost03.wav",
+			"vj_fallout/human/maleadult02/b_combattolost04.wav",
+			"vj_fallout/human/maleadult02/b_combattolost05.wav",
+			"vj_fallout/human/maleadult02/b_combattolost06.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/maleadult02/b_hit01.wav",
+			"vj_fallout/human/maleadult02/b_hit02.wav",
+			"vj_fallout/human/maleadult02/b_hit03.wav",
+			"vj_fallout/human/maleadult02/b_hit04.wav",
+			"vj_fallout/human/maleadult02/b_hit05.wav",
+			"vj_fallout/human/maleadult02/b_hit06.wav",
+			"vj_fallout/human/maleadult02/b_hit07.wav",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult02/powerattack01.wav",
+			"vj_fallout/human/maleadult02/powerattack02.wav",
+			"vj_fallout/human/maleadult02/powerattack03.wav",
+			"vj_fallout/human/maleadult02/powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult02/death01.wav",
+			"vj_fallout/human/maleadult02/death02.wav",
+			"vj_fallout/human/maleadult02/death03.wav",
+		}
+	elseif voice == "male03" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult03/fiend_avoidthreat01.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult03/fie_combattonormal01.wav",
+			"vj_fallout/human/maleadult03/fie_combattonormal02.wav",
+			"vj_fallout/human/maleadult03/fie_combattonormal03.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult03/fiend_alertidle01.wav",
+			"vj_fallout/human/maleadult03/fiend_alertidle02.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult03/fie_normaltocombat01.wav",
+			"vj_fallout/human/maleadult03/fie_normaltocombat02.wav",
+			"vj_fallout/human/maleadult03/fie_normaltocombat03.wav",
+		}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult03/fiend_attack01.wav",
+			"vj_fallout/human/maleadult03/fiend_attack02.wav",
+			"vj_fallout/human/maleadult03/fiend_attack03.wav",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult03/fiend_normaltoalert01.wav",
+			"vj_fallout/human/maleadult03/fiend_normaltoalert02.wav",
+			"vj_fallout/human/maleadult03/fiend_normaltoalert03.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult03/fie_combattonormal01.wav",
+			"vj_fallout/human/maleadult03/fie_combattonormal02.wav",
+			"vj_fallout/human/maleadult03/fie_combattonormal03.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult03/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttonormal03.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult03/fiend_deathresponse01.wav",
+			"vj_fallout/human/maleadult03/fiend_deathresponse02.wav",
+			"vj_fallout/human/maleadult03/fiend_deathresponse03.wav",
+			"vj_fallout/human/maleadult03/fiend_deathresponse04.wav",
+			"vj_fallout/human/maleadult03/fiend_deathresponse05.wav",
+			"vj_fallout/human/maleadult03/fiend_deathresponse06.wav",
+		}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult03/fie_normaltocombat01.wav",
+			"vj_fallout/human/maleadult03/fie_normaltocombat02.wav",
+			"vj_fallout/human/maleadult03/fie_normaltocombat03.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttocombat01.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttocombat02.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttocombat03.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult03/fiend_alerttonormal01.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttonormal02.wav",
+			"vj_fallout/human/maleadult03/fiend_alerttonormal03.wav",
+			"vj_fallout/human/maleadult03/fiend_combattolost01.wav",
+			"vj_fallout/human/maleadult03/fiend_combattolost02.wav",
+			"vj_fallout/human/maleadult03/fiend_combattolost03.wav",
+		}
+		self.SoundTbl_Pain = {}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult03/powerattack01.wav",
+			"vj_fallout/human/maleadult03/powerattack02.wav",
+			"vj_fallout/human/maleadult03/powerattack03.wav",
+			"vj_fallout/human/maleadult03/powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult03/death01.wav",
+			"vj_fallout/human/maleadult03/death02.wav",
+			"vj_fallout/human/maleadult03/death03.wav",
+		}
+	elseif voice == "male08" then
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/maleadult08/b_avoidthreat01.wav",
+			"vj_fallout/human/maleadult08/b_avoidthreat02.wav",
+			"vj_fallout/human/maleadult08/b_avoidthreat03.wav",
+			"vj_fallout/human/maleadult08/b_avoidthreat04.wav",
+			"vj_fallout/human/maleadult08/b_avoidthreatresp01.wav",
+			"vj_fallout/human/maleadult08/b_avoidthreatresp02.wav",
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/maleadult08/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal06.wav",
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/maleadult08/b_alertidle01.wav",
+			"vj_fallout/human/maleadult08/b_alertidle02.wav",
+			"vj_fallout/human/maleadult08/b_alertidle03.wav",
+			"vj_fallout/human/maleadult08/b_alertidle04.wav",
+			"vj_fallout/human/maleadult08/b_alertidle05.wav",
+			"vj_fallout/human/maleadult08/b_alertidle06.wav",
+		}
+		self.SoundTbl_Guard_Angry = {
+			"vj_fallout/human/maleadult08/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat04.wav",
+			"vj_fallout/human/maleadult08/b_startcombatresp01.wav",
+			"vj_fallout/human/maleadult08/b_startcombatresp02.wav",
+			"vj_fallout/human/maleadult08/b_startcombatresp03.wav",
+			"vj_fallout/human/maleadult08/b_startcombatresp04.wav",
+			"vj_fallout/human/maleadult08/b_startcombatresp05.wav",
+		}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/maleadult08/b_attack01.wav",
+			"vj_fallout/human/maleadult08/b_attack02.wav",
+			"vj_fallout/human/maleadult08/b_attack03.wav",
+			"vj_fallout/human/maleadult08/b_attack04.wav",
+			"vj_fallout/human/maleadult08/b_attack05.wav",
+			"vj_fallout/human/maleadult08/b_attack06.wav",
+			"vj_fallout/human/maleadult08/b_attack07.wav",
+			"vj_fallout/human/maleadult08/b_attack08.wav",
+			"vj_fallout/human/maleadult08/b_attack09.wav",
+			"vj_fallout/human/maleadult08/b_attack10.wav",
+			"vj_fallout/human/maleadult08/b_attack11.wav",
+			"vj_fallout/human/maleadult08/b_attackresponse01.wav",
+			"vj_fallout/human/maleadult08/b_attackresponse02.wav",
+		}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/maleadult08/b_normaltoalert01.wav",
+			"vj_fallout/human/maleadult08/b_normaltoalert02.wav",
+			"vj_fallout/human/maleadult08/b_normaltoalert03.wav",
+			"vj_fallout/human/maleadult08/b_normaltoalert04.wav",
+			"vj_fallout/human/maleadult08/b_normaltoalert05.wav",
+		}
+		self.SoundTbl_OnKilledEnemy = {
+			"vj_fallout/human/maleadult08/b_combattonormal01.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal02.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal03.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal04.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal05.wav",
+			"vj_fallout/human/maleadult08/b_combattonormal06.wav",
+		}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {
+			"vj_fallout/human/maleadult08/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal06.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/maleadult08/b_deathresponse01.wav",
+			"vj_fallout/human/maleadult08/b_deathresponse02.wav",
+			"vj_fallout/human/maleadult08/b_deathresponse03.wav",
+			"vj_fallout/human/maleadult08/b_deathresponse04.wav",
+		}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/maleadult08/b_alerttocombat01.wav",
+			"vj_fallout/human/maleadult08/b_alerttocombat02.wav",
+			"vj_fallout/human/maleadult08/b_alerttocombat03.wav",
+			"vj_fallout/human/maleadult08/b_alerttocombat04.wav",
+			"vj_fallout/human/maleadult08/b_alerttocombat05.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat01.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat02.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat03.wav",
+			"vj_fallout/human/maleadult08/b_normaltocombat04.wav",
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/maleadult08/b_alerttonormal01.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal02.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal03.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal04.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal05.wav",
+			"vj_fallout/human/maleadult08/b_alerttonormal06.wav",
+			"vj_fallout/human/maleadult08/b_combattolost01.wav",
+			"vj_fallout/human/maleadult08/b_combattolost02.wav",
+			"vj_fallout/human/maleadult08/b_combattolost03.wav",
+			"vj_fallout/human/maleadult08/b_combattolost04.wav",
+			"vj_fallout/human/maleadult08/b_combattolost05.wav",
+			"vj_fallout/human/maleadult08/b_combattolost06.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/maleadult08/b_hit01.wav",
+			"vj_fallout/human/maleadult08/b_hit02.wav",
+			"vj_fallout/human/maleadult08/b_hit03.wav",
+			"vj_fallout/human/maleadult08/b_hit04.wav",
+			"vj_fallout/human/maleadult08/b_hit05.wav",
+			"vj_fallout/human/maleadult08/b_hit06.wav",
+			"vj_fallout/human/maleadult08/b_hit07.wav",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/human/maleadult08/powerattack01.wav",
+			"vj_fallout/human/maleadult08/powerattack02.wav",
+			"vj_fallout/human/maleadult08/powerattack03.wav",
+			"vj_fallout/human/maleadult08/powerattack04.wav",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/maleadult08/death01.wav",
+			"vj_fallout/human/maleadult08/death02.wav",
+			"vj_fallout/human/maleadult08/death03.wav",
+		}
 	else
 		self.SoundTbl_Idle = {}
 		self.SoundTbl_IdleDialogue = {}

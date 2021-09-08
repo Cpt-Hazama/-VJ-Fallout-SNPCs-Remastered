@@ -40,7 +40,6 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()
 	self:SetVoice(math.random(1,6) == 1 && "female06" or "female01")
-	-- self:SetVoice("femaleraider")
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
