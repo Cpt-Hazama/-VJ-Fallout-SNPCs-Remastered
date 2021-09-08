@@ -38,7 +38,6 @@ ENT.RangeDistance = 2000 -- This is how far away it can shoot
 ENT.RangeToMeleeDistance = 300 -- How close does it have to be until it uses melee?
 ENT.TimeUntilRangeAttackProjectileRelease = 0.95 -- How much time until the projectile code is ran?
 ENT.NextRangeAttackTime = math.random(2,3) -- How much time until it can use a range attack?
-ENT.RangeAttackExtraTimers = {/* Ex: 1,1.4 */} -- Extra range attack timers | it will run the projectile code after the given amount of seconds
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeUseAttachmentForPosID = "mouth" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 

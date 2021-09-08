@@ -4,7 +4,7 @@
 	"$bumpmap" 	"models/fallout/characters/female/handfemale_n"
 
 	$phong			1
-	$phongexponent		100
-	$phongboost		0.4
+	$phongexponent		4
+	$phongboost		0.1
 	$phongfresnelranges	"[1 1 1]"
 }

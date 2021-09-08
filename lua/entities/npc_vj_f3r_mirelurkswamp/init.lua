@@ -7,6 +7,8 @@ include('shared.lua')
 -----------------------------------------------*/
 ENT.Model = {"models/cpthazama/fallout/mirelurk.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ENT.StartHealth = 120
+
+ENT.BulletResistance = 0.35
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}

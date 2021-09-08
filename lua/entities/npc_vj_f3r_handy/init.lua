@@ -283,15 +283,16 @@ function ENT:CustomOnThink()
 	if self.CurrentAttack == 1 then
 		local att = self:GetAttachment(self:LookupAttachment("flamethrower_muzzle"))
 		if CurTime() >= self.NextFlameDMGT then
-			local entities = ents.FindInSphere(self:GetPos() +self:GetForward() *1,300)
-			for _,v in pairs(entities) do
-				if (att.Pos:Dot(((v:GetPos() +v:OBBCenter()) -self:GetPos()):GetNormalized()) > math.cos(math.rad(35))) then
-					if ((((v:IsPlayer() && v:Alive()) || v:IsNPC()) && (self:Disposition(v) == 1 || self:Disposition(v) == 2))) then
-						v:Ignite(10,0)
-						v:TakeDamage(5,self,self)
-					end
-				end
-			end
+			-- local entities = ents.FindInSphere(self:GetPos() +self:GetForward() *1,300)
+			-- for _,v in pairs(entities) do
+			-- 	if (att.Pos:Dot(((v:GetPos() +v:OBBCenter()) -self:GetPos()):GetNormalized()) > math.cos(math.rad(35))) then
+			-- 		if ((((v:IsPlayer() && v:Alive()) || v:IsNPC()) && (self:Disposition(v) == 1 || self:Disposition(v) == 2))) then
+			-- 			v:Ignite(10,0)
+			-- 			v:TakeDamage(5,self,self)
+			-- 		end
+			-- 	end
+			-- end
+			self:DoFlameDamage(300,5,self,35,10,att.Pos,att.Ang:Forward())
 			self.NextFlameDMGT = CurTime() +0.125
 		end
 		if !IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeToMeleeDistance then

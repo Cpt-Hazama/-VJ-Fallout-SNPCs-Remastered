@@ -118,24 +118,25 @@ if VJExists == true then
 		return (self:GetForward():Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
 	end
 
-	function ENT:DoFlameDamage(dist,dmg,attacker,rad,ign)
-		local dispCheck = self:IsNPC() && true or false
-		for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
-			if (ent != self && ent != attacker && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
-				if self:IsNPC() && self:Disposition(ent) != D_HT then return end
-				if self:InFront(ent,rad or 45) then
-					if ent:IsNPC() or ent:IsPlayer() then
-						ent:Ignite(ign or 4)
-					end
-					local dmginfo = DamageInfo()
-					dmginfo:SetDamageType(DMG_BURN)
-					dmginfo:SetDamage(dmg)
-					dmginfo:SetAttacker(attacker || self)
-					dmginfo:SetInflictor(self)
-					ent:TakeDamageInfo(dmginfo)
-				end
-			end
-		end
+	function ENT:DoFlameDamage(dist,dmg,attacker,rad,ign,pos,dir)
+		util.VJ_SphereDamage(self,self,pos or (self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),dist,dmg,DMG_BURN,true,true,{UseCone=true,UseConeDegree=rad,UseConeDirection=dir or false}, function(ent) if !ent:IsOnFire() && (ent:IsPlayer() or ent:IsNPC()) && ign then ent:Ignite(ign) end end)
+		-- local dispCheck = self:IsNPC() && true or false
+		-- for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
+		-- 	if (ent != self && ent != attacker && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
+		-- 		if self:IsNPC() && self:Disposition(ent) != D_HT then return end
+		-- 		if self:InFront(ent,rad or 45) then
+		-- 			if ent:IsNPC() or ent:IsPlayer() then
+		-- 				ent:Ignite(ign or 4)
+		-- 			end
+		-- 			local dmginfo = DamageInfo()
+		-- 			dmginfo:SetDamageType(DMG_BURN)
+		-- 			dmginfo:SetDamage(dmg)
+		-- 			dmginfo:SetAttacker(attacker || self)
+		-- 			dmginfo:SetInflictor(self)
+		-- 			ent:TakeDamageInfo(dmginfo)
+		-- 		end
+		-- 	end
+		-- end
 	end
 
 	-- function ENT:DoFlameDamage(dist,dmg,attacker,ign)

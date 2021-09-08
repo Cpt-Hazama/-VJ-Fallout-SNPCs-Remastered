@@ -36,6 +36,8 @@ function ENT:CustomInit()
 	local hp = math.random(self.StartHealth -10,self.StartHealth +10)
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
+	
+	self:SetVoice("female01")
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***

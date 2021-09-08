@@ -23,12 +23,12 @@ SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"
 SWEP.Instructions				= "Controls are like a regular weapon."
 SWEP.Category					= "VJ Base - Fallout: Remastered"
-SWEP.Spawnable = true
+SWEP.Spawnable = false
 SWEP.ViewModelFOV = 55
 SWEP.BobScale = 0.25
 SWEP.SwayScale = 0.5
 	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.MadeForNPCsOnly 			= false -- Is tihs weapon meant to be for NPCs only?
+SWEP.MadeForNPCsOnly 			= true -- Is tihs weapon meant to be for NPCs only?
 	-- World Model ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.WorldModel_UseCustomPosition = false -- Should the gun use custom position? This can be used to fix guns that are in the crotch
 SWEP.WorldModel_CustomPositionAngle = Vector(80,5,270)
@@ -46,101 +46,64 @@ SWEP.AnimTbl_Deploy = {ACT_GESTURE_RANGE_ATTACK_HMG1}
 SWEP.AnimTbl_Idle = {ACT_GESTURE_RANGE_ATTACK_AR2_GRENADE}
 SWEP.AnimTbl_PrimaryFire = {ACT_GESTURE_RANGE_ATTACK_AR1}
 SWEP.AnimTbl_Reload = {ACT_GESTURE_BARNACLE_STRANGLE}
+
+SWEP.Garbage = {}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:SetupDataTables()
-	self:NetworkVar("Entity",0,"CModel")
-	self:NetworkVar("Vector",0,"CMuzzle")
-end
+-- function SWEP:SetupDataTables()
+-- 	self:NetworkVar("Entity",0,"CModel")
+-- 	self:NetworkVar("Vector",0,"CMuzzle")
+-- end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
-	function SWEP:ViewModelDrawn()
-		local setvalid = IsValid(self._CModel)
-		if !setvalid then
-			local vm = self.Owner:GetViewModel()
-			if IsValid(vm) then
-				self._CModel = ClientsideModel(self.WorldModel)
-				self._CModel:SetPos(vm:GetPos())
-				self._CModel:SetAngles(vm:GetAngles())
-				self._CModel:AddEffects(EF_BONEMERGE)
-				self._CModel:SetNoDraw(true)
-				self._CModel:SetParent(vm)
-				setvalid = true
-				self:SetCModel(self._CModel)
-			end
-		end
-		if setvalid then
-			self._CModel:DrawModel()
-			self:SetCMuzzle(self._CModel:GetAttachment(self._CModel:LookupAttachment(self.CMuzzle)).Pos)
-		end
-	end
+	-- function SWEP:CreateCModel(...)
+	-- 	local ent = ClientsideModel(...)
+	-- 	table.insert(self.Garbage,ent)
+	-- 	return ent
+	-- end
+
+	-- function SWEP:CustomOnInitialize()
+	-- 	if self:GetOwner():IsPlayer() then
+	-- 		self.VJ_CModel = self:CreateCModel(self.WorldModel,RENDERGROUP_BOTH)
+	-- 		if self.VJ_CModel:GetParent() != self:GetOwner():GetViewModel() then
+	-- 			self.VJ_CModel:SetNoDraw(true)
+	-- 			self.VJ_CModel:SetupBones()
+	-- 			self.VJ_CModel:SetParent(self:GetOwner():GetViewModel())
+	-- 			self.VJ_CModel:AddEffects(EF_BONEMERGE)
+	-- 			self.VJ_CModel:AddEffects(EF_BONEMERGE_FASTCULL)
+	-- 		end
+	-- 	end
+	-- end
+
+	-- function SWEP:ViewModelDrawn()
+	-- 	if self.VJ_CModel then
+	-- 		self.VJ_CModel:DrawModel()
+	-- 		self:SetCMuzzle(self.VJ_CModel:GetAttachment(1).Pos)
+	-- 	end
+	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:PrimaryAttackEffects()
-	if self:CustomOnPrimaryAttackEffects() != true then return end
-	local owner = self:GetOwner()
-	
-	/*local vjeffectmuz = EffectData()
-	vjeffectmuz:SetOrigin(self:LocalToWorld(self:GetCMuzzle()))
-	vjeffectmuz:SetEntity(self)
-	vjeffectmuz:SetStart(self:LocalToWorld(self:GetCMuzzle()))
-	vjeffectmuz:SetNormal(owner:GetAimVector())
-	vjeffectmuz:SetAttachment(1)
-	util.Effect("VJ_Weapon_RifleMuzzle1",vjeffectmuz)*/
+-- function SWEP:PrimaryAttackEffects()
+-- 	if self:CustomOnPrimaryAttackEffects() != true then return end
+-- 	local owner = self:GetOwner()
 
-	if GetConVarNumber("vj_wep_nomuszzleflash") == 0 then
-		if self.PrimaryEffects_MuzzleFlash == true then
-			local muzzleattach = self.PrimaryEffects_MuzzleAttachment
-			if isnumber(muzzleattach) == false then muzzleattach = self:LookupAttachment(muzzleattach) end
-			if owner:IsPlayer() && owner:GetViewModel() != nil then
-				local vjeffectmuz = EffectData()
-				vjeffectmuz:SetOrigin(self:LocalToWorld(self:GetCMuzzle()))
-				vjeffectmuz:SetEntity(self)
-				vjeffectmuz:SetStart(self:LocalToWorld(self:GetCMuzzle()))
-				vjeffectmuz:SetNormal(owner:GetAimVector())
-				vjeffectmuz:SetAttachment(muzzleattach)
-				util.Effect("VJ_Weapon_RifleMuzzle1",vjeffectmuz)
-			else
-				if self.PrimaryEffects_MuzzleParticlesAsOne == true then
-					for _,v in pairs(self.PrimaryEffects_MuzzleParticles) do
-						if !istable(v) then
-							ParticleEffectAttach(v,PATTACH_POINT_FOLLOW,self,muzzleattach)
-						end
-					end
-				else
-					ParticleEffectAttach(VJ_PICK(self.PrimaryEffects_MuzzleParticles),PATTACH_POINT_FOLLOW,self,muzzleattach)
-				end
-			end
-		end
-		
-		if SERVER && self.PrimaryEffects_SpawnDynamicLight == true && GetConVarNumber("vj_wep_nomuszzleflash_dynamiclight") == 0 then
-			local FireLight1 = ents.Create("light_dynamic")
-			FireLight1:SetKeyValue("brightness", self.PrimaryEffects_DynamicLightBrightness)
-			FireLight1:SetKeyValue("distance", self.PrimaryEffects_DynamicLightDistance)
-			if owner:IsPlayer() then FireLight1:SetLocalPos(self:LocalToWorld(self:GetCMuzzle()) +self:GetForward()*40 + self:GetUp()*-10) else FireLight1:SetLocalPos(self:GetNWVector("VJ_CurBulletPos")) end
-			FireLight1:SetLocalAngles(self:GetAngles())
-			FireLight1:Fire("Color", self.PrimaryEffects_DynamicLightColor.r.." "..self.PrimaryEffects_DynamicLightColor.g.." "..self.PrimaryEffects_DynamicLightColor.b)
-			//FireLight1:SetParent(self)
-			FireLight1:Spawn()
-			FireLight1:Activate()
-			FireLight1:Fire("TurnOn","",0)
-			FireLight1:Fire("Kill","",0.07)
-			self:DeleteOnRemove(FireLight1)
-		end
-	end
-
-	if self.PrimaryEffects_SpawnShells == true && !owner:IsPlayer() && GetConVarNumber("vj_wep_nobulletshells") == 0 then
-		local shellattach = self.PrimaryEffects_ShellAttachment
-		if isnumber(shellattach) == false then shellattach = self:LookupAttachment(shellattach) end
-		local vjeffect = EffectData()
-		vjeffect:SetEntity(self)
-		vjeffect:SetOrigin(self:LocalToWorld(self:GetCMuzzle()))
-		vjeffect:SetNormal(owner:GetAimVector())
-		vjeffect:SetAttachment(shellattach)
-		util.Effect(self.PrimaryEffects_ShellType,vjeffect)
-	end
-end
+-- 	if GetConVarNumber("vj_wep_nomuszzleflash") == 0 then
+-- 		if self.PrimaryEffects_MuzzleFlash == true then
+-- 			local muzzleattach = self.PrimaryEffects_MuzzleAttachment
+-- 			if isnumber(muzzleattach) == false && IsValid(self.VJ_CModel) then muzzleattach = self.VJ_CModel:LookupAttachment(muzzleattach) end
+-- 			if owner:IsPlayer() && owner:GetViewModel() != nil && IsValid(self.VJ_CModel) then
+-- 				local vjeffectmuz = EffectData()
+-- 				vjeffectmuz:SetOrigin(owner:GetShootPos())
+-- 				vjeffectmuz:SetEntity(self.VJ_CModel)
+-- 				vjeffectmuz:SetStart(owner:GetShootPos())
+-- 				vjeffectmuz:SetNormal(owner:GetAimVector())
+-- 				vjeffectmuz:SetAttachment(muzzleattach)
+-- 				util.Effect("VJ_Weapon_RifleMuzzle1",vjeffectmuz)
+-- 			end
+-- 		end
+-- 	end
+-- end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:PrimaryAttack(UseAlt)
+/*function SWEP:PrimaryAttack(UseAlt)
 	//if self:GetOwner():KeyDown(IN_RELOAD) then return end
 	//self:GetOwner():SetFOV(45, 0.3)
 	//if !IsFirstTimePredicted() then return end
@@ -198,17 +161,6 @@ function SWEP:PrimaryAttack(UseAlt)
 			//VJ_CreateTestObject(spawnpos,self:GetAngles(),Color(0,0,255))
 			bullet.Src = spawnpos
 			
-			-- Callback
-			bullet.Callback = function(attacker, tr, dmginfo)
-				self:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
-				/*local laserhit = EffectData()
-				laserhit:SetOrigin(tr.HitPos)
-				laserhit:SetNormal(tr.HitNormal)
-				laserhit:SetScale(25)
-				util.Effect("AR2Impact", laserhit)
-				tr.HitPos:Ignite(8,0)*/
-			end
-			
 			-- Damage
 			if isply then
 				bullet.Spread = Vector((self.Primary.Cone / 60) / 4, (self.Primary.Cone / 60) / 4, 0)
@@ -256,8 +208,33 @@ function SWEP:CustomOnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnRemove()
+function SWEP:CustomOnEquip()
+	-- if CLIENT then
+		-- if self:GetOwner():IsPlayer() && !IsValid(self.VJ_CModel) then
+			-- self.VJ_CModel = self:CreateCModel(self.WorldModel,RENDERGROUP_BOTH)
+			-- if self.VJ_CModel:GetParent() != self:GetOwner():GetViewModel() then
+				-- self.VJ_CModel:SetNoDraw(true)
+				-- self.VJ_CModel:SetupBones()
+				-- self.VJ_CModel:SetParent(self:GetOwner():GetViewModel())
+				-- self.VJ_CModel:AddEffects(EF_BONEMERGE)
+				-- self.VJ_CModel:AddEffects(EF_BONEMERGE_FASTCULL)
+			-- end
+		-- end
+	-- end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:Holster()
 	if self:GetOwner():IsPlayer() then
-		SafeRemoveEntity(self:GetCModel())
+		for _,v in pairs(self.Garbage) do
+			SafeRemoveEntity(v)
+		end
 	end
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomOnRemove()
+	if self:GetOwner():IsPlayer() then
+		for _,v in pairs(self.Garbage) do
+			SafeRemoveEntity(v)
+		end
+	end
+end*/

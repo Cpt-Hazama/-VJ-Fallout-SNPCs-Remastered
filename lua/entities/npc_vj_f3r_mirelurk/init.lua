@@ -17,6 +17,8 @@ ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calcula
 ENT.MeleeAttackDistance = 80
 ENT.Immune_AcidPoisonRadiation = true
 
+ENT.BulletResistance = 0.4
+
 	-- ====== Flinching Code ====== --
 ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchChance = 12 -- Chance of it flinching from 1 to x | 1 will make it always flinch
@@ -74,11 +76,13 @@ ENT.SoundTbl_Death = {
 	"vj_fallout/mirelurk/mirelurk_death01.mp3",
 	"vj_fallout/mirelurk/mirelurk_death02.mp3",
 }
-ENT.BulletResistance = 0.4
-ENT.Controller_UseFirstPerson = true
-ENT.Controller_FirstPersonBone = "Bip01 Head"
-ENT.Controller_FirstPersonOffset = Vector(4,0,0)
-ENT.Controller_FirstPersonAngle = Angle(90,0,90)
+
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0,0,-20), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(4, 0, 0), -- The offset for the controller when the camera is in first person
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupInventory(opWep)
 	if self.CustomInventory then self:CustomInventory() end
@@ -199,7 +203,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
 		if hitgroup == 101 then
 			dmginfo:ScaleDamage(1.5)
 		else
-			dmginfo:ScaleDamage(self.BulletResistance)
+			dmginfo:ScaleDamage(self.BulletResistance or 1)
 		end
 	end
 end

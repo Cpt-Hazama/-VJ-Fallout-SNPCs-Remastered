@@ -154,6 +154,105 @@ ENT.Controller_FirstPersonBone = "Bip01 Head"
 ENT.Controller_FirstPersonOffset = Vector(4,0,5)
 ENT.Controller_FirstPersonAngle = Angle(90,0,90)
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:SetVoice(voice)
+	if voice == "female01" then
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_Alert = {
+			"vj_fallout/human/femaleadult01/b_alerttocombat01.wav",
+			"vj_fallout/human/femaleadult01/b_alerttocombat02.wav",
+			"vj_fallout/human/femaleadult01/b_alerttocombat03.wav",
+			"vj_fallout/human/femaleadult01/b_alerttocombat04.wav",
+			"vj_fallout/human/femaleadult01/b_alerttocombat05.wav",
+			"vj_fallout/human/femaleadult01/b_normaltocombat01.wav",
+			"vj_fallout/human/femaleadult01/b_normaltocombat02.wav",
+			"vj_fallout/human/femaleadult01/b_normaltocombat03.wav",
+			"vj_fallout/human/femaleadult01/b_normaltocombat04.wav"
+		}
+		self.SoundTbl_CombatIdle = {
+			"vj_fallout/human/femaleadult01/b_alertidle01.wav",
+			"vj_fallout/human/femaleadult01/b_alertidle02.wav",
+			"vj_fallout/human/femaleadult01/b_alertidle03.wav",
+			"vj_fallout/human/femaleadult01/b_alertidle04.wav",
+			"vj_fallout/human/femaleadult01/b_alertidle05.wav",
+			"vj_fallout/human/femaleadult01/b_alertidle06.wav"
+		}
+		self.SoundTbl_Investigate = {
+			"vj_fallout/human/femaleadult01/b_normaltoalert01.wav",
+			"vj_fallout/human/femaleadult01/b_normaltoalert02.wav",
+			"vj_fallout/human/femaleadult01/b_normaltoalert03.wav",
+			"vj_fallout/human/femaleadult01/b_normaltoalert04.wav",
+			"vj_fallout/human/femaleadult01/b_normaltoalert05.wav"
+		}
+		self.SoundTbl_LostEnemy = {
+			"vj_fallout/human/femaleadult01/b_alerttonormal01.wav",
+			"vj_fallout/human/femaleadult01/b_alerttonormal02.wav",
+			"vj_fallout/human/femaleadult01/b_alerttonormal03.wav",
+			"vj_fallout/human/femaleadult01/b_alerttonormal04.wav",
+			"vj_fallout/human/femaleadult01/b_alerttonormal05.wav",
+			"vj_fallout/human/femaleadult01/b_alerttonormal06.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost01.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost02.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost03.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost04.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost05.wav",
+			"vj_fallout/human/femaleadult01/b_combattolost06.wav"
+		}
+		self.SoundTbl_Suppressing = {
+			"vj_fallout/human/femaleadult01/b_attack01.wav",
+			"vj_fallout/human/femaleadult01/b_attack02.wav",
+			"vj_fallout/human/femaleadult01/b_attack03.wav",
+			"vj_fallout/human/femaleadult01/b_attack04.wav",
+			"vj_fallout/human/femaleadult01/b_attack05.wav",
+			"vj_fallout/human/femaleadult01/b_attack06.wav",
+			"vj_fallout/human/femaleadult01/b_attack07.wav",
+			"vj_fallout/human/femaleadult01/b_attack08.wav",
+			"vj_fallout/human/femaleadult01/b_attack09.wav",
+			"vj_fallout/human/femaleadult01/b_attack10.wav",
+			"vj_fallout/human/femaleadult01/b_attack11.wav"
+		}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_CallForHelp = {}
+		self.SoundTbl_OnGrenadeSight = {
+			"vj_fallout/human/femaleadult01/b_avoidthreat01.wav",
+			"vj_fallout/human/femaleadult01/b_avoidthreat02.wav",
+			"vj_fallout/human/femaleadult01/b_avoidthreat03.wav",
+			"vj_fallout/human/femaleadult01/b_avoidthreat04.wav",
+		}
+		self.SoundTbl_AllyDeath = {
+			"vj_fallout/human/femaleadult01/b_deathresponse01.wav",
+			"vj_fallout/human/femaleadult01/b_deathresponse02.wav",
+			"vj_fallout/human/femaleadult01/b_deathresponse03.wav",
+			"vj_fallout/human/femaleadult01/b_deathresponse04.wav",
+		}
+		self.SoundTbl_Pain = {
+			"vj_fallout/human/femaleadult01/b_hit01.wav",
+			"vj_fallout/human/femaleadult01/b_hit02.wav",
+			"vj_fallout/human/femaleadult01/b_hit03.wav",
+			"vj_fallout/human/femaleadult01/b_hit04.wav",
+			"vj_fallout/human/femaleadult01/b_hit05.wav",
+			"vj_fallout/human/femaleadult01/b_hit06.wav",
+			"vj_fallout/human/femaleadult01/b_hit07.wav"
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/human/femaleadult01/death01.wav",
+			"vj_fallout/human/femaleadult01/death02.wav",
+			"vj_fallout/human/femaleadult01/death03.wav"
+		}
+		self.SoundTbl_OnClearedArea = {
+			"vj_fallout/human/femaleadult01/b_combattonormal01.wav",
+			"vj_fallout/human/femaleadult01/b_combattonormal02.wav",
+			"vj_fallout/human/femaleadult01/b_combattonormal03.wav",
+			"vj_fallout/human/femaleadult01/b_combattonormal04.wav",
+			"vj_fallout/human/femaleadult01/b_combattonormal05.wav",
+			"vj_fallout/human/femaleadult01/b_combattonormal06.wav"
+		}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Calmed = {}
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BeforeApparelSpawned() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupApparel(ent)
@@ -306,6 +405,8 @@ function ENT:CustomOnInitialize()
 		self:ManipulateBoneJiggle(92,1)
 		self:ManipulateBoneJiggle(93,1)
 	end
+	
+	-- self:SetVoice("female01")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)

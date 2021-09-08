@@ -16,6 +16,8 @@ ENT.AllowIgnition = false
 ENT.MeleeAttackSetEnemyOnFire = true -- Sets the enemy on fire when it does the melee attack
 ENT.MeleeAttackSetEnemyOnFireTime = 15
 
+ENT.BulletResistance = 0.25
+
 ENT.SoundTbl_FootStepL = {
 	"vj_fallout/magmalurk/foot/mirelurk_foot_l01.mp3",
 	"vj_fallout/magmalurk/foot/mirelurk_foot_l02.mp3",

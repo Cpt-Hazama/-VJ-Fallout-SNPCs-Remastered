@@ -4,7 +4,7 @@
 	"$bumpmap" 	"models/fallout/characters/female/headhuman_caucaisan30_n"
 	
 	$phong			1
-	$phongexponent		30
-	$phongboost		1
+	$phongexponent		4
+	$phongboost		0.2
 	$phongfresnelranges	"[1 1 1]"
 }

@@ -10,6 +10,8 @@ ENT.StartHealth = 85
 ENT.MeleeAttackDistance = 50
 ENT.GeneralSoundPitch1 = 100
 ENT.GeneralSoundPitch2 = 100
+
+ENT.BulletResistance = 0.85
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}

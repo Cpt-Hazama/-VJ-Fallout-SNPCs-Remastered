@@ -6,50 +6,46 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.VJ_NPC_Class = {"CLASS_RAIDER"}
+
+ENT.PlayerFriendly = false
+
+ENT.StartedEffects = false
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink()
+	self.RangeDistance = 325
+	local parameter = self:GetPoseParameter("aim_yaw")
+	if parameter != self.Turret_CurrentParameter then
+		self.turret_turningsd = CreateSound(self,self.Turret_TurningSound) 
+		self.turret_turningsd:SetSoundLevel(70)
+		self.turret_turningsd:PlayEx(1,100)
+	else
+		VJ_STOPSOUND(self.turret_turningsd)
+	end
+	if self.StartedEffects then
+		local enemy = self:GetEnemy()
+		if !IsValid(enemy) or IsValid(enemy) && enemy:GetPos():Distance(self:GetPos()) > self.RangeDistance or !self.Sentry_HasLOS then
+			self:StopParticles()
+			VJ_STOPSOUND(self.FlameLoopSound)
+			self.StartedEffects = false
+		end
+	end
+	self.Turret_CurrentParameter = parameter
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomRangeAttackCode()
-	local start = self:GetAttachment(1).Pos
-	local bullet = {}
-	bullet.Num = 1
-	bullet.Src = start
-	bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *20
-	bullet.Spread = 4
-	bullet.Tracer = 1
-	bullet.TracerName = "vj_fo3_laser"
-	bullet.Force = 7
-	bullet.Damage = self.LaserDamage
-	bullet.AmmoType = "SMG1"
-	bullet.Callback = function(attacker,tr,dmginfo)
-		local vjeffectmuz = EffectData()
-		vjeffectmuz:SetOrigin(tr.HitPos)
-		util.Effect("vj_fo3_laserhit",vjeffectmuz)
-		dmginfo:SetDamageType(bit.bor(DMG_BULLET,DMG_BURN,DMG_DISSOLVE))
+	if !self.StartedEffects then
+		ParticleEffectAttach("flamer",PATTACH_POINT_FOLLOW,self,1)
+		self.FlameLoopSound = CreateSound(self,"vj_fallout/weapons/flamer/flamer_fire_lp.wav")
+		self.FlameLoopSound:Play()
+		self.StartedEffects = true
 	end
-	self:FireBullets(bullet)
-	
-	local vjeffectmuz = EffectData()
-	vjeffectmuz:SetOrigin(start)
-	vjeffectmuz:SetEntity(self)
-	vjeffectmuz:SetStart(start)
-	vjeffectmuz:SetNormal(bullet.Dir)
-	vjeffectmuz:SetAttachment(1)
-	util.Effect("vj_fo3_muzzle_gatlinglaser",vjeffectmuz)
-	
-	local FireLight1 = ents.Create("light_dynamic")
-	FireLight1:SetKeyValue("brightness", "4")
-	FireLight1:SetKeyValue("distance", "120")
-	FireLight1:SetPos(start)
-	FireLight1:SetLocalAngles(self:GetAngles())
-	FireLight1:Fire("Color", "255 0 0")
-	FireLight1:SetParent(self)
-	FireLight1:Spawn()
-	FireLight1:Activate()
-	FireLight1:Fire("TurnOn","",0)
-	FireLight1:Fire("Kill","",0.07)
-	self:DeleteOnRemove(FireLight1)
-	
-	VJ_EmitSound(self,"vj_fallout/weapons/laserpistol/pistollaser_fire_2d.wav",85)
-	VJ_EmitSound(self,"vj_fallout/weapons/laserpistol/pistollaser_fire_3d.wav",110)
+	local att = self:GetAttachment(1)
+	self:DoFlameDamage(300,5,self,35,2,att.Pos,att.Ang:Forward())
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnRemove()
+	VJ_STOPSOUND(self.turret_turningsd)
+	VJ_STOPSOUND(self.FlameLoopSound)
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2017 by DrVrej, All rights reserved. ***

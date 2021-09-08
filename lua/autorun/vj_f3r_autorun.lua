@@ -15,6 +15,20 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
+	function devGetSounds(dir,keyword)
+		local tbl = {}
+		local dir = dir or "vj_fallout/human/femaleadult01/"
+		local keyword = keyword or "alertidle"
+		for _,file in pairs(file.Find("sound/" .. dir .. "*","GAME")) do
+			if string.find(file,keyword) then
+				table.insert(tbl,dir .. file)
+			end
+		end
+		for _,v in pairs(tbl) do
+			print('"' .. v .. '",')
+		end
+	end
+	
 	local vCre = "Fallout - Creatures"
 	VJ.AddCategoryInfo(vCre, {Icon = "vj_icons/f3r_creatures16.png"})
 	local vHum = "Fallout - Humans"
@@ -137,7 +151,7 @@ if VJExists == true then
 	VJ.AddNPC("Sentrybot (Brother Hood)","npc_vj_f3r_sentrybot",vRob)
 	VJ.AddNPC("Sentrybot (Brother Hood Winter)","npc_vj_f3r_sentrybot_bosw",vRob)
 	VJ.AddNPC("Sentry Turret (Brother Hood)","npc_vj_f3r_sentryturret",vRob)
-	-- VJ.AddNPC("Sentry Turret (Raiders)","npc_vj_f3r_sentryturret_flame",vRob)
+	VJ.AddNPC("Sentry Turret (Raiders)","npc_vj_f3r_sentryturret_flame",vRob)
 	VJ.AddNPC("Sentry Turret (Enclave)","npc_vj_f3r_sentryturret_plasma",vRob)
 	VJ.AddNPC("Chinese Spider Mine","npc_vj_f3r_spidermine",vRob)
 

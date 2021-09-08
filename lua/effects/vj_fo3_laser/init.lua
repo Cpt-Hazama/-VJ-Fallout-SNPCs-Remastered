@@ -1,15 +1,20 @@
 EFFECT.Mat = Material( "cable/redlaser" )
 
 function EFFECT:Init(data)
-	self.texcoord = math.Rand(0,20)/3
+	self.texcoord = math.Rand(0,20) /3
 	self.Position = data:GetStart()
 	self.WeaponEnt = data:GetEntity()
 	self.Attachment = data:GetAttachment()
 	
+	if self.WeaponEnt.CW20Weapon then
+		local ent = self.WeaponEnt
+		self.Position = ent.CW_CMODEL:GetAttachment(1).Pos
+		self.WeaponEnt = ent.CW_CMODEL
+		self.Attachment = ent.CW_CMODEL:GetAttachment(1)
+	end
 
 	self.StartPos = self:GetTracerShootPos(self.Position,self.WeaponEnt,self.Attachment)
 	self.EndPos = data:GetOrigin()
-	
 
 	self.Entity:SetCollisionBounds(self.StartPos -self.EndPos,Vector(110,110,110))
 	self.Entity:SetRenderBoundsWS(self.StartPos,self.EndPos,Vector() *8)

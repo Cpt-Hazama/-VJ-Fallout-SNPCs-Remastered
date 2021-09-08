@@ -7,6 +7,8 @@ include('shared.lua')
 -----------------------------------------------*/
 ENT.VJ_NPC_Class = {"CLASS_ENCLAVE"}
 
+ENT.PlayerFriendly = false
+
 ENT.NextRangeAttackTime = 0.7 -- How much time until it can use a range attack?
 ENT.NextAnyAttackTime_Range = 0.7 -- How much time until it can use any attack again? | Counted in Seconds
 ---------------------------------------------------------------------------------------------------------------------------------------------

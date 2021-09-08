@@ -9,6 +9,8 @@ ENT.Model = {"models/cpthazama/fallout/mirelurk_hunter.mdl"} -- The game will pi
 ENT.StartHealth = 375
 ENT.GeneralSoundPitch1 = 90
 ENT.GeneralSoundPitch2 = 90
+
+ENT.BulletResistance = 0.2
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}

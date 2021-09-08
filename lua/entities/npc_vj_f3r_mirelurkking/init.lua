@@ -17,6 +17,8 @@ ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calcula
 ENT.MeleeAttackDistance = 80
 ENT.Immune_AcidPoisonRadiation = true
 
+ENT.BulletResistance = 0.75
+
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.RangeAttackEntityToSpawn = "obj_vj_f3r_sonic" -- The entity that is spawned when range attacking
 ENT.AnimTbl_RangeAttack = {ACT_RANGE_ATTACK1} -- Range Attack Animations
@@ -212,7 +214,7 @@ function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
 		if hitgroup == 101 then
 			dmginfo:ScaleDamage(1.5)
 		else
-			dmginfo:ScaleDamage(self.BulletResistance)
+			dmginfo:ScaleDamage(self.BulletResistance or 1)
 		end
 	end
 end

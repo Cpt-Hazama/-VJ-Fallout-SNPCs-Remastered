@@ -15,6 +15,10 @@ ENT.VJ_NPC_Class = {"CLASS_BOS"} -- NPCs with the same class with be allied to e
 
 ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 
+ENT.BecomeEnemyToPlayer = true
+ENT.PlayerFriendly = true
+ENT.BecomeEnemyToPlayerLevel = 2
+
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
 ENT.DisableDefaultRangeAttackCode = true -- When true, it won't spawn the range attack entity, allowing you to make your own
 ENT.DisableRangeAttackAnimation = true -- if true, it will disable the animation code
@@ -51,7 +55,7 @@ function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(20,20,60), Vector(-20,-20,0))
 
 	self.RangeDistance = self.SightDistance
-	self.RangeAttackAngleRadius = 75
+	self.RangeAttackAngleRadius = 180
 	self.SightAngle = 70
 	self.Turret_AlarmTimes = 0
 	self.Sentry_HasLOS = false
