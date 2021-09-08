@@ -8,10 +8,10 @@ Be sure you have the latest version of VJ Base!
 
 Credits:
 
-Cpt. Hazama (me) - Coding everything, porting some stuff, texting creation/edits
+Cpt. Hazama (me) - Coding, porting, texturing, particles, sound edits
 
-Bizzclaw - Female human models
+Bizzclaw - Some used assets
 
-Silverlan - Original particles/models
+Silverlan - Ported most of the models/animations/sounds, particles
 
 Darken - Sonic particles
