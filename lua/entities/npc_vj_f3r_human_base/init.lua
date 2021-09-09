@@ -9,7 +9,7 @@ ENT.Model = {"models/fallout/player/default.mdl"} -- The game will pick a random
 ENT.StartHealth = 50
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_PLAYER_ALLY"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = nil -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"vjges_h2hattackright_a_npc"} -- Melee Attack Animations
@@ -90,42 +90,9 @@ ENT.SoundTbl_OnKilledEnemy = {}
 ENT.SoundTbl_Guard_Warn = {}
 ENT.SoundTbl_Guard_Angry = {}
 ENT.SoundTbl_Guard_Calmed = {}
-ENT.SoundTbl_Pain = {
-	"vj_fallout/player/player_hit1.mp3",
-	"vj_fallout/player/player_hit2.mp3",
-	"vj_fallout/player/player_hit3.mp3",
-	"vj_fallout/player/player_hit4.mp3",
-	"vj_fallout/player/player_hit5.mp3",
-	"vj_fallout/player/player_hit6.mp3",
-	"vj_fallout/player/player_hit7.mp3",
-	"vj_fallout/player/player_hit8.mp3",
-	"vj_fallout/player/player_hit9.mp3",
-	"vj_fallout/player/player_hit10.mp3",
-	"vj_fallout/player/player_hit11.mp3",
-	"vj_fallout/player/player_hit12.mp3",
-	"vj_fallout/player/player_hit13.mp3",
-	"vj_fallout/player/player_hit14.mp3",
-	"vj_fallout/player/player_hit15.mp3",
-	"vj_fallout/player/player_hit16.mp3",
-	"vj_fallout/player/player_hit17.mp3",
-	"vj_fallout/player/player_hit18.mp3",
-}
-ENT.SoundTbl_Death = {
-	"vj_fallout/player/player_death01.mp3",
-	"vj_fallout/player/player_death02.mp3",
-	"vj_fallout/player/player_death03.mp3",
-	"vj_fallout/player/player_death04.mp3",
-	"vj_fallout/player/player_death05.mp3",
-	"vj_fallout/player/player_death06.mp3",
-}
-ENT.SoundTbl_Swing = {
-	"vj_fallout/player/player_powerattack01.mp3",
-	"vj_fallout/player/player_powerattack02.mp3",
-	"vj_fallout/player/player_powerattack03.mp3",
-	"vj_fallout/player/player_powerattack04.mp3",
-	"vj_fallout/player/player_powerattack05.mp3",
-	"vj_fallout/player/player_powerattack06.mp3"
-}
+ENT.SoundTbl_Pain = {}
+ENT.SoundTbl_Death = {}
+ENT.SoundTbl_Swing = {}
 
 ENT.GeneralSoundPitch1 = 100
 
@@ -149,10 +116,13 @@ ENT.tbl_BeardModels = {}
 ENT.tbl_ApparelModels = {}
 ENT.CanHolsterWeapon = true
 ENT.IsHolstered = false
-ENT.Controller_UseFirstPerson = true
-ENT.Controller_FirstPersonBone = "Bip01 Head"
-ENT.Controller_FirstPersonOffset = Vector(4,0,5)
-ENT.Controller_FirstPersonAngle = Angle(90,0,90)
+
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0,25,-40), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(3, 0, 0), -- The offset for the controller when the camera is in first person
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetVoice(voice)
 	if voice == "female01" then
@@ -1596,6 +1566,114 @@ function ENT:SetVoice(voice)
 			"vj_fallout/human/maleadult08/death02.wav",
 			"vj_fallout/human/maleadult08/death03.wav",
 		}
+	elseif voice == "maledefault" then
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Alert = {}
+		self.SoundTbl_CombatIdle = {}
+		self.SoundTbl_Investigate = {}
+		self.SoundTbl_LostEnemy = {}
+		self.SoundTbl_Suppressing = {}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_OnGrenadeSight = {}
+		self.SoundTbl_AllyDeath = {}
+		self.SoundTbl_Pain = {
+			"vj_fallout/player/player_hit1.mp3",
+			"vj_fallout/player/player_hit2.mp3",
+			"vj_fallout/player/player_hit3.mp3",
+			"vj_fallout/player/player_hit4.mp3",
+			"vj_fallout/player/player_hit5.mp3",
+			"vj_fallout/player/player_hit6.mp3",
+			"vj_fallout/player/player_hit7.mp3",
+			"vj_fallout/player/player_hit8.mp3",
+			"vj_fallout/player/player_hit9.mp3",
+			"vj_fallout/player/player_hit10.mp3",
+			"vj_fallout/player/player_hit11.mp3",
+			"vj_fallout/player/player_hit12.mp3",
+			"vj_fallout/player/player_hit13.mp3",
+			"vj_fallout/player/player_hit14.mp3",
+			"vj_fallout/player/player_hit15.mp3",
+			"vj_fallout/player/player_hit16.mp3",
+			"vj_fallout/player/player_hit17.mp3",
+			"vj_fallout/player/player_hit18.mp3",
+		}
+		self.SoundTbl_Death = {
+			"vj_fallout/player/player_death01.mp3",
+			"vj_fallout/player/player_death02.mp3",
+			"vj_fallout/player/player_death03.mp3",
+			"vj_fallout/player/player_death04.mp3",
+			"vj_fallout/player/player_death05.mp3",
+			"vj_fallout/player/player_death06.mp3",
+		}
+		self.SoundTbl_OnClearedArea = {}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Calmed = {}
+		self.SoundTbl_Swing = {
+			"vj_fallout/player/player_powerattack01.mp3",
+			"vj_fallout/player/player_powerattack02.mp3",
+			"vj_fallout/player/player_powerattack03.mp3",
+			"vj_fallout/player/player_powerattack04.mp3",
+			"vj_fallout/player/player_powerattack05.mp3",
+			"vj_fallout/player/player_powerattack06.mp3"
+		}
+	elseif voice == "femaledefault" then
+		self.SoundTbl_OnGrenadeSight = {}
+		self.SoundTbl_OnClearedArea = {}
+		self.SoundTbl_CombatIdle = {}
+		self.SoundTbl_Guard_Angry = {}
+		self.SoundTbl_Guard_Warn = {}
+		self.SoundTbl_Suppressing = {}
+		self.SoundTbl_FollowPlayer = {}
+		self.SoundTbl_OnPlayerSight = {}
+		self.SoundTbl_Investigate = {}
+		self.SoundTbl_OnKilledEnemy = {}
+		self.SoundTbl_UnFollowPlayer = {}
+		self.SoundTbl_Guard_Calmed = {}
+		self.SoundTbl_AllyDeath = {}
+		self.SoundTbl_IdleDialogue = {}
+		self.SoundTbl_Alert = {}
+		self.SoundTbl_DamageByPlayer = {}
+		self.SoundTbl_Idle = {}
+		self.SoundTbl_LostEnemy = {}
+		self.SoundTbl_Pain = {
+			"vj_fallout/female/genericplayer_hit_1.mp3",
+			"vj_fallout/female/genericplayer_hit_10.mp3",
+			"vj_fallout/female/genericplayer_hit_11.mp3",
+			"vj_fallout/female/genericplayer_hit_12.mp3",
+			"vj_fallout/female/genericplayer_hit_13.mp3",
+			"vj_fallout/female/genericplayer_hit_14.mp3",
+			"vj_fallout/female/genericplayer_hit_15.mp3",
+			"vj_fallout/female/genericplayer_hit_16.mp3",
+			"vj_fallout/female/genericplayer_hit_2.mp3",
+			"vj_fallout/female/genericplayer_hit_3.mp3",
+			"vj_fallout/female/genericplayer_hit_4.mp3",
+			"vj_fallout/female/genericplayer_hit_5.mp3",
+			"vj_fallout/female/genericplayer_hit_6.mp3",
+			"vj_fallout/female/genericplayer_hit_7.mp3",
+			"vj_fallout/female/genericplayer_hit_8.mp3",
+			"vj_fallout/female/genericplayer_hit_9.mp3",
+		}
+		self.SoundTbl_Swing = {
+			"vj_fallout/female/genericplayer_powerattack_1.mp3",
+			"vj_fallout/female/genericplayer_powerattack_2.mp3",
+			"vj_fallout/female/genericplayer_powerattack_3.mp3",
+			"vj_fallout/female/genericplayer_powerattack_4.mp3",
+			"vj_fallout/female/genericplayer_powerattack_5.mp3",
+			"vj_fallout/female/genericplayer_powerattack_6.mp3",
+		}
+		self.SoundTbl_IdleDialogueAnswer = {}
+		self.SoundTbl_Death = {
+			"vj_fallout/female/genericplayer_death_1.mp3",
+			"vj_fallout/female/genericplayer_death_2.mp3",
+			"vj_fallout/female/genericplayer_death_3.mp3",
+			"vj_fallout/female/genericplayer_death_4.mp3",
+			"vj_fallout/female/genericplayer_death_5.mp3",
+		}
 	else
 		self.SoundTbl_Idle = {}
 		self.SoundTbl_IdleDialogue = {}
@@ -1667,6 +1745,7 @@ function ENT:AddApparel(ent,mdl,ishair,color)
 	apparel:SetOwner(ent)
 	apparel:SetParent(ent)
 	apparel:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+	if !ishair then apparel:AddEffects(EF_BONEMERGE) end
 	apparel:Fire("SetParentAttachment","headgear",0)
 	apparel:Spawn()
 	apparel:Activate()
@@ -1678,15 +1757,17 @@ function ENT:AddApparel(ent,mdl,ishair,color)
 	apparel:SetSolid(SOLID_NONE)
 	if ent == self then
 		if !ishair then
+			table.insert(self.tbl_CurrentApparel,apparel)
 			table.insert(self.tbl_Apparel,apparel:GetModel())
 		else
+			table.insert(self.tbl_CurrentHair,apparel)
 			table.insert(self.tbl_Hair,apparel:GetModel())
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPlayerSight(argent)
-	if self.Human_IsSoldier && !IsValid(self:GetEnemy()) then
+	if self.Human_IsSoldier && !IsValid(self:GetEnemy()) && self:Disposition(argent) == D_LI then
 		self:StopMoving()
 		self:VJ_ACT_PLAYACTIVITY(ACT_MP_GESTURE_VC_NODNO,true,false,true)
 		if !self.IsHolstered && IsValid(self:GetActiveWeapon()) then
@@ -1736,7 +1817,9 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
+	self.tbl_CurrentApparel = {}
 	self.tbl_Apparel = {}
+	self.tbl_CurrentHair = {}
 	self.tbl_Hair = {}
 	self.HasApparel = false
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
@@ -2123,6 +2206,7 @@ function ENT:Equip()
 			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_EquipSound,75,100)
 		end
 	end
+	self:SetWeaponState(VJ_WEP_STATE_NONE)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Unequip()
@@ -2143,6 +2227,7 @@ function ENT:Unequip()
 			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_UnequipSound,75,100)
 		end
 	end
+	self:SetWeaponState(VJ_WEP_STATE_HOLSTERED)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:HumanThink() end
@@ -2155,19 +2240,33 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self.NextHolsterT = self.NextHolsterT or CurTime()
-	self:GuardAI()
-	if IsValid(self:GetEnemy()) then
-		self.NextHolsterT = CurTime() +15
-	end
-	if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
-		if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
-			self:Unequip()
-			-- self.NextHolsterT = CurTime() +5
-		elseif IsValid(self:GetEnemy()) && self.IsHolstered then
+	if !IsValid(self.VJ_TheController) then
+		self:GuardAI()
+		if IsValid(self:GetEnemy()) then
+			self.NextHolsterT = CurTime() +15
+		end
+		if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
+			if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
+				self:Unequip()
+				-- self.NextHolsterT = CurTime() +5
+			elseif IsValid(self:GetEnemy()) && self.IsHolstered then
+				self:Equip()
+			end
+		elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
 			self:Equip()
 		end
-	elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
-		self:Equip()
+	else
+		if self.VJ_TheController:KeyDown(IN_RELOAD) then
+			local wep = self:GetActiveWeapon()
+			if wep:Clip1() < wep.Primary.ClipSize then return end
+			if CurTime() < self.NextHolsterT then return end
+			if self.IsHolstered then
+				self:Equip()
+			else
+				self:Unequip()
+			end
+			self.NextHolsterT = CurTime() +2
+		end
 	end
 	if CurTime() < self.NPC_NextMouthMove then
 		if self.NPC_NextMouthDistance == 0 then

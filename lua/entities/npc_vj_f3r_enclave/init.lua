@@ -16,9 +16,27 @@ function ENT:CustomInit()
 	local hp = math.random(self.StartHealth -10,self.StartHealth +10)
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
-	
-	self:SetBodygroup(2,2)
-	self:SetBodygroup(3,1)
+
+	self.Gender = math.random(1,4) == 1 && 2 or 1
+
+	self:GenderInit()
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:GenderInit()
+	self:SetModel(self.Gender == 1 && "models/fallout/player/enclavepowerarmor.mdl" or "models/fallout/player/female/enclavepowerarmor.mdl")
+	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
+
+	if self.Gender == 1 then
+		self:SetBodygroup(2,2)
+		self:SetBodygroup(3,1)
+	else
+		self:SetBodygroup(4,2)
+		self:SetBodygroup(5,1)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:AfterInit()
+	self:SetVoice(self.Gender == 1 && "male08" or "female07")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)

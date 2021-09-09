@@ -47,6 +47,13 @@ ENT.SoundTbl_Death = {
 }
 
 ENT.RangeDistance = 1000
+
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0,0,-20), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(12, 0, 4), -- The offset for the controller when the camera is in first person
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupInventory(opWep)
 	if self.CustomInventory then self:CustomInventory() end

@@ -51,8 +51,8 @@ function ENT:DeathEffects(data,phys)
 
 	if data.HitEntity == Entity(0) then
 		local tr = util.TraceLine({
-			start = tr.HitPos,
-			endpos = tr.HitPos -Vector(0,0,80),
+			start = data.HitPos,
+			endpos = data.HitPos -Vector(0,0,80),
 			mask = CONTENTS_SOLID
 		})
 		if tr.HitWorld then

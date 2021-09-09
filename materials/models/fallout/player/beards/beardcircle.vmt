@@ -2,5 +2,5 @@
 {
 	"$baseTexture" "models/fallout/player/beards/beardcircle"
 	"$bumpmap" 	"models/fallout/player/beards/beardcircle_n"
-	"$translucent" "1"
+	"$alphatest" "1"
 }

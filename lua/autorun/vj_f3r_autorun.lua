@@ -21,9 +21,11 @@ if VJExists == true then
 		female06
 		female07
 		femaleraider
+		femaledefault
 		malefiend
 		maleraider
 		maleclone
+		maledefault
 		male01
 		male02
 		male03 -- This is technically the actual fiend voice lines, the other is a raider/fiend mix
@@ -319,20 +321,19 @@ if VJExists == true then
 	VJ.AddNPC("FEV Subject","npc_vj_f3r_fev",vFEV)
 
 		-- Humans --
-	VJ.AddNPC_HUMAN("_Human Base","npc_vj_f3r_human_base",{
-		"weapon_vj_f3r_assaultrifle",
-		"weapon_vj_f3r_combatshotgun",
-		"weapon_vj_f3r_10mmpistol",
-		"weapon_vj_f3r_huntingrifle",
-	},vHum)
+	-- VJ.AddNPC_HUMAN("_Human Base","npc_vj_f3r_human_base",{
+	-- 	"weapon_vj_f3r_assaultrifle",
+	-- 	"weapon_vj_f3r_combatshotgun",
+	-- 	"weapon_vj_f3r_10mmpistol",
+	-- 	"weapon_vj_f3r_huntingrifle",
+	-- },vHum)
 	VJ.AddNPC_HUMAN("Enclave Soldier (NV)","npc_vj_f3r_enclave_nv",{"weapon_vj_f3r_plasmapistol","weapon_vj_f3r_plasmarifle"},vHum)
 	VJ.AddNPC_HUMAN("Enclave Soldier","npc_vj_f3r_enclave",{"weapon_vj_f3r_plasmapistol","weapon_vj_f3r_plasmarifle"},vHum)
+	VJ.AddNPC_HUMAN("Enclave Hellfire Soldier","npc_vj_f3r_enclave_hell",{"weapon_vj_f3r_heavyincinerator"},vHum)
 	VJ.AddNPC_HUMAN("Enclave Tesla Soldier","npc_vj_f3r_enclave_tesla",{"weapon_vj_f3r_plasmarifle"},vHum)
-	VJ.AddNPC_HUMAN("Brother Hood Initiate","npc_vj_f3r_bos",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Casual)","npc_vj_f3r_waste_casu",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Combat Armor)","npc_vj_f3r_waste_comb",{},vHum)
+	VJ.AddNPC_HUMAN("Brother Hood Initiate","npc_vj_f3r_bos",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_10mmpistol"},vHum)
+	VJ.AddNPC_HUMAN("Brother Hood T-45","npc_vj_f3r_bosarmor",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
 	VJ.AddNPC_HUMAN("NCR Ranger","npc_vj_f3r_ncr",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Formal)","npc_vj_f3r_waste_form",{},vHum)
 	VJ.AddNPC_HUMAN("Child of Atom","npc_vj_f3r_coa",{},vHum)
 	VJ.AddNPC_HUMAN("Gary","npc_vj_f3r_garry",{
 		"weapon_vj_f3r_assaultrifle",
@@ -340,13 +341,9 @@ if VJExists == true then
 		"weapon_vj_f3r_10mmpistol",
 		"weapon_vj_f3r_huntingrifle",
 	},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Engineer)","npc_vj_f3r_waste_eng",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Lab Coat)","npc_vj_f3r_waste_lab",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Leather Armor)","npc_vj_f3r_waste_lea",{"weapon_vj_f3r_huntingrifle","weapon_vj_f3r_10mmpistol"},vHum)
 	VJ.AddNPC_HUMAN("Talon Merc Company","npc_vj_f3r_talon",{},vHum) -- Mark 2 combat
 	VJ.AddNPC_HUMAN("Raider (Metal Armor)","npc_vj_f3r_raider_met",{},vHum)
 	VJ.AddNPC_HUMAN("Raider (Power Armor)","npc_vj_f3r_raider_pow",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Radsuit)","npc_vj_f3r_waste_rad",{},vHum)
 	VJ.AddNPC_HUMAN("Raider","npc_vj_f3r_raider",{
 		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_combatshotgun",
@@ -354,14 +351,22 @@ if VJExists == true then
 		"weapon_vj_f3r_huntingrifle",
 	},vHum)
 	VJ.AddNPC_HUMAN("Y-17 Trauma Override Harness","npc_vj_f3r_skeleton",{},vHum)
-	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.I","npc_vj_f3r_chinese1",{},vHum)
-	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.II","npc_vj_f3r_chinese2",{},vHum)
-	VJ.AddNPC_HUMAN("Brother Hood T-45","npc_vj_f3r_bosarmor",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Tuxedo)","npc_vj_f3r_waste_tux",{},vHum)
+	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.I","npc_vj_f3r_chinese1",{"weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
+	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.II","npc_vj_f3r_chinese2",{"weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
 	VJ.AddNPC_HUMAN("Vault Security","npc_vj_f3r_vault",{},vHum)
 	VJ.AddNPC_HUMAN("Vault Dweller","npc_vj_f3r_vaultsec",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",{},vHum)
-	VJ.AddNPC_HUMAN("Wastelander (Merchant)","npc_vj_f3r_waste_merch",{},vHum)
+	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",{
+		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol",
+		"weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_44magnum","weapon_vj_f3r_44magnum","weapon_vj_f3r_44magnum",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_flamer",
+		"weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_sawedoffshotgun","weapon_vj_f3r_sawedoffshotgun","weapon_vj_f3r_sawedoffshotgun",
+		"weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle",
+		"weapon_vj_f3r_laserpistol"
+	},vHum)
 
 	VJ.AddParticle("particles/alienblaster.pcf",{
 		"alienblaster_projectile",

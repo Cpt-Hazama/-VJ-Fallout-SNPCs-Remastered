@@ -2,5 +2,5 @@
 {
 	"$baseTexture" "models/fallout/player/hair/hairmessy03"
 	"$bumpmap" 	"models/fallout/player/hair/hairmessy03_n"
-	"$translucent" "1"
+	"$alphatest" "1"
 }

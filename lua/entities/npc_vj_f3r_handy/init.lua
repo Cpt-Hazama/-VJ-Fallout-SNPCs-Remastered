@@ -121,6 +121,13 @@ ENT.Skin = 1
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = 2000 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
 ENT.NoChaseAfterCertainRange_CloseDistance = 750
+
+ENT.VJC_Data = {
+    CameraMode = 1, -- Sets the default camera mode | 1 = Third Person, 2 = First Person
+    ThirdP_Offset = Vector(0,0,-20), -- The offset for the controller when the camera is in third person
+    FirstP_Bone = "Bip01 Head", -- If left empty, the base will attempt to calculate a position for first person
+    FirstP_Offset = Vector(4, 0, 4), -- The offset for the controller when the camera is in first person
+}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:HasFlamer()
 	return self:GetBodygroup(1) == 1
@@ -218,7 +225,7 @@ function ENT:Gesture(ges)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
-	if IsValid(self:GetEnemy()) && self.NearestPointToEnemyDistance <= self.RangeToMeleeDistance then
+	if IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_ATTACK) or (!IsValid(self.VJ_TheController) && IsValid(self:GetEnemy()) && self.NearestPointToEnemyDistance <= self.RangeToMeleeDistance) then
 		self:StartFlamer()
 	end
 end
@@ -263,7 +270,7 @@ function ENT:CustomOnThink()
 	
 	if IsValid(self:GetEnemy()) then
 		self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
-		if self.NearestPointToEnemyDistance < 150 then
+		if self.NearestPointToEnemyDistance < 150 && !IsValid(self.VJ_TheController) then
 			self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-250,-400))
 			self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
 		end
@@ -295,7 +302,7 @@ function ENT:CustomOnThink()
 			self:DoFlameDamage(300,5,self,35,10,att.Pos,att.Ang:Forward())
 			self.NextFlameDMGT = CurTime() +0.125
 		end
-		if !IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeToMeleeDistance then
+		if IsValid(self.VJ_TheController) && !self.VJ_TheController:KeyDown(IN_ATTACK) or !IsValid(self.VJ_TheController) && (!IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeToMeleeDistance) then
 			self.CurrentAttack = nil
 			self:StopParticles()
 			self:EmitSound("vj_fallout/weapons/flamer/flamer_fire_end.wav",75,100)
@@ -322,7 +329,7 @@ function ENT:CustomOnThink()
 			-- end
 		end
 	elseif self.CurrentAttack == 2 then
-		if !IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeDistance then
+		if IsValid(self.VJ_TheController) && !self.VJ_TheController:KeyDown(IN_ATTACK2) or !IsValid(self.VJ_TheController) && (!IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeDistance) then
 			self.CurrentAttack = nil
 		else
 			local att = self:GetAttachment(self:LookupAttachment("plasmagun_muzzle"))

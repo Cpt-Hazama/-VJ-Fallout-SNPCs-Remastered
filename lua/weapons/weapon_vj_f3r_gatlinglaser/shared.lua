@@ -44,6 +44,8 @@ function SWEP:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PrimaryAttackEffects()
+	self:GetOwner():RestartGesture(ACT_SLAM_DETONATOR_DRAW)
+
 	local customeffects = self:CustomOnPrimaryAttackEffects()
 	if customeffects != true then return end
 

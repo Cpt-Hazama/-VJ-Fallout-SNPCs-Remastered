@@ -7,6 +7,8 @@
 local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 
+	if CLIENT then return end
+
 	local ENT = FindMetaTable("Entity")
 	local NPC = FindMetaTable("NPC")
 
@@ -85,6 +87,23 @@ if VJExists == true then
 			self:GetActiveWeapon():DrawShadow(false)
 			self:GetActiveWeapon():SetMaterial("cpthazama/cloak")
 		end
+		if self.tbl_CurrentApparel then
+			for _,v in ipairs(self.tbl_CurrentApparel) do
+				if IsValid(v) then
+					print(self,v)
+					v:SetMaterial("cpthazama/cloak")
+					v:DrawShadow(false)
+				end
+			end
+		end
+		if self.tbl_CurrentHair then
+			for k,v in ipairs(self.tbl_CurrentHair) do
+				if IsValid(v) then
+					v:SetMaterial("cpthazama/cloak")
+					v:DrawShadow(false)
+				end
+			end
+		end
 		for _, x in ipairs(ents.GetAll()) do
 			if (x:GetClass() != self:GetClass() && x:GetClass() != "npc_grenade_frag") && x:IsNPC() && self:Visible(x) then
 				x:AddEntityRelationship(self,D_NU,99)
@@ -109,6 +128,22 @@ if VJExists == true then
 				if IsValid(self:GetActiveWeapon()) then
 					self:GetActiveWeapon():DrawShadow(true)
 					self:GetActiveWeapon():SetMaterial(" ")
+				end
+				if self.tbl_CurrentApparel then
+					for _,v in ipairs(self.tbl_CurrentApparel) do
+						if IsValid(v) then
+							v:SetMaterial(" ")
+							v:DrawShadow(true)
+						end
+					end
+				end
+				if self.tbl_CurrentHair then
+					for _,v in ipairs(self.tbl_CurrentHair) do
+						if IsValid(v) then
+							v:SetMaterial(" ")
+							v:DrawShadow(true)
+						end
+					end
 				end
 			end
 		end)
