@@ -98,7 +98,7 @@ function ENT:SetupInventory(opWep)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(TheProjectile)
-	return self:CalculateProjectile("Curve",self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos,self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +self:GetEnemy():GetUp() *30,1500)
+	return self:CalculateProjectile("Line",TheProjectile:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),1000)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()

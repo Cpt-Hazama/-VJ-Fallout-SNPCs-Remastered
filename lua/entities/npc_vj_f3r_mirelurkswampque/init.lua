@@ -10,6 +10,10 @@ ENT.RangeAttackEntityToSpawn = "obj_vj_f3r_spit"
 
 ENT.IsKing = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:RangeAttackCode_GetShootPos(TheProjectile)
+	return self:CalculateProjectile("Curve",TheProjectile:GetPos(),self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter(),1000)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
 	self:SetupInventory()

@@ -8,7 +8,8 @@ include('shared.lua')
 ENT.StartHealth = 700
 ENT.Skin = 2
 
-ENT.VJ_NPC_Class = {"CLASS_OUTCASTS"}
+ENT.VJ_NPC_Class = {"CLASS_OUTCASTS","CLASS_PLAYER_ALLY"}
+ENT.PlayerFriendly = true
 
 ENT.SoundTbl_Alert = {
 	"vj_fallout/mrgutsy/genericrobot_alerttocombat1.mp3",

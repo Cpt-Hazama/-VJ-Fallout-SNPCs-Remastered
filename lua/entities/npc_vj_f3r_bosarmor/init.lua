@@ -30,6 +30,22 @@ function ENT:CustomInit()
 		self:SetBodygroup(4,2)
 		self:SetBodygroup(5,2)
 	end
+
+	self.DeathCorpseSubMaterials = {}
+
+	for k, v in ipairs(self:GetMaterials()) do
+		local trueValue = k -1
+		if VJ_HasValue(self.VJ_NPC_Class,"CLASS_OUTCASTS") then
+			if v == "models/fallout/armor/powerarmor/powerarmorbody" then
+				table.insert(self.DeathCorpseSubMaterials,trueValue)
+				self:SetSubMaterial(trueValue,"models/fallout/armor/powerarmor/powerarmorbodyoutcast")
+			end
+			if v == "models/fallout/armor/powerarmor/powerarmorhelmet" then
+				table.insert(self.DeathCorpseSubMaterials,trueValue)
+				self:SetSubMaterial(trueValue,"models/fallout/armor/powerarmor/powerarmoroutcasthelmet")
+			end
+		end
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()

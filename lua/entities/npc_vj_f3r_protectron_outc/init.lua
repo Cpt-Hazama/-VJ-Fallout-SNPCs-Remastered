@@ -7,7 +7,8 @@ include('shared.lua')
 -----------------------------------------------*/
 ENT.Model = {"models/fallout/protectron.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_OUTCASTS"}
+ENT.VJ_NPC_Class = {"CLASS_OUTCASTS","CLASS_PLAYER_ALLY"}
+ENT.PlayerFriendly = true
 
 ENT.LaserDamage = 15
 ENT.Skin = 3
