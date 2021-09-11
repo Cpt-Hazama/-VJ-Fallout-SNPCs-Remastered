@@ -23,7 +23,13 @@ function ENT:CustomInit()
 	local hp = math.random(self.StartHealth -10,self.StartHealth +10)
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
+
 	self.Gender = math.random(1,2)
+
+	self:ModelInit()
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ModelInit()
 	if self.Gender == 1 then
 		self:SetModel("models/fallout/player/raider.mdl")
 	else

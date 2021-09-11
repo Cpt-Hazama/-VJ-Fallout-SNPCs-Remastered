@@ -117,6 +117,18 @@ ENT.Data = {
 			apparel=defApparel_Male,
 			apparelchance=false
 		},
+		{mdl={
+			"models/fallout/player/wastelandclothing.mdl"},
+			hp=60,
+			b_scale=1,
+			o_scale=1,
+			hair=true,
+			hairchance=false,
+			beards=true,
+			beardchance=false,
+			apparel=defApparel_Male,
+			apparelchance=false
+		},
 		{mdl="models/fallout/player/combatarmor.mdl",
 			hp=65,
 			b_scale=0.85,
@@ -244,6 +256,10 @@ function ENT:CustomInit()
 		else
 			self.tbl_BeardModels = self.SpawnData.beards
 		end
+	end
+
+	if self:GetModel() == "models/fallout/player/wastelandclothing.mdl" then
+		self:SetBodygroup(0,math.random(0,5))
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

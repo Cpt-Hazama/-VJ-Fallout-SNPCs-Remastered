@@ -353,14 +353,14 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
 		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	elseif htype == "1hp" then
-		local aim = VJ_SequenceToActivity(self,"1hpaim")
-		local walk = VJ_SequenceToActivity(self,"1hpaim_walk")
-		local walk_crouch = VJ_SequenceToActivity(self,"1hpaim_sneak")
-		local run = VJ_SequenceToActivity(self,"1hpaim_run")
-		local run_crouch = VJ_SequenceToActivity(self,"1hpaim_sneakfast")
-		local fire = VJ_SequenceToActivity(self,"1hpattackright")
-		local crouch = VJ_SequenceToActivity(self,"sneak1hpaim")
-		local reload = "1hpreloada"
+		local aim = VJ_SequenceToActivity(self,"2hraim")
+		local walk = ACT_GESTURE_RANGE_ATTACK_SMG2
+		local walk_crouch = VJ_SequenceToActivity(self,"2hraim_sneak")
+		local run = ACT_GESTURE_RANGE_ATTACK_SMG1_LOW
+		local run_crouch = VJ_SequenceToActivity(self,"2hraim_sneakfast")
+		local fire = VJ_SequenceToActivity(self,"2hrattack2")
+		local crouch = VJ_SequenceToActivity(self,"sneak2hraim")
+		local reload = "2hrreloada"
 
 		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
 		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk

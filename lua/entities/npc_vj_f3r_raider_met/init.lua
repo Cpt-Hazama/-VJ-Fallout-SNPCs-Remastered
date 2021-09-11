@@ -5,35 +5,13 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ENT.StartHealth = 75
-ENT.VJ_NPC_Class = {"CLASS_RAIDER"} -- NPCs with the same class with be allied to each other
-
-ENT.Human_IsAggressive = true
-ENT.HairColor = Color(math.random(0,255),math.random(0,255),math.random(0,255))
-ENT.CantHaveHairWithApparel = true
-ENT.SpawnWithApparelChance = 4
-ENT.SpawnWithHairChance = 1
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:BeforeApparelSpawned()
-	self.HairColor = Color(math.random(0,255),math.random(0,255),math.random(0,255))
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomInit()
-	local hp = math.random(self.StartHealth -10,self.StartHealth +10)
-	self:SetHealth(hp)
-	self:SetMaxHealth(hp)
-	self.Gender = math.random(1,2)
+function ENT:ModelInit()
 	if self.Gender == 1 then
-		self:SetModel("models/fallout/player/raider.mdl")
+		self:SetModel("models/fallout/player/metalarmor.mdl")
 	else
-		local tbl = {
-			"models/fallout/player/female/raider01.mdl",
-			"models/fallout/player/female/raider02.mdl",
-			"models/fallout/player/female/raider03.mdl",
-			"models/fallout/player/female/raider04.mdl",
-		}
-		self:SetModel(VJ_PICKRANDOMTABLE(tbl))
+		self:SetModel("models/fallout/player/female/metalarmor.mdl")
 	end
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 	if self.Gender == 1 then
@@ -63,16 +41,15 @@ function ENT:CustomInit()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:AfterInit()
-	self:SetVoice(self.Gender == 1 && (math.random(1,4) == 1 && "malefiend" or "maleraider") or "femaleraider")
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoKilledEnemy(argent,attacker,inflictor)
-	if !IsValid(self:GetEnemy()) then
-		if math.random(1,6) == 1 then
-			self:VJ_ACT_PLAYACTIVITY(ACT_MP_GESTURE_VC_HANDMOUTH,true,false,true)
-			VJ_EmitSound(self,self.SoundTbl_Laugh,82,100)
-		end
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)
+	if (dmginfo:IsBulletDamage()) then
+		local bScale = 0.825
+		dmginfo:ScaleDamage(bScale)
+		if bScale <= 0.8 then VJ_EmitSound(self,"vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav",70) end
+	elseif dmginfo:GetDamageType() != DMG_GENERIC then
+		local oScale = 0.9
+		dmginfo:ScaleDamage(oScale)
+		if oScale <= 0.8 then VJ_EmitSound(self,"vj_impact_metal/bullet_metal/metalsolid"..math.random(1,10)..".wav",70) end
 	end
 end
 /*-----------------------------------------------

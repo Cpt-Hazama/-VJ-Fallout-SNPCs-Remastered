@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = nil -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
+ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"vjges_h2hattackright_a_npc"} -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 8
@@ -1267,8 +1267,6 @@ function ENT:SetVoice(voice)
 			"vj_fallout/human/maleadult02/b_attack09.wav",
 			"vj_fallout/human/maleadult02/b_attack10.wav",
 			"vj_fallout/human/maleadult02/b_attack11.wav",
-			"vj_fallout/human/maleadult02/b_attackresponse01.wav",
-			"vj_fallout/human/maleadult02/b_attackresponse02.wav",
 		}
 		self.SoundTbl_FollowPlayer = {}
 		self.SoundTbl_OnPlayerSight = {}
@@ -1822,6 +1820,7 @@ function ENT:CustomOnInitialize()
 	self.tbl_CurrentHair = {}
 	self.tbl_Hair = {}
 	self.HasApparel = false
+	
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 	timer.Simple(0.02,function()
 		if IsValid(self) then
@@ -1870,6 +1869,8 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 		VJ_EmitSound(self,self.SoundTbl_Swing,80,100)
 	elseif string.find(key,"event_1hm") then
 		local atk = string.Replace(key,"event_1hm ","")
+		local wep = self:GetActiveWeapon()
+		self.MeleeAttackDamage = IsValid(wep) && wep.IsMeleeWeapon && (key == "event_1hm forwardpower" && wep.Primary.HeavyDamage or wep.Primary.Damage) or 8
 		self:MeleeAttackCode()
 	elseif string.find(key,"event_2hm") then
 		local atk = string.Replace(key,"event_2hm ","")
@@ -1931,6 +1932,29 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
 		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
 		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "1hm" then
+		local aim = VJ_SequenceToActivity(self,"1hmaim")
+		local walk = VJ_SequenceToActivity(self,"1hmwalk")
+		local walk_crouch = VJ_SequenceToActivity(self,"1hpaim_sneak")
+		local run = VJ_SequenceToActivity(self,"1hmrun")
+		local run_crouch = VJ_SequenceToActivity(self,"1hpaim_sneakfast")
+		local fire = ACT_READINESS_PISTOL_RELAXED_TO_STIMULATED_WALK
+		local fire2 = ACT_READINESS_PISTOL_RELAXED_TO_STIMULATED
+		local crouch = VJ_SequenceToActivity(self,"sneak1hpaim")
+		local reload = "1hmreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK2] 					= fire2
 		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
 		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
 		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
@@ -2312,6 +2336,52 @@ end
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
 	GetCorpse.tbl_Inventory = self.tbl_Inventory
 	self:SetupApparel(GetCorpse)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:MeleeAttackCode()
+	if self.Dead == true or /*self.vACT_StopAttacks == true or*/ self.Flinching == true or self.ThrowingGrenade == true then return end
+	if self.StopMeleeAttackAfterFirstHit == true && self.AlreadyDoneMeleeAttackFirstHit == true then return end
+	if /*self.VJ_IsBeingControlled == false &&*/ self.MeleeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(),true) end
+	//self.MeleeAttacking = true
+	local FindEnts = ents.FindInSphere(self:SetMeleeAttackDamagePosition(),self.MeleeAttackDamageDistance)
+	local hitentity = false
+	local HasHitNonPropEnt = false
+	if FindEnts != nil then
+		for _,v in pairs(FindEnts) do
+			if (self.VJ_IsBeingControlled == true && self.VJ_TheControllerBullseye == v) or (v:IsPlayer() && v.IsControlingNPC == true) then continue end
+			if (v:IsNPC() or (v:IsPlayer() && v:Alive() && GetConVar("ai_ignoreplayers"):GetInt() == 0)) && (self:Disposition(v) != D_LI) && (v != self) && (v:GetClass() != self:GetClass()) or (v:GetClass() == "prop_physics") or v:GetClass() == "func_breakable_surf" or v:GetClass() == "func_breakable" && (self:GetSightDirection():Dot((v:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(self.MeleeAttackDamageAngleRadius))) then
+				local doactualdmg = DamageInfo()
+				doactualdmg:SetDamage(self:VJ_GetDifficultyValue(self.MeleeAttackDamage))
+				if v:IsNPC() or v:IsPlayer() then doactualdmg:SetDamageForce(self:GetForward()*((doactualdmg:GetDamage()+100)*70)) end
+				doactualdmg:SetInflictor(self)
+				doactualdmg:SetAttacker(self)
+				v:TakeDamageInfo(doactualdmg, self)
+				if v:IsPlayer() then
+					v:ViewPunch(Angle(math.random(-1,1)*10,math.random(-1,1)*10,math.random(-1,1)*10))
+				end
+				VJ_DestroyCombineTurret(self,v)
+				if v:GetClass() != "prop_physics" then HasHitNonPropEnt = true end
+				if v:GetClass() == "prop_physics" && HasHitNonPropEnt == false then
+					//if VJ_HasValue(self.EntitiesToDestoryModel,v:GetModel()) or VJ_HasValue(self.EntitiesToPushModel,v:GetModel()) then
+					//hitentity = true else hitentity = false end
+					hitentity = false
+				else
+					hitentity = true
+				end
+			end
+		end
+	end
+	if hitentity == true then
+		self:PlaySoundSystem("MeleeAttack")
+		if self.StopMeleeAttackAfterFirstHit == true then self.AlreadyDoneMeleeAttackFirstHit = true /*self:StopMoving()*/ end
+	else
+		self:CustomOnMeleeAttack_Miss()
+		self:PlaySoundSystem("MeleeAttackMiss", {}, VJ_EmitSound)
+	end
+	if self.AlreadyDoneFirstMeleeAttack == false && self.TimeUntilMeleeAttackDamage != false then
+		self:MeleeAttackCode_DoFinishTimers()
+	end
+	self.AlreadyDoneFirstMeleeAttack = true
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
