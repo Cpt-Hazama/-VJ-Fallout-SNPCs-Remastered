@@ -320,8 +320,10 @@ function ENT:CustomOnThink()
 		self.AnimTbl_Walk = {ACT_WALK_HURT}
 		self.AnimTbl_Run = {ACT_RUN_HURT}
 	end
+	
+	local cont = self.VJ_TheController
 	if IsValid(self:GetEnemy()) then
-		if self.CanUseRadAttack && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.RadiationAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,20) == 1 then
+		if self.CanUseRadAttack && ((IsValid(cont) && cont:KeyDown(IN_RELOAD)) or !IsValid(cont) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.RadiationAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,20) == 1) then
 			if CurTime() > self.NextRadAttackT && !self.RadAttacking && !self.MeleeAttacking && !self.RangeAttacking then
 				self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 				self.RadAttacking = true
@@ -332,18 +334,18 @@ function ENT:CustomOnThink()
 						self.RangeAttacking = false
 					end
 				end)
-				self.NextRadAttackT = CurTime() +math.Rand(10,25)
+				self.NextRadAttackT = CurTime() +(IsValid(cont) && 8) or math.Rand(10,25)
 			end
 		end
-		if self.HasGrenadeAttack && self:Health() > 50 && self:GetEnemy():Visible(self) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.GrenadeAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,8) == 1 then
+		if self.HasGrenadeAttack && self:Health() > 50 && ((IsValid(cont) && cont:KeyDown(IN_ATTACK2)) or !IsValid(cont) && self:GetEnemy():Visible(self) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.GrenadeAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,8) == 1) then
 			if CurTime() > self.NextGrenadeAttackT && !self.RadAttacking && !self.MeleeAttacking && !self.RangeAttacking then
 				self:VJ_ACT_PLAYACTIVITY(ACT_ARM,true,false,true)
 				timer.Simple(self:DecideAnimationLength(ACT_ARM,false),function()
 					if IsValid(self) then
 						if self:Health() > 50 then
 							if IsValid(self:GetEnemy()) then
-								self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2,true,false,true)
-								timer.Simple(self:DecideAnimationLength(ACT_RANGE_ATTACK2,false),function()
+								self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK2,true,0.8,true)
+								timer.Simple(self:DecideAnimationLength(ACT_RANGE_ATTACK2,false,3),function()
 									if IsValid(self) then
 										self.RangeAttacking = false
 									end
@@ -358,13 +360,14 @@ function ENT:CustomOnThink()
 						end
 					end
 				end)
-				self.NextGrenadeAttackT = CurTime() +math.Rand(6,10)
+				self.NextGrenadeAttackT = CurTime() +(IsValid(cont) && 5) or math.Rand(6,10)
 			end
 		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:GrenadeCode()
+	if !IsValid(self:GetEnemy()) then return end
 	local rangeprojectile = ents.Create(self.RangeAttackEntityToSpawn)
 	rangeprojectile:SetPos(self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos)
 	rangeprojectile:SetAngles((self:GetEnemy():GetPos()-rangeprojectile:GetPos()):Angle())

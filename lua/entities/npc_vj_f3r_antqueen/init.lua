@@ -101,9 +101,11 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	local enemy = self:GetEnemy()
+	local cont = self.VJ_TheController
 	if IsValid(enemy) then
 		local dist = self.NearestPointToEnemyDistance
-		if dist <= self.RangeDistance && self:Visible(enemy) && !self.MeleeAttacking && CurTime() > self.NextRangeAttackT then
+		if IsValid(cont) && cont:KeyDown(IN_ATTACK2) or !IsValid(cont) && dist <= self.RangeDistance && self:Visible(enemy) then
+			if !(!self.MeleeAttacking && CurTime() > self.NextRangeAttackT) then return end
 			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
 			self.NextRangeAttackT = CurTime() +math.Rand(2,5)
 		end
