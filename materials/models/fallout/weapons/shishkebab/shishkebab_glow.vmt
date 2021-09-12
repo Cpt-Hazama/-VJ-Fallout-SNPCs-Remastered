@@ -3,8 +3,8 @@
 {
  	"$model" 1
     "$nocull" "1"
-	"$basetexture" "models/oblivion/flameatronarch/flame"
-	"$texture2" "models/oblivion/flameatronarch/flame"
+	"$basetexture" "models/oblivion/flameatronach/flame"
+	"$texture2" "models/oblivion/flameatronach/flame"
 
 "$translucent" 1
 

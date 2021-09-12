@@ -11,7 +11,7 @@ ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
-ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
+ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"vjges_h2hattackright_a"} -- Melee Attack Animations
 ENT.TimeUntilMeleeAttackDamage = false -- This counted in seconds | This calculates the time until it hits something
 ENT.MeleeAttackDamage = 18
@@ -307,18 +307,11 @@ function ENT:CustomOnInitialize()
 	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnPlayCreateSound(SoundData,SoundFile)
-	self.NPC_NextMouthMove = CurTime() + SoundDuration(SoundFile)
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnAcceptInput(key,activator,caller,data)
+function ENT:ExtraInput(key,activator,caller,data)
 	if key == "event_emit FootLeft" then
 		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	elseif key == "event_emit FootRight" then
 		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
-	elseif string.find(key,"event_mattack") then
-		local atk = string.Replace(key,"event_mattack ","")
-		self:MeleeAttackCode()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -384,6 +377,52 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
 		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
 		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+	elseif htype == "1hm" then
+		local aim = VJ_SequenceToActivity(self,"2hmaim")
+		local walk = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local run = VJ_SequenceToActivity(self,"2hmaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hmaim_run")
+		local fire = ACT_GESTURE_MELEE_ATTACK2
+		local fire2 = ACT_MELEE_ATTACK2
+		local crouch = VJ_SequenceToActivity(self,"2hmaim")
+		local reload = "2hmreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK2] 					= fire2
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hm" then
+		local aim = VJ_SequenceToActivity(self,"2hmaim")
+		local walk = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local run = VJ_SequenceToActivity(self,"2hmaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hmaim_run")
+		local fire = ACT_GESTURE_MELEE_ATTACK2
+		local fire2 = ACT_MELEE_ATTACK2
+		local crouch = VJ_SequenceToActivity(self,"2hmaim")
+		local reload = "2hmreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK2] 					= fire2
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
 	elseif htype == "2hh" then
 		local aim = VJ_SequenceToActivity(self,"2hhaim")
 		local walk = VJ_SequenceToActivity(self,"2hhaim_walk")
@@ -562,77 +601,14 @@ function ENT:SetupHoldTypes(wep,htype)
 	-- if #self.AnimTbl_WeaponReload > 0 then table.insert(wep.NPC_ReloadAnimationTbl_Custom,VJ_SequenceToActivity(self,string.Replace(self.AnimTbl_WeaponReload[1],"vjges_ ",""))) end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Equip()
-	self.IsHolstered = false
-	self.WeaponAnimTranslations[ACT_IDLE] = self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
-	self.WeaponAnimTranslations[ACT_WALK] = self.WeaponAnimTranslations[ACT_WALK_AIM]
-	self.WeaponAnimTranslations[ACT_RUN] = self.WeaponAnimTranslations[ACT_RUN_AIM]
-	-- self.AnimTbl_IdleStand = {self.Weapon_Idle}
-	-- self.AnimTbl_Walk = {self.Weapon_Walk}
-	-- self.AnimTbl_Run = {self.Weapon_Run}
-	if IsValid(self:GetActiveWeapon()) then
-		self:GetActiveWeapon():SetNoDraw(false)
-		if self:GetActiveWeapon().NPC_EquipSound then
-			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_EquipSound,75,100)
-		end
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:Unequip()
-	self.IsHolstered = true
-	self.WeaponAnimTranslations[ACT_IDLE] = ACT_IDLE
-	self.WeaponAnimTranslations[ACT_WALK] = ACT_WALK
-	self.WeaponAnimTranslations[ACT_RUN] = ACT_RUN
-	-- self.Weapon_Idle = self.AnimTbl_IdleStand[1]
-	-- self.Weapon_Walk = self.AnimTbl_Walk[1]
-	-- self.Weapon_Run = self.AnimTbl_Run[1]
-	-- self.AnimTbl_IdleStand = {ACT_IDLE}
-	-- self.AnimTbl_Walk = {ACT_WALK}
-	-- self.AnimTbl_Run = {ACT_RUN}
-	if IsValid(self:GetActiveWeapon()) then
-		self:GetActiveWeapon():SetNoDraw(true)
-		if self:GetActiveWeapon().NPC_UnequipSound then
-			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_UnequipSound,75,100)
-		end
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(argent)
 
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	self.NextHolsterT = self.NextHolsterT or CurTime()
-	self:GuardAI()
-	if IsValid(self:GetEnemy()) then
-		self.NextHolsterT = CurTime() +15
-	end
-	if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
-		if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
-			self:Unequip()
-			-- self.NextHolsterT = CurTime() +5
-		elseif IsValid(self:GetEnemy()) && self.IsHolstered then
-			self:Equip()
-		end
-	elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
-		self:Equip()
-	end
-	-- if CurTime() < self.NPC_NextMouthMove then
-		-- if self.NPC_NextMouthDistance == 0 then
-			-- self.NPC_NextMouthDistance = math.random(15,80)
-		-- else
-			-- self.NPC_NextMouthDistance = 0
-		-- end
-		-- self:SetPoseParameter(self.MouthParameter,self.NPC_NextMouthDistance)
-	-- else
-		-- self:SetPoseParameter(self.MouthParameter,0)
-	-- end
-	self:ItemThink()
-	self:HumanThink()
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
 	GetCorpse.tbl_Inventory = self.tbl_Inventory
+
+	GetCorpse:SetMaterial(" ")
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***

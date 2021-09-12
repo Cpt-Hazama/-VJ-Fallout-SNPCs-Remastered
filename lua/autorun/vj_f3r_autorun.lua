@@ -208,10 +208,17 @@ if VJExists == true then
 		"weapon_vj_f3r_sniperrifle",
 		"weapon_vj_f3r_sniperrifle",
 		"weapon_vj_f3r_sniperrifle",
+		"weapon_vj_f3r_combatknife",
+		"weapon_vj_f3r_leadpipe",
+		"weapon_vj_f3r_supersledge",
 	}
 
 	local wepAll = {
 		"weapon_vj_f3r_laserkatana",
+		"weapon_vj_f3r_combatknife",
+		"weapon_vj_f3r_leadpipe",
+		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_shishkebab",
 		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_10mmpistol",
 		"weapon_vj_f3r_10mmsmg",
@@ -372,12 +379,14 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant",{
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_supersledge",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Light)","npc_vj_f3r_supermutant_lig",{
 		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_supersledge",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Medium)","npc_vj_f3r_supermutant_med",{
 		"weapon_vj_f3r_assaultrifle",
@@ -387,6 +396,7 @@ if VJExists == true then
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
+		"weapon_vj_f3r_supersledge",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -404,6 +414,7 @@ if VJExists == true then
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
+		"weapon_vj_f3r_supersledge",
 	},vFEV)
 	VJ.AddNPC("Super Mutant Behemoth","npc_vj_f3r_behemoth",vFEV)
 	VJ.AddNPC("Centaur","npc_vj_f3r_centaur",vFEV)
@@ -440,8 +451,8 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Raider (Power Armor)","npc_vj_f3r_raider_pow",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Raider","npc_vj_f3r_raider",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Y-17 Trauma Override Harness","npc_vj_f3r_skeleton",wepAll,vHum)
-	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.I","npc_vj_f3r_chinese1",{"weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
-	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.II","npc_vj_f3r_chinese2",{"weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
+	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.I","npc_vj_f3r_chinese1",{"weapon_vj_f3r_laserkatana","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
+	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.II","npc_vj_f3r_chinese2",{"weapon_vj_f3r_laserkatana","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
 	VJ.AddNPC_HUMAN("Vault Dweller","npc_vj_f3r_vault",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Vault Security","npc_vj_f3r_vaultsec",{"weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmsmg"},vHum)
 	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",{

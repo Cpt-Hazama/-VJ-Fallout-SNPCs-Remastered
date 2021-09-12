@@ -73,9 +73,7 @@ ENT.HitGroupFlinching_Values = {
 	},
 }
 
-	-- ====== File Path Variables ====== --
-	-- Leave blank if you don't want any sounds to play
-ENT.SoundTbl_FootStep = {"npc/footsteps/hardboot_generic6.wav"}
+ENT.SoundTbl_FootStep = 0
 ENT.SoundTbl_IdleDialogue = {}
 ENT.SoundTbl_IdleDialogueAnswer = {}
 ENT.SoundTbl_Idle = {}
@@ -1864,6 +1862,10 @@ function ENT:OnPlayCreateSound(SoundData,SoundFile)
 	self.NPC_NextMouthMove = CurTime() + SoundDuration(SoundFile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnFootStepSound() VJ_CreateStepSound(self,32) end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ExtraInput(key,activator,caller,data) end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_swing" then
 		VJ_EmitSound(self,self.SoundTbl_Swing,80,100)
@@ -1879,6 +1881,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 		local atk = string.Replace(key,"event_mattack ","")
 		self:MeleeAttackCode()
 	end
+	self:ExtraInput(key,activator,caller,data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ItemThink()
@@ -1947,6 +1950,29 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire2 = ACT_READINESS_PISTOL_RELAXED_TO_STIMULATED
 		local crouch = VJ_SequenceToActivity(self,"sneak1hpaim")
 		local reload = "1hmreloada"
+
+		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
+		self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM] 				= walk_crouch
+		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
+		self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM] 				= run_crouch
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK2] 					= fire2
+		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1_LOW] 				= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.WeaponAnimTranslations[ACT_COVER_LOW] 						= crouch
+		self.WeaponAnimTranslations[ACT_RELOAD_LOW] 					= crouch
+	elseif htype == "2hm" then
+		local aim = VJ_SequenceToActivity(self,"2hmaim")
+		local walk = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local walk_crouch = VJ_SequenceToActivity(self,"2hmaim_walk")
+		local run = VJ_SequenceToActivity(self,"2hmaim_run")
+		local run_crouch = VJ_SequenceToActivity(self,"2hmaim_run")
+		local fire = ACT_GESTURE_MELEE_ATTACK2
+		local fire2 = ACT_MELEE_ATTACK2
+		local crouch = VJ_SequenceToActivity(self,"2hmaim")
+		local reload = "2hmreloada"
 
 		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
 		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
@@ -2220,9 +2246,6 @@ function ENT:Equip()
 	self.WeaponAnimTranslations[ACT_IDLE] = self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
 	self.WeaponAnimTranslations[ACT_WALK] = self.WeaponAnimTranslations[ACT_WALK_AIM]
 	self.WeaponAnimTranslations[ACT_RUN] = self.WeaponAnimTranslations[ACT_RUN_AIM]
-	-- self.AnimTbl_IdleStand = {self.Weapon_Idle}
-	-- self.AnimTbl_Walk = {self.Weapon_Walk}
-	-- self.AnimTbl_Run = {self.Weapon_Run}
 	self.NextIdleStandTime = 0
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(false)
@@ -2238,12 +2261,6 @@ function ENT:Unequip()
 	self.WeaponAnimTranslations[ACT_IDLE] = ACT_IDLE
 	self.WeaponAnimTranslations[ACT_WALK] = ACT_WALK
 	self.WeaponAnimTranslations[ACT_RUN] = ACT_RUN
-	-- self.Weapon_Idle = self.AnimTbl_IdleStand[1]
-	-- self.Weapon_Walk = self.AnimTbl_Walk[1]
-	-- self.Weapon_Run = self.AnimTbl_Run[1]
-	-- self.AnimTbl_IdleStand = {ACT_IDLE}
-	-- self.AnimTbl_Walk = {ACT_WALK}
-	-- self.AnimTbl_Run = {ACT_RUN}
 	self.NextIdleStandTime = 0
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(true)
@@ -2335,6 +2352,8 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
 	GetCorpse.tbl_Inventory = self.tbl_Inventory
+
+	GetCorpse:SetMaterial(" ")
 	self:SetupApparel(GetCorpse)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

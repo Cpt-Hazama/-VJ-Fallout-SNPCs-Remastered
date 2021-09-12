@@ -18,6 +18,10 @@ if VJExists == true then
 	VJ.AddNPCWeapon("VJ_F3R_PlasmaRifle","weapon_vj_f3r_plasmarifle")
 
 	VJ.AddNPCWeapon("VJ_F3R_LaserKatana","weapon_vj_f3r_laserkatana")
+	VJ.AddNPCWeapon("VJ_F3R_CombatKnife","weapon_vj_f3r_combatknife")
+	VJ.AddNPCWeapon("VJ_F3R_LeadPipe","weapon_vj_f3r_leadpipe")
+	VJ.AddNPCWeapon("VJ_F3R_SuperSledge","weapon_vj_f3r_supersledge")
+	VJ.AddNPCWeapon("VJ_F3R_Shiskebab","weapon_vj_f3r_shishkebab")
 
 	VJ.AddNPCWeapon("VJ_F3R_10mmSubMachineGun","weapon_vj_f3r_10mmsmg")
 	VJ.AddNPCWeapon("VJ_F3R_25mmGrenadeLauncher","weapon_vj_f3r_25mmlauncher")
