@@ -138,7 +138,20 @@ if VJExists == true then
 		}
 	}
 
-
+	function VJ_PlaySound(sndType,ent,snd,vol,pit,delay)
+		delay = delay or 0
+		vol = vol or 75
+		timer.Simple(delay,function()
+			pit = (pit or 100) *VJ_GetVarInt("host_timescale")
+			if sndType == 1 && IsValid(ent) then
+				VJ_CreateSound(ent,snd,vol,pit)
+			elseif sndType == 2 && IsValid(ent) then
+				VJ_EmitSound(ent,snd,vol,pit)
+			elseif sndType == 3 then
+				sound.Play(VJ_PICK(snd),type(ent) == "Vector" && ent or (IsValid(ent) && ent:GetPos()) or VJ_Vec0,vol,pit,1)
+			end
+		end)
+	end
 
 	function VJ_CreateStepSound(ent,stepHeight,overrideSound,overrideSoundOverlap)
 		if !ent:IsOnGround() then return end

@@ -334,7 +334,7 @@ function ENT:CustomOnThink()
 						self.RangeAttacking = false
 					end
 				end)
-				self.NextRadAttackT = CurTime() +(IsValid(cont) && 8) or math.Rand(10,25)
+				self.NextRadAttackT = CurTime() +math.Rand(10,25)
 			end
 		end
 		if self.HasGrenadeAttack && self:Health() > 50 && ((IsValid(cont) && cont:KeyDown(IN_ATTACK2)) or !IsValid(cont) && self:GetEnemy():Visible(self) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.GrenadeAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,8) == 1) then
@@ -360,7 +360,7 @@ function ENT:CustomOnThink()
 						end
 					end
 				end)
-				self.NextGrenadeAttackT = CurTime() +(IsValid(cont) && 5) or math.Rand(6,10)
+				self.NextGrenadeAttackT = CurTime() +math.Rand(6,10)
 			end
 		end
 	end
