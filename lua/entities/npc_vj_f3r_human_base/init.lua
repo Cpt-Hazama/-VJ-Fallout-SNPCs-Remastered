@@ -1818,6 +1818,8 @@ function ENT:CustomOnInitialize()
 	self.tbl_CurrentHair = {}
 	self.tbl_Hair = {}
 	self.HasApparel = false
+
+	self.CanHolsterWeapon = GetConVar("vj_f3r_human_holster"):GetBool()
 	
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 	timer.Simple(0.02,function()
@@ -1833,6 +1835,8 @@ function ENT:CustomOnInitialize()
 					if !IsValid(self:GetEnemy()) && !self.IsHolstered then
 						self:Unequip()
 					end
+				elseif !self.CanHolsterWeapon then
+					self:Equip()
 				end
 				self:SetupInventory(self:GetActiveWeapon())
 			end
@@ -1859,7 +1863,8 @@ function ENT:CustomOnInitialize()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)
-	self.NPC_NextMouthMove = CurTime() + SoundDuration(SoundFile)
+	-- print(self,SoundDuration(SoundFile))
+	self.NPC_NextMouthMove = CurTime() +SoundDuration(SoundFile)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnFootStepSound() VJ_CreateStepSound(self,32) end
@@ -2115,6 +2120,12 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 	self.WeaponAnimTranslations[ACT_WALK_CROUCH] = self.WeaponAnimTranslations[ACT_WALK_CROUCH_AIM]
 	self.WeaponAnimTranslations[ACT_RUN_CROUCH] = self.WeaponAnimTranslations[ACT_RUN_CROUCH_AIM]
 
+	if !self.CanHolsterWeapon then
+		self.WeaponAnimTranslations[ACT_IDLE] 							= self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
+		self.WeaponAnimTranslations[ACT_WALK] 							= self.WeaponAnimTranslations[ACT_WALK_AIM]
+		self.WeaponAnimTranslations[ACT_RUN] 							= self.WeaponAnimTranslations[ACT_RUN_AIM]
+	end
+
 	return true
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -2239,6 +2250,7 @@ function ENT:SetupHoldTypes(wep,htype)
 			self:Unequip()
 		end
 	end
+	print("2")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Equip()
@@ -2253,6 +2265,7 @@ function ENT:Equip()
 			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_EquipSound,75,100)
 		end
 	end
+	print("1")
 	self:SetWeaponState(VJ_WEP_STATE_NONE)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -2286,15 +2299,17 @@ function ENT:CustomOnThink()
 		if IsValid(self:GetEnemy()) then
 			self.NextHolsterT = CurTime() +15
 		end
-		if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
-			if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT then
-				self:Unequip()
-				-- self.NextHolsterT = CurTime() +5
-			elseif IsValid(self:GetEnemy()) && self.IsHolstered then
+		if self.CanHolsterWeapon then
+			if !self.VJ_F3R_InGuardMode then
+				if !IsValid(self:GetEnemy()) && !self.IsHolstered && CurTime() > self.NextHolsterT && self.CanHolsterWeapon == true then
+					self:Unequip()
+					-- self.NextHolsterT = CurTime() +5
+				elseif IsValid(self:GetEnemy()) && self.IsHolstered then
+					self:Equip()
+				end
+			elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
 				self:Equip()
 			end
-		elseif self.IsHolstered && self.VJ_F3R_InGuardMode then
-			self:Equip()
 		end
 	else
 		if self.VJ_TheController:KeyDown(IN_RELOAD) then
@@ -2309,15 +2324,14 @@ function ENT:CustomOnThink()
 			self.NextHolsterT = CurTime() +2
 		end
 	end
-	if CurTime() < self.NPC_NextMouthMove then
-		if self.NPC_NextMouthDistance == 0 then
-			self.NPC_NextMouthDistance = math.random(15,80)
-		else
-			self.NPC_NextMouthDistance = 0
-		end
-		self:SetPoseParameter(self.MouthParameter,self.NPC_NextMouthDistance)
+	if self.NPC_NextMouthMove > CurTime() then
+		self.NPC_NextMouthDistance = Lerp(FrameTime() *30,self:GetMouth(),math.random(-20,90))
+		self:SetMouth(self.NPC_NextMouthDistance)
 	else
-		self:SetPoseParameter(self.MouthParameter,0)
+		if self:GetMouth() != 0 then
+			self.NPC_NextMouthDistance = math.Round(Lerp(FrameTime() *30,self:GetMouth(),0))
+			self:SetMouth(0)
+		end
 	end
 	-- if self.Human_IsAggressive && !IsValid(self:GetEnemy()) then
 		-- if CurTime() > self.NextCheckForPlayersT then

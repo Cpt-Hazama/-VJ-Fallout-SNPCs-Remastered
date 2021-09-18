@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+    $basetexture "models/cpthazama/fallout/supermutant/supermutantpants"
+    $bumpmap "models/cpthazama/fallout/supermutant/supermutantpants_n"
+    $alphatest "1"
+}

@@ -138,6 +138,11 @@ if VJExists == true then
 		}
 	}
 
+	function VJ_GetVarInt(var)
+		local var = GetConVar(var)
+		return (var && var:GetInt()) or -1
+	end
+
 	function VJ_PlaySound(sndType,ent,snd,vol,pit,delay)
 		delay = delay or 0
 		vol = vol or 75

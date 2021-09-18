@@ -81,6 +81,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 		local atk = string.Replace(key,"event_mattack ","")
 		self:MeleeAttackCode()
 	elseif string.find(key,"event_rattack") then
+		if !IsValid(self:GetEnemy()) then return end
 		VJ_EmitSound(self,"vj_fallout/giantantqueen/antqueen_attack_spit.mp3")
 		local spit = ents.Create("obj_vj_f3r_spit")
 		spit:SetPos(self:GetAttachment(1).Pos)

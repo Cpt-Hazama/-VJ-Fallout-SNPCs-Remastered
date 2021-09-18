@@ -15,6 +15,11 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
+	if SERVER then
+		resource.AddWorkshop("2600347219")
+		resource.AddWorkshop("2600378863")
+	end
+
 	/*
 		-- Human Voice Types --
 		female01
@@ -348,6 +353,7 @@ if VJExists == true then
 		VJ.AddNPC("Tunneler Queen","npc_vj_f3r_tunnelerqueen",vCre)
 
 		-- Robots --
+	VJ.AddNPC("Liberty Prime","npc_vj_f3r_libertyprime",vRob)
 	VJ.AddNPC("Zeta Support Drone","npc_vj_f3r_drone",vRob)
 	VJ.AddNPC("Eye Bot","npc_vj_f3r_eyebot",vRob)
 	VJ.AddNPC("Ede","npc_vj_f3r_eyebot_ede",vRob)
@@ -422,6 +428,62 @@ if VJExists == true then
 	VJ.AddNPC("The Thing","npc_vj_f3r_centaurthing",vFEV)
 	VJ.AddNPC("FEV Subject","npc_vj_f3r_fev",vFEV)
 
+	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant_3",{
+		"weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_supersledge",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant (Light)","npc_vj_f3r_supermutant_lig_3",{
+		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_supersledge",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant (Medium)","npc_vj_f3r_supermutant_med_3",{
+		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_laserpistol",
+		"weapon_vj_f3r_laserrifle",
+		"weapon_vj_f3r_plasmarifle",
+		"weapon_vj_f3r_supersledge",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea_3",{
+		"weapon_vj_f3r_heavyincinerator",
+		"weapon_vj_f3r_gatlinglaser",
+		"weapon_vj_f3r_fatman",
+		"weapon_vj_f3r_plasmacaster",
+		"weapon_vj_f3r_teslacannon",
+		"weapon_vj_f3r_missilelauncher",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant (Captain)","npc_vj_f3r_supermutant_cap_3",{
+		"weapon_vj_f3r_heavyincinerator",
+		"weapon_vj_f3r_gatlinglaser",
+		"weapon_vj_f3r_missilelauncher",
+		"weapon_vj_f3r_flamer",
+		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_laserrifle",
+		"weapon_vj_f3r_plasmarifle",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant (Nightkin)","npc_vj_f3r_supermutant_nig_3",{
+		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_10mmsmg",
+		"weapon_vj_f3r_laserpistol",
+		"weapon_vj_f3r_laserrifle",
+		"weapon_vj_f3r_plasmarifle",
+		"weapon_vj_f3r_supersledge",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Fawkes","npc_vj_f3r_supermutant_vault_3",{
+		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_gatlinglaser",
+		"weapon_vj_f3r_supersledge",
+	},vFEV)
+
 		-- Humans --
 	-- VJ.AddNPC_HUMAN("_Human Base","npc_vj_f3r_human_base",{
 	-- 	"weapon_vj_f3r_assaultrifle",
@@ -490,6 +552,19 @@ if VJExists == true then
 	VJ.AddParticle("particles/flame_gojira.pcf",{})
 	VJ.AddParticle("particles/flamer.pcf",{})
 	VJ.AddParticle("particles/incinerator.pcf",{})
+	VJ.AddParticle("particles/mininuke.pcf",{
+		"mininuke_explosion",
+		"mininuke_explosion_generic_smokestreak_parent",
+		"mininuke_explosion_child_firesmoke",
+		"mininuke_explosion_child_flash",
+		"mininuke_explosion_child_flash_mod",
+		"mininuke_explosion_child_shrapnel",
+		"mininuke_explosion_child_smoke",
+		"mininuke_explosion_child_sparks",
+		"mininuke_explosion_child_sparks2",
+		"mininuke_explosion_shrapnel_fire_child",
+		"mininuke_explosion_shrapnel_smoke_child",
+	})
 	VJ.AddParticle("particles/goregrenade.pcf",{})
 	VJ.AddParticle("particles/radiation_shockwave.pcf",{})
 	VJ.AddParticle("particles/sporecarrier_glow.pcf",{})
@@ -498,6 +573,27 @@ if VJExists == true then
 	VJ.AddParticle("particles/fo3_fx.pcf",{})
 	VJ.AddParticle("particles/vman_explosion.pcf",{})
 	VJ.AddParticle("particles/rpg_firetrail.pcf",{})
+	VJ.AddParticle("particles/fo3_libertyprime.pcf",{
+		"fo4_mininuke_explosion",
+		"vj_f3r_lp_impact",
+		"vj_f3r_lp_laser"
+	})
+
+	VJ.AddConVar("vj_f3r_human_holster", 1, {FCVAR_ARCHIVE})
+
+	if CLIENT then
+		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_F3R", function()
+			spawnmenu.AddToolMenuOption("DrVrej", "SNPC Configures", "Fallout Remastered", "Fallout Remastered", "", "", function(Panel)
+				if !game.SinglePlayer() && !LocalPlayer():IsAdmin() then
+					Panel:AddControl("Label", {Text = "#vjbase.menu.general.admin.not"})
+					Panel:AddControl( "Label", {Text = "#vjbase.menu.general.admin.only"})
+					return
+				end
+				Panel:AddControl( "Label", {Text = "#vjbase.menu.general.admin.only"})
+				Panel:AddControl("Checkbox", {Label = "Allow Humanoids to unequip their weapon", Command = "vj_f3r_human_holster"})
+			end)
+		end)
+	end
 	
 -- !!!!!! DON'T TOUCH ANYTHING BELOW THIS !!!!!! -------------------------------------------------------------------------------------------------------------------------
 	AddCSLuaFile(AutorunFile)

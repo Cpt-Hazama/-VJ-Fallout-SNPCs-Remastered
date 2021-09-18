@@ -276,20 +276,21 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
-	self:SetCollisionBounds(Vector(30,30,110),Vector(-30,-30,0))
+
+	self.CanHolsterWeapon = GetConVar("vj_f3r_human_holster"):GetBool()
+
+	self:SetCollisionBounds(Vector(24,24,98),Vector(-24,-24,0))
 	timer.Simple(0.02,function()
 		if IsValid(self) then
 			if IsValid(self:GetActiveWeapon()) then
 				local wep = self:GetActiveWeapon()
-				-- if wep.AnimationType == nil then self:Remove() end
-				-- if wep.AnimationType then
-					-- self:SetupHoldTypes(wep,wep.AnimationType)
-				-- end
-
+	
 				if self.CanHolsterWeapon && !self.Human_GuardMode then
 					if !IsValid(self:GetEnemy()) && !self.IsHolstered then
 						self:Unequip()
 					end
+				elseif !self.CanHolsterWeapon then
+					self:Equip()
 				end
 				self:SetupInventory(self:GetActiveWeapon())
 			end
@@ -304,6 +305,8 @@ function ENT:CustomOnInitialize()
 	self.NPC_NextMouthDistance = 0
 	self.NextStimPackT = CurTime()
 	self.NextStealthBoyT = CurTime()
+
+	if self.OnInit then self:OnInit() end
 	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -502,6 +505,12 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
 		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
 		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+	end
+
+	if !self.CanHolsterWeapon then
+		self.WeaponAnimTranslations[ACT_IDLE] 							= self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
+		self.WeaponAnimTranslations[ACT_WALK] 							= self.WeaponAnimTranslations[ACT_WALK_AIM]
+		self.WeaponAnimTranslations[ACT_RUN] 							= self.WeaponAnimTranslations[ACT_RUN_AIM]
 	end
 
 	return true
