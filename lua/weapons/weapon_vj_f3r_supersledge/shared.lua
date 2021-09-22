@@ -12,7 +12,7 @@ SWEP.NPC_BeforeFireSound 		= {
 	"vj_fallout/weapons/melee/swing/fx_swing_large02.wav",
 }
 
-SWEP.Primary.Damage = 24
+SWEP.Primary.Damage = 32
 SWEP.Primary.HeavyDamage = 38
 SWEP.Primary.Sound = {}
 SWEP.HeavyAttackChance = 5

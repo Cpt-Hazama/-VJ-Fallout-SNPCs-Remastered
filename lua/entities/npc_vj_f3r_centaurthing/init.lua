@@ -10,7 +10,7 @@ ENT.StartHealth = 235
 ENT.HullType = HULL_HUMAN
 ENT.HasDeathRagdoll = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT","CLASS_FEV_MUTANT_EAST"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
 ENT.GibOnDeathDamagesTable = {"All"}

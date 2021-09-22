@@ -11,7 +11,7 @@ ENT.StartHealth = 500
 
 ENT.HasHealthRegeneration = true
 ENT.HealthRegenerationAmount = 1
-ENT.HealthRegenerationDelay = VJ_Set(1,1)
+ENT.HealthRegenerationDelay = VJ_Set(0.35,0.35)
 
 ENT.PlayerFriendly = true
 ENT.HasOnPlayerSight = true

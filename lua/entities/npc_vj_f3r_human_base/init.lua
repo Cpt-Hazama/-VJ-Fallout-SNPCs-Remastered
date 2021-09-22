@@ -1781,7 +1781,7 @@ function ENT:CustomOnPlayerSight(argent)
 			end
 		end)
 	end
-	if self.VJ_F3R_InGuardMode then
+	if self.VJ_F3R_InGuardMode && self:Disposition(argent) != D_LI then
 		if argent:GetPos():Distance(self:GetPos()) <= self.VJ_F3R_GuardWarnDistance then
 			VJ_EmitSound(self,self.SoundTbl_Guard_Warn,78,100)
 			local time = math.random(5,8)
@@ -2250,7 +2250,7 @@ function ENT:SetupHoldTypes(wep,htype)
 			self:Unequip()
 		end
 	end
-	print("2")
+	-- print("2")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Equip()
@@ -2265,7 +2265,7 @@ function ENT:Equip()
 			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_EquipSound,75,100)
 		end
 	end
-	print("1")
+	-- print("1")
 	self:SetWeaponState(VJ_WEP_STATE_NONE)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

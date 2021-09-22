@@ -9,7 +9,7 @@ ENT.Model = {"models/fallout/supermutant_behemoth.mdl"} -- The game will pick a 
 ENT.StartHealth = 2500
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT_EAST"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {ACT_RANGE_ATTACK2}
