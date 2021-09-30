@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/weapons/minefrag/1stpersonminefrag"
-	"$normalmap"     "models/fallout/weapons/minefrag/1stpersonminefrag_n"
-	"$selfillum" "1"
-}

@@ -1,7 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" 	"models/fallout/armor/mwpa/mwpah"
-	"$bumpmap" 	"models/fallout/armor/mwpa/mwpah_n"
-	"$surfaceprop" 	"metal"
-
-}

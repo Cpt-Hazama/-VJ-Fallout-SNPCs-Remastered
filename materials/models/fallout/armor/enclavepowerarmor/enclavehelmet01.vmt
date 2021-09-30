@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/armor/enclavepowerarmor/enclavehelmet01"
-	"$bumpmap" 	"models/fallout/armor/enclavepowerarmor/enclavehelmet01_n"
-	"$selfillum" "1"
-}

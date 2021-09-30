@@ -1,5 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/armor/powerarmor/powerarmorbody"
-	"$bumpmap" 	"models/fallout/armor/powerarmor/powerarmorbody_n"
-}

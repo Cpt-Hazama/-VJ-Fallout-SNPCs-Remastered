@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/weapons/alienblaster/1stpersonalienblaster"
-	"$normalmap"     "models/fallout/weapons/alienblaster/1stpersonalienblaster_n"
-	"$selfillum" "1"
-}

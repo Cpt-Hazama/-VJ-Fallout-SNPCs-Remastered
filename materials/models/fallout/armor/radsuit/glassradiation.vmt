@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/armor/radsuit/glassradiation"
-	"$bumpmap" 	"models/fallout/armor/radsuit/glassradiation_n"
-	"$translucent" "1"
-}

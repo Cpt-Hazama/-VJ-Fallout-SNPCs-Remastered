@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/armor/stealthsuitmkii/nvdlc03stealthsuit_d"
-	"$bumpmap" 	"models/fallout/armor/stealthsuitmkii/nvdlc03stealthsuit_n"
-	"$selfillum" "1"
-}

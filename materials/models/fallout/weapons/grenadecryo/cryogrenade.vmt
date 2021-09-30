@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/weapons/grenadecryo/cryogrenade"
-	"$normalmap"     "models/fallout/weapons/grenadecryo/cryogrenade_n"
-	"$selfillum" "1"
-}

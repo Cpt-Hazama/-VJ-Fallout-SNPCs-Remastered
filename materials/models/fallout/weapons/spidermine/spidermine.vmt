@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "models/fallout/weapons/spidermine/spidermine"
-	"$normalmap"     "models/fallout/weapons/spidermine/spidermine_n"
-	"$selfillum" "1"
-}
