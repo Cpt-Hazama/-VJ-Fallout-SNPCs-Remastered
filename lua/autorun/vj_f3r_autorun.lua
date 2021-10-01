@@ -458,6 +458,13 @@ if VJExists == true then
 		"weapon_vj_f3r_teslacannon",
 		"weapon_vj_f3r_missilelauncher",
 	},vFEV)
+	VJ.AddNPC_HUMAN("Super Mutant Overlord","npc_vj_f3r_supermutant_elite_3",{
+		"weapon_vj_f3r_heavyincinerator",
+		"weapon_vj_f3r_gatlinglaser",
+		"weapon_vj_f3r_missilelauncher",
+		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_laserscattergun"
+	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Captain)","npc_vj_f3r_supermutant_cap_3",{
 		"weapon_vj_f3r_heavyincinerator",
 		"weapon_vj_f3r_gatlinglaser",
