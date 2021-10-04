@@ -1,13 +1,22 @@
 # Fallout SNPCs Revamp
 
-##This will not work unless you download the models too!
+### This will not work unless you download the models and sounds too!
+
 https://github.com/Cpt-Hazama/-VJ-Fallout-SNPCs-Remastered-Models
 
+https://github.com/Cpt-Hazama/-VJ-Fallout-SNPCs-Remastered-Sounds
+
+### About
+
 These SNPCs have been recreated from the ground up ever since their initial release back in 2015-2016.
+
+### Installation
 
 To install, place the contents of the rar file in your "/Steam/steamapps/common/Garrysmod/garrysmod/addons/" folder.
 
 **Be sure you have the latest version of VJ Base!**
+
+Alternatively, you can just download the workshop version.
 
 ### Credits
 
