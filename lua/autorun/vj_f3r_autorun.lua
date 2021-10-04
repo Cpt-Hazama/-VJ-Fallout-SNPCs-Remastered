@@ -23,6 +23,7 @@ if VJExists == true then
 	/*
 		-- Human Voice Types --
 		female01
+		female03 -- NCR
 		female06
 		female07
 		femaleraider
@@ -33,6 +34,8 @@ if VJExists == true then
 		maledefault
 		male01
 		male02
+		male04 -- Legion
+		male05 -- NCR
 		male03 -- This is technically the actual fiend voice lines, the other is a raider/fiend mix
 		male08
 	*/
@@ -192,7 +195,7 @@ if VJExists == true then
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_combatshotgun",
-		"weapon_vj_f3r_fatman",
+		"weapon_vj_f3r_missilelauncher",
 		"weapon_vj_f3r_flamer",
 		"weapon_vj_f3r_flamer",
 		"weapon_vj_f3r_huntingrifle",
@@ -329,6 +332,8 @@ if VJExists == true then
 		VJ.AddNPC("Mirelurk","npc_vj_f3r_mirelurk",vCre)
 		VJ.AddNPC("Mirelurk Hunter","npc_vj_f3r_mirelurkhunter",vCre)
 		VJ.AddNPC("Nukalurk","npc_vj_f3r_mirelurknuka",vCre)
+		VJ.AddNPC("Firelurk","npc_vj_f3r_mirelurkfire",vCre)
+		VJ.AddNPC("Glowlurk","npc_vj_f3r_mirelurkglow",vCre)
 		VJ.AddNPC("Swamplurk","npc_vj_f3r_mirelurkswamp",vCre)
 		VJ.AddNPC("Swamplurk Hunter","npc_vj_f3r_swamplurkhunt",vCre)
 		VJ.AddNPC("Mirelurk King","npc_vj_f3r_mirelurkking",vCre)
@@ -512,7 +517,6 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Brother Hood Initiate","npc_vj_f3r_bos",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_10mmpistol"},vHum)
 	VJ.AddNPC_HUMAN("Brother Hood T-45","npc_vj_f3r_bosarmor",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
 	VJ.AddNPC_HUMAN("Brother Hood Outcast","npc_vj_f3r_bosarmor_outcast",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
-	-- VJ.AddNPC_HUMAN("NCR Ranger","npc_vj_f3r_ncr",{},vHum)
 	VJ.AddNPC_HUMAN("Child of Atom","npc_vj_f3r_coa",{"weapon_vj_f3r_10mmpistol"},vHum)
 	VJ.AddNPC_HUMAN("Gary","npc_vj_f3r_garry",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Talon Merc Company","npc_vj_f3r_talon",wepCommon,vHum)
@@ -536,6 +540,10 @@ if VJExists == true then
 		"weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle",
 		"weapon_vj_f3r_laserpistol"
 	},vHum)
+	VJ.AddNPC_HUMAN("NCR Ranger","npc_vj_f3r_ncr",wepCommon,vHum)
+	VJ.AddNPC_HUMAN("Legion Soldier","npc_vj_f3r_legion",wepCommon,vHum)
+	VJ.AddNPC_HUMAN("Legion Centurion","npc_vj_f3r_legion_centurion",wepCommon,vHum)
+	-- VJ.AddNPC_HUMAN("Caesar","npc_vj_f3r_legion_caesar",wepCommon,vHum)
 
 	VJ.AddParticle("particles/alienblaster.pcf",{
 		"alienblaster_projectile",

@@ -151,12 +151,12 @@ end
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	-- print(key)
 	if key == "event_emit FootLeft" then
-		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self.sndData["Melee"].pitch)
+		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,math.random(self.FootStepPitch.a,self.FootStepPitch.b))
 		if self.tbl_Flames then
 			util.ScreenShake(self:GetPos(),13,100,1,1000)
 		end
 	elseif key == "event_emit FootRight" then
-		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self.sndData["Melee"].pitch)
+		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,math.random(self.FootStepPitch.a,self.FootStepPitch.b))
 		if self.tbl_Flames then
 			util.ScreenShake(self:GetPos(),13,100,1,1000)
 		end

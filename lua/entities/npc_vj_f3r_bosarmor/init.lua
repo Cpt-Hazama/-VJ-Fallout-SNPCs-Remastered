@@ -23,13 +23,13 @@ function ENT:CustomInit()
 	self:SetModel(self.Gender == 1 && "models/fallout/player/t-45dpowerarmor.mdl" or "models/fallout/player/female/t-45dpowerarmor.mdl")
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 
-	if self.Gender == 1 then
-		self:SetBodygroup(2,2)
-		self:SetBodygroup(3,2)
-	else
+	-- if self.Gender == 1 then
+	-- 	self:SetBodygroup(2,2)
+	-- 	self:SetBodygroup(3,2)
+	-- else
 		self:SetBodygroup(4,2)
 		self:SetBodygroup(5,2)
-	end
+	-- end
 
 	self.DeathCorpseSubMaterials = {}
 

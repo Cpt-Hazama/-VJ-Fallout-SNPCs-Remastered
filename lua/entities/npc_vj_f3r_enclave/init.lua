@@ -26,13 +26,13 @@ function ENT:GenderInit()
 	self:SetModel(self.Gender == 1 && "models/fallout/player/enclavepowerarmor.mdl" or "models/fallout/player/female/enclavepowerarmor.mdl")
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 
-	if self.Gender == 1 then
-		self:SetBodygroup(2,2)
-		self:SetBodygroup(3,1)
-	else
+	-- if self.Gender == 1 then
+	-- 	self:SetBodygroup(2,2)
+	-- 	self:SetBodygroup(3,1)
+	-- else
 		self:SetBodygroup(4,2)
 		self:SetBodygroup(5,1)
-	end
+	-- end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()

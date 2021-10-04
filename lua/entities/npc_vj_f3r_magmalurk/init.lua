@@ -41,6 +41,11 @@ ENT.SoundTbl_Death = {
 }
 ENT.BulletResistance = 0.25
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnMeleeAttack_AfterChecks(hitEnt, isProp)
+	hitEnt:Ignite(self.MeleeAttackSetEnemyOnFireTime)
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
 	self:SetupInventory()

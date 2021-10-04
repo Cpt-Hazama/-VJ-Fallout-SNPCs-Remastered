@@ -3,7 +3,7 @@ if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
 SWEP.WorldModel					= "models/fallout/weapons/w_combatshotgun.mdl"
 SWEP.PrintName					= "Combat Shotgun"
 SWEP.ID 						= ITEM_VJ_COMBATSHOTGUN
-SWEP.AnimationType 				= "2ha"
+SWEP.AnimationType 				= "2hr"
 SWEP.NPC_NextPrimaryFire 		= 0.85 -- Next time it can use primary fire
 SWEP.NPC_CustomSpread	 		= 1.75
 SWEP.NPC_TimeUntilFire	 		= 0 -- How much time until the bullet/projectile is fired?
@@ -34,4 +34,4 @@ SWEP.WorldModel_CustomPositionOrigin = Vector(-1,11.3,1)
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
-SWEP.HoldType 					= "2ha"
+SWEP.HoldType 					= "2hr"

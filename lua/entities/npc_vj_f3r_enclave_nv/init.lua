@@ -17,8 +17,8 @@ function ENT:CustomInit()
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
 	
-	self:SetBodygroup(2,2)
-	self:SetBodygroup(3,3)
+	self:SetBodygroup(3,2)
+	self:SetBodygroup(4,3)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()
