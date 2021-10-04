@@ -1,10 +1,8 @@
 # Fallout SNPCs Revamp
 
-### This will not work unless you download the models and sounds too!
+### This will not work unless you download the models too!
 
 https://github.com/Cpt-Hazama/-VJ-Fallout-SNPCs-Remastered-Models
-
-https://github.com/Cpt-Hazama/-VJ-Fallout-SNPCs-Remastered-Sounds
 
 ### About
 
