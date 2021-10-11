@@ -118,6 +118,10 @@ function ENT:CustomOnInitialize()
 	local dur = SoundDuration("vj_fallout/libertyprime/mq11_mq11primeactivationli_00071ef7_1.mp3") +1 -- .MP3's always return 1 second shorter than what they really are
 	self.NextIdleSoundT = CurTime() +dur
 	self.NextAlertSoundT = CurTime() +dur
+
+	if GetConVar("vj_f3r_prime_nukes"):GetInt() == 0 then
+		self.LibertyPrime_NextNukeAttackT = CurTime() +999999999
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:LibertyPrime_DoFootstep(at)
@@ -167,12 +171,12 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleRangeAttacks()
 	if !IsValid(self:GetEnemy()) then return end
-	if self:GetEnemy():GetPos():Distance(self:GetPos()) > 600 && CurTime() > self.LibertyPrime_NextNukeAttackT && ((!IsValid(self.VJ_TheController)) or (IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_JUMP))) then
+	if self:GetEnemy():GetPos():Distance(self:GetPos()) > 2500 && CurTime() > self.LibertyPrime_NextNukeAttackT && ((!IsValid(self.VJ_TheController)) or (IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.LibertyPrime_DoingNukeAttack = true
 		self.LibertyPrime_DoingLaserAttack = false
 		self.RangeAttackEntityToSpawn = "obj_vj_f3r_mininuke_prime" -- The entity that is spawned when range attacking
-		self.RangeDistance = 2700 -- This is how far away it can shoot
-		self.RangeToMeleeDistance = 600 -- How close does it have to be until it uses melee?
+		self.RangeDistance = 8000 -- This is how far away it can shoot
+		self.RangeToMeleeDistance = 2500 -- How close does it have to be until it uses melee?
 		self.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 		self.RangeUseAttachmentForPosID = "bomb" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 		self.TimeUntilRangeAttackProjectileRelease = false //2.8 -- How much time until the projectile code is ran?
@@ -239,7 +243,7 @@ function ENT:CustomOnRangeAttack_BeforeStartTimer()
 				self.PlayingAttackAnimation = false
 			end
 		end)
-		self.LibertyPrime_NextNukeAttackT = CurTime() + 20
+		self.LibertyPrime_NextNukeAttackT = CurTime() + 45
 	elseif self.LibertyPrime_DoingLaserAttack == true then
 		self:RestartGesture(ACT_GESTURE_RANGE_ATTACK1)
 	end

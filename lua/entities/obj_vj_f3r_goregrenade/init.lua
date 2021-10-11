@@ -28,7 +28,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetNoDraw(false)
-	ParticleEffectAttach("centaur_spit",PATTACH_ABSORIGIN_FOLLOW,self,0)
+	ParticleEffectAttach("goregrenade_splash",PATTACH_ABSORIGIN_FOLLOW,self,0)
 	ParticleEffectAttach("antlion_gib_02_gas", PATTACH_ABSORIGIN_FOLLOW, self, 0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -50,6 +50,14 @@ function ENT:DeathEffects(data,phys)
 			end
 		end)
 	end
+
+	local radiation = ents.Create("point_vj_f3r_radiation")
+	radiation:SetEntityOwner(self)
+	radiation:SetEmissionDistance(200)
+	radiation:SetRAD(6)
+	radiation:SetLife(4)
+	radiation:SetPos(self:GetPos())
+	radiation:Spawn()
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***

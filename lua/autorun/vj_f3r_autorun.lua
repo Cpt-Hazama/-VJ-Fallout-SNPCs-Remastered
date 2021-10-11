@@ -588,6 +588,15 @@ if VJExists == true then
 	VJ.AddParticle("particles/fo3_fx.pcf",{})
 	VJ.AddParticle("particles/vman_explosion.pcf",{})
 	VJ.AddParticle("particles/rpg_firetrail.pcf",{})
+	VJ.AddParticle("particles/nuke_explosion.pcf",{})
+	VJ.AddParticle("particles/fo3_laser.pcf",{
+		"vj_f3r_laser_red",
+		"vj_f3r_laser_red_impact",
+		"vj_f3r_laser_green",
+		"vj_f3r_laser_green_impact",
+		"vj_f3r_laser_blue",
+		"vj_f3r_laser_blue_impact",
+	})
 	VJ.AddParticle("particles/fo3_libertyprime.pcf",{
 		"fo4_mininuke_explosion",
 		"vj_f3r_lp_impact",
@@ -595,6 +604,7 @@ if VJExists == true then
 	})
 
 	VJ.AddConVar("vj_f3r_human_holster", 1, {FCVAR_ARCHIVE})
+	VJ.AddConVar("vj_f3r_prime_nukes", 1, {FCVAR_ARCHIVE})
 
 	if CLIENT then
 		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_F3R", function()
@@ -606,6 +616,7 @@ if VJExists == true then
 				end
 				Panel:AddControl( "Label", {Text = "#vjbase.menu.general.admin.only"})
 				Panel:AddControl("Checkbox", {Label = "Allow Humanoids to unequip their weapon", Command = "vj_f3r_human_holster"})
+				Panel:AddControl("Checkbox", {Label = "Allow Liberty Prime to use Mini-Nukes", Command = "vj_f3r_prime_nukes"})
 			end)
 		end)
 	end

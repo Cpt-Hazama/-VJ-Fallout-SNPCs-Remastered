@@ -8,7 +8,6 @@ include('shared.lua')
 ENT.Model = {"models/fallout/ghoulferal.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
 ENT.StartHealth = 50
 ENT.HullType = HULL_HUMAN
-ENT.IsGhoul = true
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_GHOUL_FERAL"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
@@ -248,7 +247,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 					-- Entity(1):ChatPrint(tostring(750 *self.RadStrength))
 					for _,v in ipairs(ents.FindInSphere(self:GetPos(),750 *self.RadStrength)) do
 						if (v:IsNPC() && v != self) or (v:IsPlayer() && GetConVarNumber("ai_ignoreplayers") == 0) then
-							if self:Disposition(v) != D_LI && !v.IsGhoul then
+							if self:Disposition(v) != D_LI && !v.VJ_F3R_Ghoul then
 								local dmginfo = DamageInfo()
 								dmginfo:SetDamage(self.RadDamage +(self.RadDamage *self.RadStrength))
 								dmginfo:SetAttacker(self)
@@ -256,7 +255,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 								dmginfo:SetDamageType(DMG_RADIATION)
 								dmginfo:SetDamagePosition(v:GetPos() +v:OBBCenter())
 								v:TakeDamageInfo(dmginfo)
-							elseif v.IsGhoul then
+							elseif v.VJ_F3R_Ghoul then
 								v:SetHealth(v:Health() +(self.RadDamage +(self.RadDamage *self.RadStrength)))
 								if v:Health() > v:GetMaxHealth() then v:SetHealth(v:GetMaxHealth()) end
 							end
