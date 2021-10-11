@@ -254,7 +254,8 @@ if VJExists == true then
 		"weapon_vj_f3r_sawedoffshotgun",
 		"weapon_vj_f3r_scattergun",
 		"weapon_vj_f3r_sniperrifle",
-		"weapon_vj_f3r_teslacannon"
+		"weapon_vj_f3r_teslacannon",
+		"weapon_vj_f3r_minigun",
 	}
 	
 	local vCre = "Fallout - Creatures"
@@ -407,7 +408,7 @@ if VJExists == true then
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_supersledge","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -415,7 +416,7 @@ if VJExists == true then
 		"weapon_vj_f3r_fatman",
 		"weapon_vj_f3r_plasmacaster",
 		"weapon_vj_f3r_teslacannon",
-		"weapon_vj_f3r_missilelauncher",
+		"weapon_vj_f3r_missilelauncher","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Nightkin)","npc_vj_f3r_supermutant_nig",{
 		"weapon_vj_f3r_assaultrifle",
@@ -453,7 +454,7 @@ if VJExists == true then
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_supersledge","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea_3",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -461,14 +462,14 @@ if VJExists == true then
 		"weapon_vj_f3r_fatman",
 		"weapon_vj_f3r_plasmacaster",
 		"weapon_vj_f3r_teslacannon",
-		"weapon_vj_f3r_missilelauncher",
+		"weapon_vj_f3r_missilelauncher","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant Overlord","npc_vj_f3r_supermutant_elite_3",{
 		"weapon_vj_f3r_heavyincinerator",
 		"weapon_vj_f3r_gatlinglaser",
 		"weapon_vj_f3r_missilelauncher",
 		"weapon_vj_f3r_supersledge",
-		"weapon_vj_f3r_laserscattergun"
+		"weapon_vj_f3r_laserscattergun","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Captain)","npc_vj_f3r_supermutant_cap_3",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -477,7 +478,7 @@ if VJExists == true then
 		"weapon_vj_f3r_flamer",
 		"weapon_vj_f3r_supersledge",
 		"weapon_vj_f3r_laserrifle",
-		"weapon_vj_f3r_plasmarifle",
+		"weapon_vj_f3r_plasmarifle","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Nightkin)","npc_vj_f3r_supermutant_nig_3",{
 		"weapon_vj_f3r_assaultrifle",
@@ -515,8 +516,8 @@ if VJExists == true then
 		"weapon_vj_f3r_multiplasmarifle",
 	},vHum)
 	VJ.AddNPC_HUMAN("Brother Hood Initiate","npc_vj_f3r_bos",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_10mmpistol"},vHum)
-	VJ.AddNPC_HUMAN("Brother Hood T-45","npc_vj_f3r_bosarmor",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
-	VJ.AddNPC_HUMAN("Brother Hood Outcast","npc_vj_f3r_bosarmor_outcast",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
+	VJ.AddNPC_HUMAN("Brother Hood T-45","npc_vj_f3r_bosarmor",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_minigun","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
+	VJ.AddNPC_HUMAN("Brother Hood Outcast","npc_vj_f3r_bosarmor_outcast",{"weapon_vj_f3r_laserpistol","weapon_vj_f3r_minigun","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserpistol","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserrifle","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_laserscattergun","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle","weapon_vj_f3r_missilelauncher","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_gatlinglaser","weapon_vj_f3r_flamer","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_assaultrifle"},vHum)
 	VJ.AddNPC_HUMAN("Child of Atom","npc_vj_f3r_coa",{"weapon_vj_f3r_10mmpistol"},vHum)
 	VJ.AddNPC_HUMAN("Gary","npc_vj_f3r_garry",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Talon Merc Company","npc_vj_f3r_talon",wepCommon,vHum)
