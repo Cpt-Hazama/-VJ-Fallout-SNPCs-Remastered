@@ -17,6 +17,8 @@ SWEP.NPC_ReloadSound			= {"vj_fallout/weapons/10mmpistol/pistol10mm_reloadout.wa
 SWEP.Primary.Sound				= {"vj_fallout/weapons/10mmpistol/pistol10mm_fire_2d.wav"}
 SWEP.Primary.DistantSound		= {"vj_fallout/weapons/10mmpistol/pistol10mm_fire_3d.wav"}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
+SWEP.Primary.TracerType 			= "vj_fo3_tracer"
+SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_pistol"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.Author 					= "Cpt. Hazama"

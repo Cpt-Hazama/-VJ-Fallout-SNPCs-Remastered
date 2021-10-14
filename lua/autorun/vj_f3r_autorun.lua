@@ -176,9 +176,6 @@ if VJExists == true then
 		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_assaultrifle",
-		"weapon_vj_f3r_assaultrifle",
-		"weapon_vj_f3r_assaultrifle",
-		"weapon_vj_f3r_assaultrifle",
 		"weapon_vj_f3r_10mmpistol",
 		"weapon_vj_f3r_10mmpistol",
 		"weapon_vj_f3r_10mmpistol",
@@ -219,6 +216,19 @@ if VJExists == true then
 		"weapon_vj_f3r_combatknife",
 		"weapon_vj_f3r_leadpipe",
 		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_lincolnrifle",
+		"weapon_vj_f3r_baseballbat",
+		"weapon_vj_f3r_baseballbat",
+		"weapon_vj_f3r_baseballbat",
+		"weapon_vj_f3r_baseballbat",
+		"weapon_vj_f3r_sledgehammer",
+		"weapon_vj_f3r_sledgehammer",
+		"weapon_vj_f3r_sledgehammer",
 	}
 
 	local wepAll = {
@@ -248,7 +258,7 @@ if VJExists == true then
 		"weapon_vj_f3r_plasmacaster",
 		"weapon_vj_f3r_plasmapistol",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_railwayrifle",
+		-- "weapon_vj_f3r_railwayrifle",
 		"weapon_vj_f3r_rechargerpistol",
 		"weapon_vj_f3r_rechargerrifle",
 		"weapon_vj_f3r_sawedoffshotgun",
@@ -256,6 +266,11 @@ if VJExists == true then
 		"weapon_vj_f3r_sniperrifle",
 		"weapon_vj_f3r_teslacannon",
 		"weapon_vj_f3r_minigun",
+
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_lincolnrifle",
+		"weapon_vj_f3r_baseballbat",
+		"weapon_vj_f3r_sledgehammer",
 	}
 	
 	local vCre = "Fallout - Creatures"
@@ -391,24 +406,24 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant",{
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_10mmsmg",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Light)","npc_vj_f3r_supermutant_lig",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_10mmsmg",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Medium)","npc_vj_f3r_supermutant_med",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_10mmsmg",
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge","weapon_vj_f3r_minigun",
+		"weapon_vj_f3r_sledgehammer","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -419,14 +434,15 @@ if VJExists == true then
 		"weapon_vj_f3r_missilelauncher","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Nightkin)","npc_vj_f3r_supermutant_nig",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_lincolnrifle",
 		"weapon_vj_f3r_10mmsmg",
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC("Super Mutant Behemoth","npc_vj_f3r_behemoth",vFEV)
 	VJ.AddNPC("Centaur","npc_vj_f3r_centaur",vFEV)
@@ -437,24 +453,24 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant_3",{
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_10mmsmg",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Light)","npc_vj_f3r_supermutant_lig_3",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_10mmsmg",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Medium)","npc_vj_f3r_supermutant_med_3",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_10mmsmg",
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge","weapon_vj_f3r_minigun",
+		"weapon_vj_f3r_sledgehammer","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Heavy)","npc_vj_f3r_supermutant_hea_3",{
 		"weapon_vj_f3r_heavyincinerator",
@@ -472,6 +488,7 @@ if VJExists == true then
 		"weapon_vj_f3r_laserscattergun","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Captain)","npc_vj_f3r_supermutant_cap_3",{
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_heavyincinerator",
 		"weapon_vj_f3r_gatlinglaser",
 		"weapon_vj_f3r_missilelauncher",
@@ -481,17 +498,18 @@ if VJExists == true then
 		"weapon_vj_f3r_plasmarifle","weapon_vj_f3r_minigun",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Super Mutant (Nightkin)","npc_vj_f3r_supermutant_nig_3",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_huntingrifle",
 		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_lincolnrifle",
 		"weapon_vj_f3r_10mmsmg",
 		"weapon_vj_f3r_laserpistol",
 		"weapon_vj_f3r_laserrifle",
 		"weapon_vj_f3r_plasmarifle",
-		"weapon_vj_f3r_supersledge",
+		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
 	VJ.AddNPC_HUMAN("Fawkes","npc_vj_f3r_supermutant_vault_3",{
-		"weapon_vj_f3r_assaultrifle",
+		"weapon_vj_f3r_g3assaultrifle",
 		"weapon_vj_f3r_combatshotgun",
 		"weapon_vj_f3r_gatlinglaser",
 		"weapon_vj_f3r_supersledge",
@@ -499,7 +517,7 @@ if VJExists == true then
 
 		-- Humans --
 	-- VJ.AddNPC_HUMAN("_Human Base","npc_vj_f3r_human_base",{
-	-- 	"weapon_vj_f3r_assaultrifle",
+	-- 	"weapon_vj_f3r_g3assaultrifle",
 	-- 	"weapon_vj_f3r_combatshotgun",
 	-- 	"weapon_vj_f3r_10mmpistol",
 	-- 	"weapon_vj_f3r_huntingrifle",
@@ -529,18 +547,7 @@ if VJExists == true then
 	VJ.AddNPC_HUMAN("Chinese Stealth Suit MK.II","npc_vj_f3r_chinese2",{"weapon_vj_f3r_laserkatana","weapon_vj_f3r_assaultrifle","weapon_vj_f3r_sniperrifle"},vHum)
 	VJ.AddNPC_HUMAN("Vault Dweller","npc_vj_f3r_vault",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Vault Security","npc_vj_f3r_vaultsec",{"weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmsmg"},vHum)
-	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",{
-		"weapon_vj_f3r_assaultrifle",
-		"weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol","weapon_vj_f3r_10mmpistol",
-		"weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg","weapon_vj_f3r_10mmsmg",
-		"weapon_vj_f3r_44magnum","weapon_vj_f3r_44magnum","weapon_vj_f3r_44magnum",
-		"weapon_vj_f3r_combatshotgun",
-		"weapon_vj_f3r_flamer",
-		"weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle","weapon_vj_f3r_huntingrifle",
-		"weapon_vj_f3r_sawedoffshotgun","weapon_vj_f3r_sawedoffshotgun","weapon_vj_f3r_sawedoffshotgun",
-		"weapon_vj_f3r_sniperrifle","weapon_vj_f3r_sniperrifle",
-		"weapon_vj_f3r_laserpistol"
-	},vHum)
+	VJ.AddNPC_HUMAN("Wastelander","npc_vj_f3r_waste",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("NCR Ranger","npc_vj_f3r_ncr",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Legion Soldier","npc_vj_f3r_legion",wepCommon,vHum)
 	VJ.AddNPC_HUMAN("Legion Centurion","npc_vj_f3r_legion_centurion",wepCommon,vHum)
@@ -590,6 +597,7 @@ if VJExists == true then
 	VJ.AddParticle("particles/vman_explosion.pcf",{})
 	VJ.AddParticle("particles/rpg_firetrail.pcf",{})
 	VJ.AddParticle("particles/nuke_explosion.pcf",{})
+	VJ.AddParticle("particles/muzzleflashes_test.pcf",{})
 	VJ.AddParticle("particles/fo3_laser.pcf",{
 		"vj_f3r_laser_red",
 		"vj_f3r_laser_red_impact",

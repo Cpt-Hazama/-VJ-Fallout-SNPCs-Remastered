@@ -1,7 +1,7 @@
 if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.WorldModel					= "models/fallout/weapons/w_assaultrifle.mdl"
-SWEP.PrintName					= "Assault Rifle"
+SWEP.PrintName					= "Chinese Assault Rifle"
 SWEP.ID 						= ITEM_VJ_ASSAULTRIFLE
 SWEP.AnimationType 				= "2ha"
 SWEP.NPC_NextPrimaryFire 		= 0.1 -- Next time it can use primary fire
@@ -10,12 +10,14 @@ SWEP.NPC_TimeUntilFire	 		= 0 -- How much time until the bullet/projectile is fi
 SWEP.NPC_TimeUntilFireExtraTimers = {} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
 SWEP.Primary.Damage				= 4 -- Damage
 SWEP.Primary.ClipSize			= 28 -- Max amount of bullets per clip
-SWEP.NPC_EquipSound 			= "vj_fallout/weapons/assaultrifle/rifleassault_equip.wav"
-SWEP.NPC_UnequipSound 			= "vj_fallout/weapons/assaultrifle/rifleassault_unequip.wav"
+SWEP.NPC_EquipSound 			= "vj_fallout/weapons/assaultrifle_chinese/wpn_rifleassault_equip.wav"
+SWEP.NPC_UnequipSound 			= "vj_fallout/weapons/assaultrifle_chinese/wpn_rifleassault_unequip.wav"
 SWEP.NPC_ReloadSound			= {"vj_fallout/weapons/assaultrifle/rifleassaultg3_reload_out.wav"}
-SWEP.Primary.Sound				= {"vj_fallout/weapons/assaultrifle/rifleassaultg3_fire_2d.wav"}
-SWEP.Primary.DistantSound		= {"vj_fallout/weapons/assaultrifle/rifleassaultg3_fire_3d.wav"}
+SWEP.Primary.Sound				= {"vj_fallout/weapons/assaultrifle_chinese/wpn_rifleassault_fire_2d.wav"}
+SWEP.Primary.DistantSound		= {"vj_fallout/weapons/assaultrifle_chinese/wpn_rifleassault_fire_3d.wav"}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
+SWEP.Primary.TracerType 			= "vj_fo3_tracer"
+SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_4"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.Author 					= "Cpt. Hazama"

@@ -72,7 +72,7 @@ function ENT:Think()
 	end
 	local pos = self:GetPos()
 	for _, ent in ipairs(ents.FindInSphere(pos,self.DamageDistance)) do
-		if((ent:IsPlayer() || ent:IsNPC()) && ent:Alive()) then
+		if((ent:IsPlayer() && ent:Alive() && GetConVar("ai_ignoreplayers"):GetInt() == 0 or ent:IsNPC())) then
 			local dist = ent:NearestPoint(pos):Distance(pos)
 			local RAD = math.ceil(RAD -((dist /self.DamageDistance) *RAD))
 			self:Irradiate(ent,RAD)

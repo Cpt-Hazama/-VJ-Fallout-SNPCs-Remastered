@@ -327,7 +327,7 @@ function ENT:FireWeapon(rad)
 			local bullet = {}
 			bullet.Num = 1
 			bullet.Src = start
-			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *12
+			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *18
 			bullet.Spread = 4
 			bullet.Tracer = 1
 			bullet.Force = 5
@@ -335,7 +335,7 @@ function ENT:FireWeapon(rad)
 			bullet.AmmoType = "SMG1"
 			self:FireBullets(bullet)
 			
-			ParticleEffectAttach("vj_rifle_full",PATTACH_POINT_FOLLOW,self,1)
+			ParticleEffectAttach("muzzleflash_5",PATTACH_POINT_FOLLOW,self,1)
 			
 			local FireLight1 = ents.Create("light_dynamic")
 			FireLight1:SetKeyValue("brightness", "4")
@@ -353,7 +353,7 @@ function ENT:FireWeapon(rad)
 			local bullet = {}
 			bullet.Num = 1
 			bullet.Src = start
-			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *10
+			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *14
 			bullet.Spread = 4
 			bullet.Tracer = 1
 			bullet.TracerName = "vj_fo3_laser"
@@ -361,9 +361,9 @@ function ENT:FireWeapon(rad)
 			bullet.Damage = 7
 			bullet.AmmoType = "SMG1"
 			bullet.Callback = function(attacker,tr,dmginfo)
-				local vjeffectmuz = EffectData()
-				vjeffectmuz:SetOrigin(tr.HitPos)
-				util.Effect("vj_fo3_laserhit",vjeffectmuz)
+				-- local vjeffectmuz = EffectData()
+				-- vjeffectmuz:SetOrigin(tr.HitPos)
+				-- util.Effect("vj_fo3_laserhit",vjeffectmuz)
 				dmginfo:SetDamageType(bit.bor(DMG_BULLET,DMG_BURN,DMG_DISSOLVE))
 			end
 			self:FireBullets(bullet)

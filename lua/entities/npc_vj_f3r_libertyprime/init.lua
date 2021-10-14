@@ -171,7 +171,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleRangeAttacks()
 	if !IsValid(self:GetEnemy()) then return end
-	if self:GetEnemy():GetPos():Distance(self:GetPos()) > 2500 && CurTime() > self.LibertyPrime_NextNukeAttackT && ((!IsValid(self.VJ_TheController)) or (IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_JUMP))) then
+	if self:GetEnemy():GetPos():Distance(self:GetPos()) > 2500 && CurTime() > self.LibertyPrime_NextNukeAttackT && ((!IsValid(self.VJ_TheController) && math.random(1,50) == 1) or (IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_JUMP))) then
 		self.LibertyPrime_DoingNukeAttack = true
 		self.LibertyPrime_DoingLaserAttack = false
 		self.RangeAttackEntityToSpawn = "obj_vj_f3r_mininuke_prime" -- The entity that is spawned when range attacking
@@ -215,6 +215,7 @@ function ENT:CustomRangeAttackCode()
 		//if ((self:GetAngles() - (self:GetEnemy():GetPos() -self:GetPos()):Angle()).y <= 40 or (self:GetAngles() - (self:GetEnemy():GetPos() -self:GetPos()):Angle()).y >= 320) then -- If it's between 45 and 315 then don't shoot!
 		local trPos = self:LibertyPrime_DoLaserTrace() //self:GetEnemy():GetPos() + self:GetUp()*math.Rand(-20,20) + self:GetRight()*math.Rand(-20,20)
 		sound.Play("vj_fallout/libertyprime/libertyprime_laser_fire.mp3",self:GetAttachment(1).Pos, 110, 100)
+		sound.Play("vj_fallout/libertyprime/impact/fx_laser_impact_libertyprime_0" .. math.random(1,2) .. ".wav",trPos, 85, 100)
 		util.ScreenShake(trPos, 100, 200, 0.4, 3000)
 		-- util.ParticleTracerEx("Weapon_Combine_Ion_Cannon_Beam", self:GetPos(), trPos, false, self:EntIndex(), 1)
 		-- ParticleEffect("aurora_shockwave", trPos, defAngle)

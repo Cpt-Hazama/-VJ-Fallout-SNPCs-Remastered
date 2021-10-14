@@ -2,7 +2,7 @@ function EFFECT:Init(data)
 	self.Position = data:GetStart()
 	self.EndPos = data:GetOrigin()
 	self.WeaponEnt = data:GetEntity()
-	if !IsValid(self.WeaponEnt) then return end
+	if !IsValid(self.WeaponEnt) then self.DieTime = 0 return end
 	self.Player = self.WeaponEnt:GetOwner()
 	self.Attachment = data:GetAttachment()
 	self.ModelEnt = self.WeaponEnt.clMdl or self.WeaponEnt

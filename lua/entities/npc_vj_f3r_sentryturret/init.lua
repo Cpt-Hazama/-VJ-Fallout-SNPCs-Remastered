@@ -127,9 +127,9 @@ function ENT:CustomRangeAttackCode()
 	bullet.Damage = self.LaserDamage
 	bullet.AmmoType = "SMG1"
 	bullet.Callback = function(attacker,tr,dmginfo)
-		local vjeffectmuz = EffectData()
-		vjeffectmuz:SetOrigin(tr.HitPos)
-		util.Effect("vj_fo3_laserhit",vjeffectmuz)
+		-- local vjeffectmuz = EffectData()
+		-- vjeffectmuz:SetOrigin(tr.HitPos)
+		-- util.Effect("vj_fo3_laserhit",vjeffectmuz)
 		dmginfo:SetDamageType(bit.bor(DMG_BULLET,DMG_BURN,DMG_DISSOLVE))
 	end
 	self:FireBullets(bullet)

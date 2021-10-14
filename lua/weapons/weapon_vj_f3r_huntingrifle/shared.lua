@@ -26,6 +26,8 @@ SWEP.Primary.DistantSound		= {
 									"vj_fallout/weapons/huntingrifle/huntingrifle_fire_3d03.wav",
 								}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
+SWEP.Primary.TracerType 			= "vj_fo3_tracer"
+SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_1"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.Author 					= "Cpt. Hazama"

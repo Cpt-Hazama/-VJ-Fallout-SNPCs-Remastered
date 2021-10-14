@@ -8,7 +8,7 @@ local VJExists = file.Exists("lua/autorun/vj_base_autorun.lua","GAME")
 if VJExists == true then
 	include('autorun/vj_controls.lua')
 
-	VJ.AddNPCWeapon("VJ_F3R_AssaultRifle","weapon_vj_f3r_assaultrifle")
+	VJ.AddNPCWeapon("VJ_F3R_ChineseAssaultRifle","weapon_vj_f3r_assaultrifle")
 	VJ.AddNPCWeapon("VJ_F3R_CombatShotgun","weapon_vj_f3r_combatshotgun")
 	VJ.AddNPCWeapon("VJ_F3R_GatlingLaser","weapon_vj_f3r_gatlinglaser")
 	VJ.AddNPCWeapon("VJ_F3R_Fatman","weapon_vj_f3r_fatman")
@@ -46,4 +46,9 @@ if VJExists == true then
 	VJ.AddNPCWeapon("VJ_F3R_SniperRifle","weapon_vj_f3r_sniperrifle")
 	VJ.AddNPCWeapon("VJ_F3R_ProtoTypeTeslaCannon","weapon_vj_f3r_teslacannon")
 	VJ.AddNPCWeapon("VJ_F3R_Minigun","weapon_vj_f3r_minigun")
+
+	VJ.AddNPCWeapon("VJ_F3R_G3AssaultRifle","weapon_vj_f3r_g3assaultrifle")
+	VJ.AddNPCWeapon("VJ_F3R_LincolnRifle","weapon_vj_f3r_lincolnrifle")
+	VJ.AddNPCWeapon("VJ_F3R_BaseballBat","weapon_vj_f3r_baseballbat")
+	VJ.AddNPCWeapon("VJ_F3R_SledgeHammer","weapon_vj_f3r_sledgehammer")
 end
