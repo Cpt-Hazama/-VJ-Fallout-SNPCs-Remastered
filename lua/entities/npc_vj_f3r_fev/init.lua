@@ -9,7 +9,7 @@ ENT.Model = {"models/fallout/fevsubject.mdl"} -- The game will pick a random mod
 ENT.StartHealth = 450
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_FEV_MUTANT_DUMB"} -- NPCs with the same class with be allied to each other
 ENT.BloodColor = "Red" -- The blood type, this will determine what it should use (decal, particle, etc.)
 ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.AnimTbl_MeleeAttack = {"vjges_h2hattackleft_a","vjges_h2hattackleft_b","vjges_h2hattackleftpower","vjges_h2hattackright_a","vjges_h2hattackright_b","vjges_h2hattackrightpower"} -- Melee Attack Animations
@@ -111,10 +111,16 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_emit FootLeft" then
 		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	elseif key == "event_emit FootRight" then
-		ParticleEffect("blood_impact_red_01",self:GetBonePosition(8),Angle(0,0,0),nil)
+		-- ParticleEffect("blood_impact_red_01",self:GetBonePosition(8),Angle(0,0,0),nil)
 		VJ_EmitSound(self,"physics/body/body_medium_break" .. math.random(2,3) .. ".wav",self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
-		self:TakeDamage(1,self,self)
+		local dmginfo = DamageInfo()
+		dmginfo:SetDamage(1)
+		dmginfo:SetDamageType(DMG_SLASH)
+		dmginfo:SetAttacker(self)
+		dmginfo:SetInflictor(self)
+		dmginfo:SetDamagePosition(self:GetBonePosition(8))
+		self:TakeDamageInfo(dmginfo)
 	elseif string.find(key,"event_mattack") then
 		local atk = string.Replace(key,"event_mattack ","")
 		self:MeleeAttackCode()

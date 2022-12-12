@@ -19,7 +19,7 @@ SWEP.Primary.Automatic = false
 
 SWEP.AnimTbl_Deploy 					= {ACT_VM_DEPLOY_1}
 SWEP.AnimTbl_Idle 						= {ACT_VM_IDLE_1}
-SWEP.AnimTbl_PrimaryFire 				= {ACT_GESTURE_RANGE_ATTACK_PISTOL}
+SWEP.AnimTbl_PrimaryFire 				= {"1hpattackright"}
 SWEP.AnimTbl_Reload 					= {ACT_GESTURE_RELOAD_PISTOL}
 
 SWEP.NPC_EquipSound 			= "vj_fallout/weapons/assaultrifle/rifleassault_equip.wav"
