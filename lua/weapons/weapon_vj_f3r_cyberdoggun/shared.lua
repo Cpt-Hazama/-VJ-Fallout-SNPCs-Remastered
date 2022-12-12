@@ -15,6 +15,7 @@ SWEP.NPC_UnequipSound 			= "vj_fallout/weapons/cyberdoggun/k9000unequip02.mp3"
 SWEP.NPC_ReloadSound 			= {"vj_fallout/weapons/cyberdoggun/k9000combatstart03.mp3"}
 SWEP.Primary.Sound				= {}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
+SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_5"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.Author 					= "Cpt. Hazama"

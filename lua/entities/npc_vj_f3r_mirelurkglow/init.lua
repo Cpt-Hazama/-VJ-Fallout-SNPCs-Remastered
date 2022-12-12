@@ -33,6 +33,7 @@ function ENT:CustomOnInitialize()
 	self.Glow:Spawn()
 	self.Glow:Activate()
 	self.Glow:Fire("TurnOn","",0)
+	self.Glow:FollowBone(self,self:LookupBone("Bip01 Spine"))
 	self:DeleteOnRemove(self.Glow)
 	self.atkData = {
 		["left"] = {dmg=41,dist=135},

@@ -401,6 +401,12 @@ if VJExists == true then
 	VJ.AddNPC("Sentry Turret (Raiders)","npc_vj_f3r_sentryturret_flame",vRob)
 	VJ.AddNPC("Sentry Turret (Enclave)","npc_vj_f3r_sentryturret_plasma",vRob)
 	VJ.AddNPC("Chinese Spider Mine","npc_vj_f3r_spidermine",vRob)
+	VJ.AddNPC("Securitron Mark I","npc_vj_f3r_securitron",vRob)
+	VJ.AddNPC("Securitron Mark II","npc_vj_f3r_securitron_infatry",vRob)
+	VJ.AddNPC("Yes Man","npc_vj_f3r_securitron_yesman",vRob)
+	VJ.AddNPC("Victor","npc_vj_f3r_securitron_victor",vRob)
+	VJ.AddNPC("Jane","npc_vj_f3r_securitron_jane",vRob)
+	VJ.AddNPC("Marilyn","npc_vj_f3r_securitron_marilyn",vRob)
 
 		-- FEV Mutants --
 	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant",{
@@ -444,6 +450,14 @@ if VJExists == true then
 		"weapon_vj_f3r_plasmarifle",
 		"weapon_vj_f3r_sledgehammer",
 	},vFEV)
+	VJ.AddNPC_HUMAN("Lily","npc_vj_f3r_supermutant_lily",{
+		"weapon_vj_f3r_g3assaultrifle",
+		"weapon_vj_f3r_huntingrifle",
+		"weapon_vj_f3r_combatshotgun",
+		"weapon_vj_f3r_lincolnrifle",
+		"weapon_vj_f3r_sledgehammer",
+	},vFEV)
+	VJ.AddNPC_HUMAN("Marcus","npc_vj_f3r_supermutant_marcus",wepCommon,vFEV)
 	VJ.AddNPC("Super Mutant Behemoth","npc_vj_f3r_behemoth",vFEV)
 	VJ.AddNPC("Centaur","npc_vj_f3r_centaur",vFEV)
 	VJ.AddNPC("Evolved Centaur","npc_vj_f3r_centaurbig",vFEV)
@@ -597,7 +611,15 @@ if VJExists == true then
 	VJ.AddParticle("particles/vman_explosion.pcf",{})
 	VJ.AddParticle("particles/rpg_firetrail.pcf",{})
 	VJ.AddParticle("particles/nuke_explosion.pcf",{})
-	VJ.AddParticle("particles/muzzleflashes_test.pcf",{})
+	VJ.AddParticle("particles/muzzleflashes_test.pcf",{
+		"muzzleflash_pistol", -- Low Calibar
+		"muzzleflash_1", -- Low/Medium Calibar
+		"muzzleflash_4", -- Medium Calibar
+		"muzzleflash_g3", -- High Calibar
+		"muzzleflash_6", -- Snipers
+		"muzzleflash_5", -- Minigun
+		"muzzleflash_shotgun" -- Shotgun
+	})
 	VJ.AddParticle("particles/fo3_laser.pcf",{
 		"vj_f3r_laser_red",
 		"vj_f3r_laser_red_impact",

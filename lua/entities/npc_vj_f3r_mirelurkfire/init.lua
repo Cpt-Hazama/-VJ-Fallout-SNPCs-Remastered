@@ -14,7 +14,7 @@ ENT.FootStepPitch = VJ_Set(50, 60)
 ENT.Immune_Fire = true
 ENT.MeleeAttackSetEnemyOnFireTime = 4
 
-ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
+ENT.HasRangeAttack = false -- Should the SNPC have a range attack?
 ENT.RangeAttackEntityToSpawn = "obj_vj_f3r_heavyflame" -- The entity that is spawned when range attacking
 ENT.AnimTbl_RangeAttack = {"vjseq_idle_feed"} -- Range Attack Animations
 ENT.RangeDistance = 800 -- This is how far away it can shoot
@@ -57,6 +57,7 @@ function ENT:CustomOnInitialize()
 	self.Glow:Spawn()
 	self.Glow:Activate()
 	self.Glow:Fire("TurnOn","",0)
+	self.Glow:FollowBone(self,self:LookupBone("Bip01 Spine"))
 	self:DeleteOnRemove(self.Glow)
 	self.atkData = {
 		["left"] = {dmg=41,dist=135},
@@ -98,6 +99,70 @@ function ENT:CustomOnInitialize()
 			pitch=100
 		}
 	}
+	
+	self.FlameLP = CreateSound(self,"vj_fallout/giantant/flamerant_fire_lp.wav")
+	self.FlameLP:ChangeVolume(78)
+
+	self.InFlameAttack = false
+	self.NextCanFlameAttackT = 0
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:ResetFlameCode()
+	self.FlameLP:Stop()
+	self:StopParticles()
+	self.InFlameAttack = false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:FlameAttackCode(cont)
+	if CurTime() < self.NextCanFlameAttackT then return end
+	if !self.InFlameAttack then
+		self.InFlameAttack = true
+		self.FlameLP:Play()
+		ParticleEffectAttach("flame_gargantua", PATTACH_POINT_FOLLOW, self, 1)
+		ParticleEffectAttach("flame_gargantua", PATTACH_POINT_FOLLOW, self, 2)
+		self.NextCanFlameAttackT = CurTime() +(VJ_GetSequenceDuration(self, ACT_ARM) +VJ_GetSequenceDuration(self, ACT_DISARM)) +(cont && 0 or math.random(6,12))
+		self:VJ_ACT_PLAYACTIVITY(ACT_ARM,true,false,true,0,{OnFinish=function(interrupted,anim)
+			if interrupted then
+				self:ResetFlameCode()
+				return
+			end
+
+			self:VJ_ACT_PLAYACTIVITY(ACT_DISARM,true,false,true,0,{OnFinish=function(interrupted,anim)
+				self:ResetFlameCode()
+			end})
+		end})
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnThink()
+	if self.InFlameAttack then
+		local att1 = self:GetAttachment(1)
+		local att2 = self:GetAttachment(2)
+		self:DoFlameDamage(225,2,self,30,1,att1.Pos,att1.Ang:Forward())
+		self:DoFlameDamage(225,2,self,30,1,att2.Pos,att2.Ang:Forward())
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomAttack(ent, entVisible)
+	local dist = self.NearestPointToEnemyDistance
+	local cont = self.VJ_TheController
+
+	if IsValid(cont) then
+		if cont:KeyDown(IN_ATTACK2) then
+			self:FlameAttackCode(true)
+		end
+		return
+	end
+
+	if IsValid(ent) && dist <= 200 && entVisible then
+		if !self:IsBusy() then
+			self:FlameAttackCode()
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnRemove()
+	self.FlameLP:Stop()
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***

@@ -10,7 +10,7 @@ function EFFECT:Init(data)
 	if !IsValid(self.WeaponEnt) then self.DieTime = 0 return end
 	self.Player = self.WeaponEnt:GetOwner()
 	self.Attachment = data:GetAttachment()
-	self.ModelEnt = self.WeaponEnt.clMdl or self.WeaponEnt
+	self.ModelEnt = self.WeaponEnt.VJ_CModel or self.WeaponEnt.clMdl or self.WeaponEnt
 
 	local muzEnt = ((self.Player != LocalPlayer()) or self.Player:ShouldDrawLocalPlayer()) && self.WeaponEnt or self.ModelEnt
 	-- self.StartPos = self:GetTracerShootPos(self.Position,self.ModelEnt,self.Attachment)

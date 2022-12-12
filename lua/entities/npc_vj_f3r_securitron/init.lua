@@ -5,16 +5,20 @@ include('shared.lua')
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
-ENT.Model = {"models/fallout/sentrybot_edit.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
-ENT.StartHealth = 500
+ENT.Model = {"models/cpthazama/fallout/securitron.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
+ENT.StartHealth = 150
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
-ENT.VJ_NPC_Class = {"CLASS_BOS"} -- NPCs with the same class with be allied to each other
+ENT.VJ_NPC_Class = {"CLASS_MRHOUSE"} -- NPCs with the same class with be allied to each other
+
 ENT.Bleeds = false
+
 ENT.HasMeleeAttack = false -- Should the SNPC have a melee attack?
+
 ENT.BecomeEnemyToPlayer = true
 ENT.PlayerFriendly = true
 ENT.BecomeEnemyToPlayerLevel = 2
+
 ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
 ENT.OnPlayerSightDistance = 200 -- How close should the player be until it runs the code?
 ENT.OnPlayerSightOnlyOnce = false -- Should it only run the code once?
@@ -36,8 +40,7 @@ ENT.NextRangeAttackTime = math.random(6,12) -- How much time until it can use a 
 ENT.RangeUseAttachmentForPos = true -- Should the projectile spawn on a attachment?
 ENT.RangeUseAttachmentForPosID = "muzzle_missile" -- The attachment used on the range attack if RangeUseAttachmentForPos is set to true
 
-	-- ====== Flinching Code ====== --
-ENT.CanFlinch = 1 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
+ENT.CanFlinch = 0 -- 0 = Don't flinch | 1 = Flinch at any damage | 2 = Flinch only from certain damages
 ENT.FlinchChance = 15 -- Chance of it flinching from 1 to x | 1 will make it always flinch
 ENT.NextMoveAfterFlinchTime = false -- How much time until it can move, attack, etc. | Use this for schedules or else the base will set the time 0.6 if it sees it's a schedule!
 ENT.HasHitGroupFlinching = true -- It will flinch when hit in certain hitgroups | It can also have certain animations to play in certain hitgroups
@@ -69,115 +72,20 @@ ENT.HitGroupFlinching_Values = {
 	},
 }
 
-	-- ====== File Path Variables ====== --
-	-- Leave blank if you don't want any sounds to play
 ENT.SoundTbl_FootStep = {}
-ENT.SoundTbl_Idle = {
-	"vj_fallout/sentrybot/genericidl_idlechatter1.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter2.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter3.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter4.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter5.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter6.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter7.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter8.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter9.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter10.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter11.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter12.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter13.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter14.mp3",
-	"vj_fallout/sentrybot/genericidl_idlechatter15.mp3",
-}
-ENT.SoundTbl_Alert = {
-	"vj_fallout/sentrybot/genericrob_normaltocombat1.mp3",
-	"vj_fallout/sentrybot/genericrob_normaltocombat2.mp3",
-	"vj_fallout/sentrybot/genericrob_normaltocombat3.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttocombat1.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttocombat2.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttocombat3.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttocombat1.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttocombat2.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttocombat3.mp3",
-}
-ENT.SoundTbl_CombatIdle = {
-	"vj_fallout/sentrybot/genericrobot_attack1.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack2.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack3.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack4.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack5.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack6.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack7.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack8.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack9.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack10.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack11.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack12.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack13.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack14.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack15.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0c_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0d_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0e_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0f_1.mp3",
-}
-ENT.SoundTbl_LostEnemy = {
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0b_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_combattolost1.mp3",
-	"vj_fallout/sentrybot/genericrobot_combattolost2.mp3",
-	"vj_fallout/sentrybot/genericrobot_combattolost3.mp3",
-	"vj_fallout/sentrybot/genericrobot_lostidle1.mp3",
-	"vj_fallout/sentrybot/genericrobot_lostidle2.mp3",
-	"vj_fallout/sentrybot/genericrobot_lostidle3.mp3",
-}
-ENT.SoundTbl_OnKilledEnemy = {
-	"vj_fallout/sentrybot/genericrob_combattonormal1.mp3",
-	"vj_fallout/sentrybot/genericrob_combattonormal2.mp3",
-	"vj_fallout/sentrybot/genericrob_combattonormal3.mp3",
-	"vj_fallout/sentrybot/genericrob_combattonormal4.mp3",
-	"vj_fallout/sentrybot/genericrobot_alertidle1.mp3",
-	"vj_fallout/sentrybot/genericrobot_alertidle2.mp3",
-	"vj_fallout/sentrybot/genericrobot_alertidle3.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttonormal1.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttonormal2.mp3",
-	"vj_fallout/sentrybot/genericrobot_alerttonormal3.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttonormal1.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttonormal2.mp3",
-	"vj_fallout/sentrybot/genericrobot_losttonormal3.mp3",
-}
-ENT.SoundTbl_AllyDeath = {
-	"vj_fallout/sentrybot/genericrobot_murder1.mp3",
-	"vj_fallout/sentrybot/genericrobot_murder2.mp3",
-	"vj_fallout/sentrybot/genericrobot_murder3.mp3",
-}
-ENT.SoundTbl_DamageByPlayer = {
-	"vj_fallout/sentrybot/genericrobot_assault_00080da1_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_assault_00080da2_1.mp3",
-}
-ENT.SoundTbl_Pain = {
-	"vj_fallout/sentrybot/genericrobot_attack_00080e0a_1.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit1.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit2.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit3.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit4.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit5.mp3",
-	"vj_fallout/sentrybot/genericrobot_hit6.mp3",
-}
-ENT.SoundTbl_Death = {
-	"vj_fallout/sentrybot/genericrobot_death1.mp3",
-	"vj_fallout/sentrybot/genericrobot_death2.mp3",
-	"vj_fallout/sentrybot/genericrobot_death3.mp3",
-	"vj_fallout/sentrybot/genericrobot_death4.mp3",
-	"vj_fallout/sentrybot/genericrobot_death5.mp3",
-	"vj_fallout/sentrybot/genericrobot_death6.mp3",
-}
+ENT.SoundTbl_Idle = {}
+ENT.SoundTbl_Alert = {}
+ENT.SoundTbl_CombatIdle = {}
+ENT.SoundTbl_LostEnemy = {}
+ENT.SoundTbl_OnKilledEnemy = {}
+ENT.SoundTbl_AllyDeath = {}
+ENT.SoundTbl_DamageByPlayer = {}
+ENT.SoundTbl_Pain = {}
+ENT.SoundTbl_Death = {}
 
-ENT.SoundTbl_Guard_Warn = {"vj_fallout/sentrybot/genericrobot_guardtrespass_00080e2b_1.mp3","vj_fallout/sentrybot/genericrobot_guardtrespass_00080e29_1.mp3","vj_fallout/sentrybot/genericrobot_guardtrespass_00080e2a_1.mp3"}
-ENT.SoundTbl_Guard_Angry = {"vj_fallout/sentrybot/genericrobot_guardtrespass_00018e50_1.mp3"}
-ENT.SoundTbl_Guard_Calmed = {"vj_fallout/sentrybot/genericrobot_hello_00080d9d_1.mp3"}
-
-ENT.Skin = 0
-ENT.Weapon = 0
+ENT.SoundTbl_Guard_Warn = {}
+ENT.SoundTbl_Guard_Angry = {}
+ENT.SoundTbl_Guard_Calmed = {}
 
 ENT.ConstantlyFaceEnemy = true -- Should it face the enemy constantly?
 ENT.ConstantlyFaceEnemy_IfVisible = true -- Should it only face the enemy if it's visible?
@@ -193,6 +101,24 @@ ENT.VJ_F3R_GuardWarnDistance = 800
 ENT.VJ_F3R_RanGuardStatusChange = false
 ENT.VJ_F3R_GuardPosition = Vector(0,0,0)
 ENT.VJ_F3R_MaxGuardDistance = 550
+
+ENT.Skin = 7
+/*-- Skin Guide --
+	0 = Default
+	1 = Infantry
+	3 = Jane
+	5 = Marilyn
+	7 = Police
+	9 = Victor
+	11 = Yes Man
+	14 = Default (Clean)
+	15 = Infantry (Clean)
+	17 = Jane (Clean)
+	19 = Marilyn (Clean)
+	21 = Police (Clean)
+	23 = Victor (Clean)
+	25 = Yes Man (Clean)
+*/
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnPlayerSight(argent)
 	if self.Human_GuardMode then
@@ -266,7 +192,7 @@ end
 function ENT:CustomOnInitialize()
 	self.tbl_Inventory = {}
 	self:SetupInventory()
-	self:SetCollisionBounds(Vector(26,26,65),Vector(-26,-26,0))
+	self:SetCollisionBounds(Vector(26,26,110),Vector(-26,-26,0))
 	local v1,v2 = self:GetCollisionBounds()
 	self.Height = v2.z
 	self.DefaultDistance = self.MeleeAttackDistance
@@ -284,9 +210,22 @@ function ENT:CustomOnInitialize()
 	self.NextCanSpinT = 0
 	self.NextFireT = 0
 	self.NextGestT = 0
+			
+	-- local light = ents.Create("light_dynamic")
+	-- light:SetKeyValue("brightness", "1")
+	-- light:SetKeyValue("distance", "100")
+	-- light:SetPos(self:GetPos())
+	-- light:SetLocalAngles(self:GetAngles())
+	-- light:Fire("Color", "255 255 255")
+	-- light:SetParent(self)
+	-- light:Spawn()
+	-- light:Activate()
+	-- light:Fire("TurnOn","",0)
+	-- light:Fire("SetParentAttachment","screen",0)
+	-- self:DeleteOnRemove(light)
 	
 	self:SetSkin(self.Skin)
-	self:SetBodygroup(1,self.Weapon)
+	-- self:SetBodygroup(1,self.Weapon)
 	self:GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -330,7 +269,6 @@ function ENT:FireWeapon(rad)
 			bullet.Dir = (self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()) -start +VectorRand() *18
 			bullet.Spread = 4
 			bullet.Tracer = 1
-			bullet.TracerName = "vj_fo3_tracer"
 			bullet.Force = 5
 			bullet.Damage = 5
 			bullet.AmmoType = "SMG1"

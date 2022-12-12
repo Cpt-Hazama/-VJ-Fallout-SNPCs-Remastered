@@ -63,6 +63,7 @@ function ENT:CustomOnInitialize()
 	self.Glow:Spawn()
 	self.Glow:Activate()
 	self.Glow:Fire("TurnOn","",0)
+	self.Glow:FollowBone(self,self:LookupBone("Bip01 Spine"))
 	self:DeleteOnRemove(self.Glow)
 	self.tbl_Flames = {}
 	for i = 1, 8 do self.tbl_Flames[i] = {nextEmit = CurTime() +math.Rand(0,14), emitting = false} end
