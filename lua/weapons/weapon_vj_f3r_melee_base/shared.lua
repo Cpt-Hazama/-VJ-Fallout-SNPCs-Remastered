@@ -20,7 +20,7 @@ SWEP.Purpose = ""
 SWEP.Instructions = ""
 SWEP.Base = "weapon_vj_f3r_base"
 SWEP.HoldType = SWEP.AnimationType
-SWEP.MadeForNPCsOnly = true
+-- SWEP.MadeForNPCsOnly = true
 SWEP.NPC_TimeUntilFire = 0
 SWEP.IsMeleeWeapon = true
 ---------------------------------------------------------------------------------------------------------------------------------------------

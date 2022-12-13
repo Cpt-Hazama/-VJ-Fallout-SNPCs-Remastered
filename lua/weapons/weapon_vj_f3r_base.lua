@@ -71,6 +71,8 @@ SWEP.UseHands 					= true
 
 SWEP.Garbage = {}
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:OnHit(entTbl,hitType) end
+---------------------------------------------------------------------------------------------------------------------------------------------
 if CLIENT then
 	function SWEP:CreateCModel(...)
 		local ent = ClientsideModel(...)
@@ -107,6 +109,8 @@ else
 		end
 
 		if self.IsMeleeWeapon then
+			self.PrimaryEffects_MuzzleFlash = false
+			self.PrimaryEffects_SpawnDynamicLight = false
 			if self.MeleeInit then
 				self:MeleeInit()
 			end
@@ -407,7 +411,7 @@ function SWEP:PlayAnimation(anim)
 	else
 		self:SendWeaponAnim(anim)
 	end
-	return animTime
+	return animTime, anim
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:DoIdleAnimation()
@@ -415,6 +419,9 @@ function SWEP:DoIdleAnimation()
 	self:CustomOnIdle()
 	local owner = self:GetOwner()
 	if IsValid(owner) then
+		if self.IsMeleeWeapon == true then
+			self.SwingSide = 0
+		end
 		owner:SetAnimation(PLAYER_IDLE)
 		local animTime = self:PlayAnimation(self.AnimTbl_Idle)
 		self.NextIdleT = CurTime() + animTime
@@ -468,6 +475,46 @@ function SWEP:Reload()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:OnMeleeHit(entTbl,UseAlt)
+	local owner = self:GetOwner()
+	local hitType = 0
+	if #entTbl <= 0 then
+		local tr = util.TraceLine({
+			start = owner:GetShootPos(),
+			endpos = owner:GetShootPos() +owner:GetAimVector() *self.MeleeHitDistance,
+			filter = {owner,self}
+		})
+		if tr.Hit then
+			if self.SoundTbl_MeleeAttackHitWorld then
+				sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackHitWorld), tr.HitPos, 75)
+			end
+			hitType = 1
+		else
+			if self.SoundTbl_MeleeAttackMiss then
+				sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackMiss), owner:GetShootPos(), 70)
+			end
+			hitType = 2
+		end
+	else
+		if self.SoundTbl_MeleeAttackHit then
+			sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackHit), owner:EyePos(), 75)
+		end
+		for _,v in pairs(entTbl) do
+			local applyDmg = DamageInfo()
+			applyDmg:SetDamage(UseAlt && self.Primary.HeavyDamage or self.Primary.Damage)
+			applyDmg:SetDamageType(self.Primary.DamageType)
+			applyDmg:SetDamagePosition(self:GetNearestPoint(v).MyPosition)
+			applyDmg:SetDamageForce(self:GetForward() *((applyDmg:GetDamage() +100) *70))
+			applyDmg:SetInflictor(self)
+			applyDmg:SetAttacker(owner)
+			v:TakeDamageInfo(applyDmg,owner)
+		end
+		hitType = 3
+	end
+
+	self:OnHit(entTbl,hitType)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PrimaryAttack(UseAlt)
 	//if self:GetOwner():KeyDown(IN_RELOAD) then return end
 	//self:GetOwner():SetFOV(45, 0.3)
@@ -511,10 +558,45 @@ function SWEP:PrimaryAttack(UseAlt)
 	if owner.IsVJBaseSNPC_Human == true && owner.DisableWeaponFiringGesture != true then
 		owner:VJ_ACT_PLAYACTIVITY(owner:TranslateToWeaponAnim(VJ_PICK(owner.AnimTbl_WeaponAttackFiringGesture)), false, false, false, 0, {AlwaysUseGesture=true})
 	end
+
+	local animTime, anim
+	if isPly then
+		//self:ShootEffects("ToolTracer") -- Deprecated
+		owner:ViewPunch(Angle(-self.Primary.Recoil, 0, 0))
+		self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+		owner:SetAnimation(PLAYER_ATTACK1)
+		if self.IsMeleeWeapon == true then
+			if UseAlt then
+				self.SwingSide = 0
+				animTime, anim = self:PlayAnimation(self.AnimTbl_Melee_Power)
+				anim = !isstring(anim) && VJ_GetSequenceName(owner:GetViewModel(), anim) or anim
+			else
+				self.SwingSide = self.SwingSide == 1 && 0 or 1
+				animTime, anim = self:PlayAnimation(self.SwingSide == 1 && self.AnimTbl_Melee_Right or self.AnimTbl_Melee_Left)
+				anim = !isstring(anim) && VJ_GetSequenceName(owner:GetViewModel(), anim) or anim
+			end
+		else
+			animTime, anim = self:PlayAnimation(self.AnimTbl_PrimaryFire)
+		end
+		self.NextIdleT = CurTime() + animTime
+		self.NextReloadT = CurTime() + animTime
+	end
 	
 	-- MELEE WEAPON
 	if self.IsMeleeWeapon == true then
-
+		if SERVER && owner:IsPlayer() then
+			timer.Simple((self.MeleeHitTimes && self.MeleeHitTimes[anim]) or self.MeleeHitTime or 0.5,function()
+				if IsValid(self) && IsValid(owner) && self:GetOwner() == owner then
+					local tbl = {}
+					for _,v in pairs(ents.FindInSphere(owner:GetShootPos(),self.MeleeHitDistance)) do
+						if v.Health && owner:Visible(v) && v != self && v != owner && (owner:GetAimVector():Angle():Forward():Dot(((v:GetPos() +v:OBBCenter()) - owner:GetShootPos()):GetNormalized()) > math.cos(math.rad(self.MeleeHitRadius or 50))) then
+							table.insert(tbl,v)
+						end
+					end
+					self:OnMeleeHit(tbl,UseAlt)
+				end
+			end)
+		end
 	-- REGULAR WEAPON (NON-MELEE)
 	else
 		if self.Primary.DisableBulletCode == false then
@@ -563,15 +645,31 @@ function SWEP:PrimaryAttack(UseAlt)
 	end
 	
 	self:PrimaryAttackEffects()
-	if isPly then
-		//self:ShootEffects("ToolTracer") -- Deprecated
-		owner:ViewPunch(Angle(-self.Primary.Recoil, 0, 0))
-		self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-		owner:SetAnimation(PLAYER_ATTACK1)
-		local animTime = self:PlayAnimation(self.AnimTbl_PrimaryFire)
-		self.NextIdleT = CurTime() + animTime
-		self.NextReloadT = CurTime() + animTime
-	end
 	self:CustomOnPrimaryAttack_AfterShoot()
 	//self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CanSecondaryAttack()
+	return self:CanPrimaryAttack()
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:SecondaryAttack()
+	if !self.IsMeleeWeapon then return end
+	self:PrimaryAttack(true)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:GetNearestPoint(argent,SameZ)
+	if !IsValid(argent) then return end
+	SameZ = SameZ or false -- Should the Z of the pos be the same as the NPC's?
+	local myNearestPoint = self:GetOwner():EyePos()
+	local NearestPositions = {MyPosition=Vector(0,0,0), EnemyPosition=Vector(0,0,0)}
+	local Pos_Enemy, Pos_Self = argent:NearestPoint(myNearestPoint + argent:OBBCenter()), self:NearestPoint(argent:GetPos() + self:OBBCenter())
+	Pos_Enemy.z, Pos_Self.z = argent:GetPos().z, myNearestPoint.z
+	if SameZ == true then
+		Pos_Enemy = Vector(Pos_Enemy.x,Pos_Enemy.y,self:SetNearestPointToEntityPosition().z)
+		Pos_Self = Vector(Pos_Self.x,Pos_Self.y,self:SetNearestPointToEntityPosition().z)
+	end
+	NearestPositions.MyPosition = Pos_Self
+	NearestPositions.EnemyPosition = Pos_Enemy
+	return NearestPositions
 end
