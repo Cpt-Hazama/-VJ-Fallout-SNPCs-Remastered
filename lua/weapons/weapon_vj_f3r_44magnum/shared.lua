@@ -4,6 +4,7 @@ SWEP.WorldModel					= "models/fallout/weapons/w_44magnumrevolver.mdl"
 SWEP.PrintName					= ".44 Magnum"
 SWEP.AnimationType 						= "1hp"
 SWEP.PHoldType 							= "pistol"
+SWEP.Slot 								= (SWEP.AnimationType == "1gt" && 4 or SWEP.AnimationType == "1hm" && 0 or SWEP.AnimationType == "2hm" && 0 or SWEP.AnimationType == "2ha" && 2 or SWEP.AnimationType == "2hh" && 3 or SWEP.AnimationType == "2hl" && 4 or SWEP.AnimationType == "2hr" && 2 or SWEP.AnimationType == "1hp" && 1 or SWEP.AnimationType == "1md" && 4) or 1
 
 SWEP.NPC_NextPrimaryFire 				= 0.45
 SWEP.NPC_CustomSpread	 				= 0.8

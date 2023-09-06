@@ -5,6 +5,8 @@ SWEP.PrintName							= "Weapon_Base"
 SWEP.ID 								= ITEM_VJ_NO_ID
 SWEP.AnimationType 						= "2ha"
 SWEP.PHoldType 							= "ar2"
+SWEP.Slot 								= (SWEP.AnimationType == "1gt" && 4 or SWEP.AnimationType == "1hm" && 0 or SWEP.AnimationType == "2hm" && 0 or SWEP.AnimationType == "2ha" && 2 or SWEP.AnimationType == "2hh" && 3 or SWEP.AnimationType == "2hl" && 4 or SWEP.AnimationType == "2hr" && 2 or SWEP.AnimationType == "1hp" && 1 or SWEP.AnimationType == "1md" && 4) or 1
+SWEP.SlotPos 							= 4
 SWEP.Weights = false
 
 SWEP.WorldModel_CustomPositionAngle 	= Vector(80,5,270)
@@ -17,6 +19,8 @@ SWEP.NPC_TimeUntilFireExtraTimers 		= {}
 
 SWEP.Primary.Damage						= 1
 SWEP.Primary.ClipSize					= 1
+SWEP.Primary.Delay						= -1
+SWEP.Primary.Cone						= -1
 
 SWEP.AnimTbl_Deploy 					= {}
 SWEP.AnimTbl_Idle 						= {}
@@ -37,6 +41,12 @@ SWEP.PrimaryEffects_MuzzleAttachment 	= "muzzle"
 SWEP.AdjustViewModel = false
 SWEP.ViewModelAdjust = {
 	Pos = {Right = 0,Forward = 0,Up = 0},
+	Ang = {Right = 0,Up = 0,Forward = 0}
+}
+
+SWEP.ZoomLevel = 40
+SWEP.ViewModelZoomAdjust = {
+	Pos = {Right = -0.25,Forward = 2,Up = 0},
 	Ang = {Right = 0,Up = 0,Forward = 0}
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -71,12 +81,83 @@ SWEP.UseHands 					= true
 
 SWEP.Garbage = {}
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:OnDoMeleeAttack(anim,time) end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:AddGarbage(ent)
+	table.insert(self.Garbage,ent)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:SetupDataTables()
+	self:NetworkVar("Bool", 0, "Zoomed")
+
+	if self.Vars then
+		for _,v in pairs(self.Vars) do
+			self:NetworkVar(v.Type, v.Index, v.Name)
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+if SERVER then
+	util.AddNetworkString("VJ_F3R_InitCModel")
+	util.AddNetworkString("VJ_F3R_ClearCModel")
+
+	function SWEP:InitializeCModel()
+		net.Start("VJ_F3R_InitCModel")
+			net.WriteEntity(self)
+			net.WriteEntity(self:GetOwner())
+		net.Send(self:GetOwner())
+	end
+
+	function SWEP:ClearGarbage()
+		net.Start("VJ_F3R_ClearCModel")
+			net.WriteEntity(self)
+			net.WriteEntity(self:GetOwner())
+		net.Send(self:GetOwner())
+	end
+else
+	function SWEP:InitializeCModel()
+		self:CleanUpGarbage()
+		SafeRemoveEntity(self.VJ_CModel)
+		local ent = self:CreateCModel(self.ViewModelB or self.WorldModel,RENDERGROUP_BOTH)
+		if ent:GetParent() != self:GetOwner():GetViewModel() then
+			ent:SetNoDraw(true)
+			ent:SetupBones()
+			ent:SetParent(self:GetOwner():GetViewModel())
+			ent:AddEffects(EF_BONEMERGE)
+			ent:AddEffects(EF_BONEMERGE_FASTCULL)
+		end
+		self.VJ_CModel = ent
+
+		if self.OnCModelInit then
+			self:OnCModelInit(ent)
+		end
+	end
+	
+	net.Receive("VJ_F3R_InitCModel",function(len,ply)
+		local wep = net.ReadEntity()
+		local owner = net.ReadEntity()
+		if IsValid(wep) && IsValid(owner) && wep.InitializeCModel then
+			wep:InitializeCModel()
+		end
+	end)
+	
+	net.Receive("VJ_F3R_ClearCModel",function(len,ply)
+		local wep = net.ReadEntity()
+		local owner = net.ReadEntity()
+		if IsValid(wep) && IsValid(owner) then
+			wep:CleanUpGarbage()
+		end
+	end)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnHit(entTbl,hitType) end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local string_StartWith = string.StartWith
+--
 if CLIENT then
 	function SWEP:CreateCModel(...)
 		local ent = ClientsideModel(...)
-		table.insert(self.Garbage,ent)
+		self:AddGarbage(ent)
 		return ent
 	end
 
@@ -85,15 +166,7 @@ if CLIENT then
 			self:OnInit()
 		end
 		if self:GetOwner():IsPlayer() then
-			local ent = self:CreateCModel(self.ViewModelB or self.WorldModel,RENDERGROUP_BOTH)
-			if ent:GetParent() != self:GetOwner():GetViewModel() then
-				ent:SetNoDraw(true)
-				ent:SetupBones()
-				ent:SetParent(self:GetOwner():GetViewModel())
-				ent:AddEffects(EF_BONEMERGE)
-				ent:AddEffects(EF_BONEMERGE_FASTCULL)
-			end
-			self.VJ_CModel = ent
+			self:InitializeCModel()
 		end
 	end
 
@@ -108,6 +181,15 @@ else
 			self:OnInit()
 		end
 
+		if self.Primary.Delay == -1 then
+			self.Primary.Delay = self.NPC_NextPrimaryFire or 0.1
+		end
+		if self.Primary.Cone == -1 then
+			self.Primary.Cone = self.NPC_CustomSpread *10 or 7
+		end
+
+		self:SetZoomed(false)
+
 		if self.IsMeleeWeapon then
 			self.PrimaryEffects_MuzzleFlash = false
 			self.PrimaryEffects_SpawnDynamicLight = false
@@ -115,6 +197,15 @@ else
 				self:MeleeInit()
 			end
 		end
+
+		local owner = self:GetOwner()
+		self.WorldModel_UseCustomPosition = owner:IsPlayer() or (owner:IsNPC() && string_StartWith(owner:GetClass(), "npc_vj_f3r") == false)
+
+		hook.Add("OnPlayerPhysicsDrop",self,function(self,ply,ent)
+			if ply == self:GetOwner() && ply:GetActiveWeapon() == self then
+				self:InitializeCModel()
+			end
+		end)
 
 		timer.Simple(0,function()
 			local owner = self.Owner
@@ -133,6 +224,8 @@ else
 				self.Original_ClimbSpeed = owner:GetLadderClimbSpeed() or 200
 				self.Original_JumpPower = owner:GetJumpPower() or 200
 			end
+
+			self.Original_Cone = self.Primary.Cone
 		end)
 	end
 end
@@ -217,19 +310,20 @@ function SWEP:PrimaryAttackEffects()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnThink()
+	local owner = self:GetOwner()
 	if self.OnThink then
-		self:OnThink()
+		self:OnThink(owner)
 	end
 
 	if self.IsMeleeWeapon then
 		if self.MeleeThink then
-			self:MeleeThink()
+			self:MeleeThink(owner)
 		end
 	end
 
 	if IsValid(self:GetOwner()) then
-		self.WorldModel_UseCustomPosition = self:GetOwner():IsPlayer()
-		self:SetHoldType(self:GetOwner():IsPlayer() && self.PHoldType or self.HoldType)
+		self.WorldModel_UseCustomPosition = owner:IsPlayer() or (owner:IsNPC() && string_StartWith(owner:GetClass(), "npc_vj_f3r") == false)
+		self:SetHoldType(owner:IsPlayer() && (self.PHoldType or self.AnimationType) or self.HoldType)
 	else
 		self.WorldModel_UseCustomPosition = false
 	end
@@ -241,15 +335,7 @@ function SWEP:CustomOnEquip(owner)
 	end
 	if CLIENT then
 		if owner:IsPlayer() then
-			local ent = self:CreateCModel(self.ViewModelB or self.WorldModel,RENDERGROUP_BOTH)
-			if ent:GetParent() != owner:GetViewModel() then
-				ent:SetNoDraw(true)
-				ent:SetupBones()
-				ent:SetParent(owner:GetViewModel())
-				ent:AddEffects(EF_BONEMERGE)
-				ent:AddEffects(EF_BONEMERGE_FASTCULL)
-			end
-			self.VJ_CModel = ent
+			self:InitializeCModel()
 		end
 	end
 end
@@ -260,6 +346,7 @@ function SWEP:CustomOnDeploy()
 	end
 	local owner = self:GetOwner()
 	if owner:IsPlayer() then
+		self:InitializeCModel()
 		timer.Simple(0,function()
 			if self.WalkSpeed then
 				owner:SetWalkSpeed(owner:GetWalkSpeed() *self.WalkSpeed)
@@ -284,8 +371,10 @@ function SWEP:Holster(newWep)
 	if self == newWep or self.Reloading == true then return end
 	self.HasIdleAnimation = false
 	if self:GetOwner():IsPlayer() then
-		for _,v in pairs(self.Garbage) do
-			SafeRemoveEntity(v)
+		if SERVER then
+			self:ClearGarbage()
+		else
+			self:CleanUpGarbage()
 		end
 	end
 	if SERVER && self:GetOwner():IsPlayer() then
@@ -294,12 +383,20 @@ function SWEP:Holster(newWep)
 	return self:CustomOnHolster(newWep)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CleanUpGarbage()
+	for _,v in pairs(self.Garbage) do
+		if v.StopEmissionAndDestroyImmediately then
+			v:StopEmissionAndDestroyImmediately()
+		else
+			SafeRemoveEntity(v)
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnRemove()
 	self:StopParticles()
 	self:CustomOnRemove()
-	for _,v in pairs(self.Garbage) do
-		SafeRemoveEntity(v)
-	end
+	self:CleanUpGarbage()
 	if SERVER && self:GetOwner():IsPlayer() then
 		self:ResetPlayerSpeed(self:GetOwner())
 	end
@@ -313,12 +410,20 @@ function SWEP:ResetPlayerSpeed(owner)
 	owner:SetJumpPower(self.Original_JumpPower or 200)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:GetZoomViewModelPosition()
+	return self:GetZoomed(), self.ViewModelZoomAdjust.Pos, self.ViewModelZoomAdjust.Ang
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:ShouldForceViewModelPosition()
 	return false
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local IRONSIGHT_TIME = 0.25
+--
 function SWEP:GetViewModelPosition(pos,ang)
+	local shouldZoom, zoomPos, zoomAng = self:GetZoomViewModelPosition()
 	local forceAdjust, forceAdjustPos, forceAdjustAng = self:ShouldForceViewModelPosition()
+
 	if self.AdjustViewModel == true or forceAdjust then
 		pos:Add(ang:Right() *(self.ViewModelAdjust.Pos.Right))
 		pos:Add(ang:Forward() *(self.ViewModelAdjust.Pos.Forward))
@@ -334,6 +439,34 @@ function SWEP:GetViewModelPosition(pos,ang)
 		ang:RotateAroundAxis(ang:Up(),0)
 		ang:RotateAroundAxis(ang:Forward(),0)
 	end
+
+	if shouldZoom != self.ShouldZoom then
+		self.ShouldZoom = shouldZoom
+		self.ZoomT = CurTime()
+	end
+	
+	local ZoomT = self.ZoomT or 0
+
+	if !shouldZoom && ZoomT < CurTime() -IRONSIGHT_TIME then
+		return pos, ang
+	end
+
+	local Mul = 1
+	if ZoomT > CurTime() -IRONSIGHT_TIME then
+		Mul = math.Clamp((CurTime() -ZoomT) /IRONSIGHT_TIME,0,1)
+		if !shouldZoom then
+			Mul = 1 -Mul
+		end
+	end
+
+	-- if shouldZoom then
+		pos:Add(ang:Right() *(zoomPos.Right *Mul))
+		pos:Add(ang:Forward() *(zoomPos.Forward *Mul))
+		pos:Add(ang:Up() *(zoomPos.Up *Mul))
+		ang:RotateAroundAxis(ang:Right(),zoomAng.Right *Mul)
+		ang:RotateAroundAxis(ang:Up(),zoomAng.Up *Mul)
+		ang:RotateAroundAxis(ang:Forward(),zoomAng.Forward *Mul)
+	-- end
 
 	return pos,ang
 end
@@ -451,6 +584,7 @@ function SWEP:Reload()
 	if !IsValid(owner) or !owner:IsPlayer() or !owner:Alive() or owner:GetAmmoCount(self.Primary.Ammo) == 0 or self.Reloading or CurTime() < self.NextReloadT then return end // or !owner:KeyDown(IN_RELOAD)
 	if self:Clip1() < self.Primary.ClipSize then
 		self.Reloading = true
+		self:SetZoomed(false)
 		self:CustomOnReload()
 		if SERVER && self.HasReloadSound == true then owner:EmitSound(VJ_PICK(self.ReloadSound), 50, math.random(90, 100)) end
 		-- Handle animation
@@ -473,6 +607,15 @@ function SWEP:Reload()
 		end)
 		return true
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:Zoom()
+	if self.Reloading then return end
+	local zoomed = self:GetZoomed()
+	self:SetZoomed(!zoomed)
+	self:GetOwner():SetFOV(self:GetZoomed() && (self.ZoomLevel or 40) or (GetConVar("fov_desired"):GetInt() or 90), 0.25)
+	self.Primary.Cone = (self:GetZoomed() && self.Original_Cone *0.5) or self.Original_Cone
+	self:EmitSound("physics/metal/weapon_footstep" .. (self:GetZoomed() && 2 or 1) .. ".wav", 65, 100)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnMeleeHit(entTbl,UseAlt)
@@ -501,7 +644,7 @@ function SWEP:OnMeleeHit(entTbl,UseAlt)
 		end
 		for _,v in pairs(entTbl) do
 			local applyDmg = DamageInfo()
-			applyDmg:SetDamage(UseAlt && self.Primary.HeavyDamage or self.Primary.Damage)
+			applyDmg:SetDamage((UseAlt && self.Primary.HeavyDamage or self.Primary.Damage) *(owner:IsPlayer() && 2 or 1))
 			applyDmg:SetDamageType(self.Primary.DamageType)
 			applyDmg:SetDamagePosition(self:GetNearestPoint(v).MyPosition)
 			applyDmg:SetDamageForce(self:GetForward() *((applyDmg:GetDamage() +100) *70))
@@ -515,6 +658,14 @@ function SWEP:OnMeleeHit(entTbl,UseAlt)
 	self:OnHit(entTbl,hitType)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+local function IsValidEntity(v)
+	if !IsValid(v) then return false end
+	if v:IsNPC() or v:IsPlayer() or v:IsNextBot() or v:GetClass() == "prop_physics" or string_StartWith(v:GetClass(),"func") then
+		return true
+	end
+	return false
+end
+--
 function SWEP:PrimaryAttack(UseAlt)
 	//if self:GetOwner():KeyDown(IN_RELOAD) then return end
 	//self:GetOwner():SetFOV(45, 0.3)
@@ -568,8 +719,9 @@ function SWEP:PrimaryAttack(UseAlt)
 		if self.IsMeleeWeapon == true then
 			if UseAlt then
 				self.SwingSide = 0
-				animTime, anim = self:PlayAnimation(self.AnimTbl_Melee_Power)
+				animTime, anim = self:PlayAnimation(owner:GetVelocity():Length() > 15 && self.AnimTbl_Melee_PowerForward or self.AnimTbl_Melee_Power)
 				anim = !isstring(anim) && VJ_GetSequenceName(owner:GetViewModel(), anim) or anim
+				self:SetNextSecondaryFire(CurTime() + animTime)
 			else
 				self.SwingSide = self.SwingSide == 1 && 0 or 1
 				animTime, anim = self:PlayAnimation(self.SwingSide == 1 && self.AnimTbl_Melee_Right or self.AnimTbl_Melee_Left)
@@ -585,11 +737,13 @@ function SWEP:PrimaryAttack(UseAlt)
 	-- MELEE WEAPON
 	if self.IsMeleeWeapon == true then
 		if SERVER && owner:IsPlayer() then
-			timer.Simple((self.MeleeHitTimes && self.MeleeHitTimes[anim]) or self.MeleeHitTime or 0.5,function()
-				if IsValid(self) && IsValid(owner) && self:GetOwner() == owner then
+			local time = (self.MeleeHitTimes && self.MeleeHitTimes[anim]) or self.MeleeHitTime or 0.5
+			self:OnDoMeleeAttack(anim,time)
+			timer.Simple(time,function()
+				if IsValid(self) && IsValid(owner) && self:GetOwner() == owner && owner:GetActiveWeapon() == self then
 					local tbl = {}
 					for _,v in pairs(ents.FindInSphere(owner:GetShootPos(),self.MeleeHitDistance)) do
-						if v.Health && owner:Visible(v) && v != self && v != owner && (owner:GetAimVector():Angle():Forward():Dot(((v:GetPos() +v:OBBCenter()) - owner:GetShootPos()):GetNormalized()) > math.cos(math.rad(self.MeleeHitRadius or 50))) then
+						if IsValidEntity(v) && v.Health && owner:Visible(v) && v != self && v != owner && (owner:GetAimVector():Angle():Forward():Dot(((v:GetPos() +v:OBBCenter()) - owner:GetShootPos()):GetNormalized()) > math.cos(math.rad(self.MeleeHitRadius or 50))) then
 							table.insert(tbl,v)
 						end
 					end
@@ -650,11 +804,18 @@ function SWEP:PrimaryAttack(UseAlt)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CanSecondaryAttack()
+	if !self.IsMeleeWeapon then
+		return self:GetNextSecondaryFire() < CurTime()
+	end
 	return self:CanPrimaryAttack()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:SecondaryAttack()
-	if !self.IsMeleeWeapon then return end
+	if !self.IsMeleeWeapon then
+		self:Zoom()
+		self:SetNextSecondaryFire(CurTime() + 0.2)
+		return true
+	end
 	self:PrimaryAttack(true)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

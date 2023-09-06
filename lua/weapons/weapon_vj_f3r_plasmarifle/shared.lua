@@ -15,7 +15,7 @@ SWEP.Primary.Sound				= {"vj_fallout/weapons/plasmarifle/plasmarifle_fire_2d01.w
 SWEP.Primary.DistantSound				= {"vj_fallout/weapons/plasmarifle/plasmarifle_fire_3d01.wav","vj_fallout/weapons/plasmarifle/plasmarifle_fire_3d02.wav"}
 SWEP.PrimaryEffects_MuzzleFlash = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"

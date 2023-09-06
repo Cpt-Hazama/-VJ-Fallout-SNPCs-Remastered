@@ -19,7 +19,7 @@ SWEP.Primary.DistantSound		= {"vj_fallout/weapons/pulsegun/pulsegun_fire_3d01.mp
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
 SWEP.Primary.TracerType			= "vj_fo3_laser"
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"

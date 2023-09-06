@@ -4,6 +4,7 @@ SWEP.WorldModel							= "models/cpthazama/fallout/weapons/w_baseballbat.mdl"
 SWEP.PrintName							= "Baseball Bat"
 SWEP.AnimationType 						= "2hm"
 SWEP.PHoldType 							= "melee2"
+SWEP.Slot 								= (SWEP.AnimationType == "1gt" && 4 or SWEP.AnimationType == "1hm" && 0 or SWEP.AnimationType == "2hm" && 0 or SWEP.AnimationType == "2ha" && 2 or SWEP.AnimationType == "2hh" && 3 or SWEP.AnimationType == "2hl" && 4 or SWEP.AnimationType == "2hr" && 2 or SWEP.AnimationType == "1hp" && 1 or SWEP.AnimationType == "1md" && 4) or 1
 
 SWEP.NPC_NextPrimaryFire 				= 0.8
 SWEP.NPC_CustomSpread	 				= 0.8
@@ -15,15 +16,16 @@ SWEP.Primary.HeavyDamage 				= 26
 SWEP.Primary.DamageType 				= DMG_CLUB
 SWEP.Primary.ClipSize					= 1
 SWEP.Primary.TakeAmmo					= 0
-SWEP.Primary.Delay 						= 0.8
+SWEP.Primary.Delay 						= 0.7
 SWEP.MeleeHitDistance 					= 165
-SWEP.MeleeHitTimes 						= {["2hmattackleft_a"] = 0.25,["2hmattackleft_b"] = 0.25,["2hmattackright_a"] = 0.5,["2hmattackright_b"] = 0.5,["2hmattackpower"] = 0.5}
+SWEP.MeleeHitTimes 						= {["2hmattackleft_a"] = 0.25,["2hmattackleft_b"] = 0.25,["2hmattackright_a"] = 0.5,["2hmattackright_b"] = 0.5,["2hmattackpower"] = 0.5,["2hmattackforwardpower"] = 0.6}
 
 SWEP.AnimTbl_Deploy 					= {"2hmequip"}
 SWEP.AnimTbl_Idle 						= {"2hmaim"}
 SWEP.AnimTbl_Melee_Left 				= {"2hmattackleft_a","2hmattackleft_a"}
 SWEP.AnimTbl_Melee_Right 				= {"2hmattackright_a","2hmattackright_a"}
-SWEP.AnimTbl_Melee_Power 				= {"2hmattackpower"}
+SWEP.AnimTbl_Melee_Power 				= "2hmattackpower"
+SWEP.AnimTbl_Melee_PowerForward 		= "2hmattackforwardpower"
 
 SWEP.NPC_BeforeFireSound 				= {"vj_fallout/weapons/melee/swing/fx_swing_medium01.wav","vj_fallout/weapons/melee/swing/fx_swing_medium02.wav","vj_fallout/weapons/melee/swing/fx_swing_medium03.wav","vj_fallout/weapons/melee/swing/fx_swing_medium04.wav",}
 SWEP.NPC_EquipSound 					= "vj_fallout/weapons/melee/melee_back_equip.wav"
@@ -47,13 +49,21 @@ function SWEP:MeleeInit()
 	local owner = self:GetOwner()
 	if owner:IsNPC() then
 		timer.Simple(0,function()
-			owner.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CRUSH,DMG_CLUB)
-			owner.SoundTbl_MeleeAttack = {
-				"vj_fallout/weapons/hit/bluntflesh/wpn_hit_bluntflesh_01.wav",
-				"vj_fallout/weapons/hit/bluntflesh/wpn_hit_bluntflesh_02.wav",
-				"vj_fallout/weapons/hit/bluntflesh/wpn_hit_bluntflesh_03.wav",
-				"vj_fallout/weapons/hit/bluntflesh/wpn_hit_bluntflesh_04.wav",
-			}
+			owner.MeleeAttackDamageType = bit.bor(DMG_SLASH,DMG_CLUB)
+			owner.SoundTbl_MeleeAttack = self.SoundTbl_MeleeAttackHit
 		end)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:OnDoMeleeAttack(anim,time)
+	local owner = self:GetOwner()
+	if anim == "2hmattackforwardpower" then
+		for i = 1,8 do
+			timer.Simple(i *0.05,function()
+				if IsValid(self) && IsValid(owner) && self:GetOwner() == owner && owner:GetActiveWeapon() == self then
+					owner:SetVelocity(owner:GetForward() *250)
+				end
+			end)
+		end
 	end
 end

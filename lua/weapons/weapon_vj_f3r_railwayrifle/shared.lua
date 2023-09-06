@@ -18,7 +18,7 @@ SWEP.Primary.Sound				= {"vj_fallout/weapons/10mmpistol/pistol10mm_fire_2d.wav"}
 SWEP.Primary.DistantSound		= {"vj_fallout/weapons/10mmpistol/pistol10mm_fire_3d.wav"}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"

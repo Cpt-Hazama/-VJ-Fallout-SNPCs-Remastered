@@ -5,6 +5,7 @@ SWEP.PrintName							= "Chinese Assault Rifle"
 SWEP.ID 								= ITEM_VJ_ASSAULTRIFLE
 SWEP.AnimationType 						= "2ha"
 SWEP.PHoldType 							= "ar2"
+SWEP.Slot 								= (SWEP.AnimationType == "1gt" && 4 or SWEP.AnimationType == "1hm" && 0 or SWEP.AnimationType == "2hm" && 0 or SWEP.AnimationType == "2ha" && 2 or SWEP.AnimationType == "2hh" && 3 or SWEP.AnimationType == "2hl" && 4 or SWEP.AnimationType == "2hr" && 2 or SWEP.AnimationType == "1hp" && 1 or SWEP.AnimationType == "1md" && 4) or 1
 
 SWEP.WorldModel_CustomPositionAngle 	= Vector(80,5,270)
 SWEP.WorldModel_CustomPositionOrigin 	= Vector(-3.6,0,-1.2)

@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
+	*** Copyright (c) 2023 by Cpt. Hazama, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -70,11 +70,36 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
-	GetCorpse.tbl_Inventory = self.tbl_Inventory
+function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,corpse)
+	corpse.tbl_Inventory = self.tbl_Inventory
+	if (bit.band(self.SavedDmgInfo.type, DMG_DISSOLVE) != 0) then
+		timer.Simple(1,function()
+			if IsValid(corpse) then
+				local tr = util.TraceLine({
+					start = corpse:GetPos(),
+					endpos = corpse:GetPos() +Vector(0,0,-600),
+					filter = corpse
+				})
+				if tr.HitWorld then
+					local dust = ents.Create("prop_vj_animatable")
+					dust:SetModel("models/fallout/goopile.mdl")
+					dust:SetPos(tr.HitPos)
+					dust:SetAngles(Angle(0,corpse:GetAngles().y,0))
+					dust:SetCollisionGroup(COLLISION_GROUP_IN_VEHICLE)
+					dust:Spawn()
+					dust:SetModelScale(0.001)
+					dust:SetModelScale(1,1.25)
+					dust.FadeCorpseType = "kill"
+					dust.tbl_Inventory = corpse.tbl_Inventory
+					VJ.Corpse_Add(dust)
+					undo.ReplaceEntity(corpse,dust)
+				end
+			end
+		end)
+	end
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
+	*** Copyright (c) 2023 by Cpt. Hazama, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

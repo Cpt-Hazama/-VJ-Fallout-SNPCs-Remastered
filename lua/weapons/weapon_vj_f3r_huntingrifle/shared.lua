@@ -29,7 +29,7 @@ SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
 SWEP.Primary.TracerType 			= "vj_fo3_tracer"
 SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_1"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"

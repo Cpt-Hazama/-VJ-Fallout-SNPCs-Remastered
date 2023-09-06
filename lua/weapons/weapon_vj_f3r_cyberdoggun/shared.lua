@@ -17,7 +17,7 @@ SWEP.Primary.Sound				= {}
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
 SWEP.PrimaryEffects_MuzzleParticles = {"muzzleflash_5"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"

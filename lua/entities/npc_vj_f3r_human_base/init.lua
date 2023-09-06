@@ -1,7 +1,7 @@
 AddCSLuaFile("shared.lua")
 include('shared.lua')
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
+	*** Copyright (c) 2023 by Cpt. Hazama, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
@@ -19,6 +19,8 @@ ENT.MeleeAttackAnimationAllowOtherTasks = true
 ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
 ENT.BecomeEnemyToPlayer = true
 ENT.BecomeEnemyToPlayerLevel = 2
+
+ENT.Weapon_AimTurnDiff_Def = 0.83
 
 ENT.HasOnPlayerSight = true -- Should do something when it sees the enemy? Example: Play a sound
 ENT.OnPlayerSightDistance = 200 -- How close should the player be until it runs the code?
@@ -3461,7 +3463,20 @@ function ENT:Equip()
 	self.WeaponAnimTranslations[ACT_IDLE] = self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
 	self.WeaponAnimTranslations[ACT_WALK] = self.WeaponAnimTranslations[ACT_WALK_AIM]
 	self.WeaponAnimTranslations[ACT_RUN] = self.WeaponAnimTranslations[ACT_RUN_AIM]
-	self.NextIdleStandTime = 0
+	-- self.NextIdleStandTime = 0
+	self:SetIdleAnimation({ACT_IDLE},true)
+	if self:IsMoving() then
+		local lastPos = self:GetLastPosition()
+		local curSched = self.CurrentSchedule
+		local moveType = "TASK_WALK_PATH"
+		if curSched != nil && curSched.MoveType == 1 then
+			moveType = "TASK_RUN_PATH"
+		end
+		self:StopMoving()
+		self:SetLastPosition(lastPos)
+		self:VJ_TASK_GOTO_LASTPOS(moveType,function(x) x.CanShootWhenMoving = true x.ConstantlyFaceEnemy = true end)
+	end
+	-- self:SetMovementActivity(self:GetActivity() == ACT_RUN && self.WeaponAnimTranslations[ACT_RUN_AIM] or self.WeaponAnimTranslations[ACT_WALK_AIM])
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(false)
 		if self:GetActiveWeapon().NPC_EquipSound then
@@ -3477,7 +3492,20 @@ function ENT:Unequip()
 	self.WeaponAnimTranslations[ACT_IDLE] = ACT_IDLE
 	self.WeaponAnimTranslations[ACT_WALK] = ACT_WALK
 	self.WeaponAnimTranslations[ACT_RUN] = ACT_RUN
-	self.NextIdleStandTime = 0
+	-- self.NextIdleStandTime = 0
+	self:SetIdleAnimation({ACT_IDLE},true)
+	if self:IsMoving() then
+		local lastPos = self:GetLastPosition()
+		local curSched = self.CurrentSchedule
+		local moveType = "TASK_WALK_PATH"
+		if curSched != nil && curSched.MoveType == 1 then
+			moveType = "TASK_RUN_PATH"
+		end
+		self:StopMoving()
+		self:SetLastPosition(lastPos)
+		self:VJ_TASK_GOTO_LASTPOS(moveType,function(x) x.CanShootWhenMoving = true x.ConstantlyFaceEnemy = true end)
+	end
+	-- self:SetMovementActivity(self:GetActivity() == self.WeaponAnimTranslations[ACT_RUN_AIM] && ACT_RUN or ACT_WALK)
 	if IsValid(self:GetActiveWeapon()) then
 		self:GetActiveWeapon():SetNoDraw(true)
 		if self:GetActiveWeapon().NPC_UnequipSound then
@@ -3620,7 +3648,7 @@ function ENT:MeleeAttackCode()
 	self.AlreadyDoneFirstMeleeAttack = true
 end
 /*-----------------------------------------------
-	*** Copyright (c) 2012-2019 by Cpt. Hazama, All rights reserved. ***
+	*** Copyright (c) 2023 by Cpt. Hazama, All rights reserved. ***
 	No parts of this code or any of its contents may be reproduced, copied, modified or adapted,
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/

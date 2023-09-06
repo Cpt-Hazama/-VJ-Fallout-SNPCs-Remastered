@@ -19,7 +19,7 @@ SWEP.Primary.DistantSound		= {"vj_fallout/weapons/incinerator/incinerator_fire_3
 SWEP.PrimaryEffects_MuzzleAttachment = "muzzle"
 SWEP.Primary.DisableBulletCode	= true
 ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Base 						= "weapon_vj_base"
+SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"
