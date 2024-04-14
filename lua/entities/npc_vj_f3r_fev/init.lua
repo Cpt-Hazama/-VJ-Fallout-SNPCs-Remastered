@@ -101,14 +101,14 @@ function ENT:CustomOnInitialize()
 	local v1,v2 = self:GetCollisionBounds()
 	self.Height = v2.z
 	self.DefaultDistance = self.MeleeAttackDistance
-	self.IdleStand = {VJ_SequenceToActivity(self,"h2haim")}
-	self.Walk = {VJ_SequenceToActivity(self,"h2haim_walk")}
+	self.IdleStand = VJ_SequenceToActivity(self,"h2haim")
+	self.Walk = VJ_SequenceToActivity(self,"h2haim_walk")
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_IDLE then
 		return self.IdleStand
-	elseif act == ACT_WALK or ct == ACT_RUN then
+	elseif act == ACT_WALK or act == ACT_RUN then
 		return self.Walk
 	end
 
