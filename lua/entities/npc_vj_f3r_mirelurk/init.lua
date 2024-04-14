@@ -189,17 +189,32 @@ function ENT:MultipleMeleeAttacks()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
-	local idle = self.Alerted && ACT_IDLE_STIMULATED or ACT_IDLE
-	local walk = self.Alerted && ACT_WALK_AIM or ACT_WALK
-	local run = self.Alerted && ACT_RUN_AIM or ACT_RUN
-	if (self:Health() <= self:GetMaxHealth() *0.35) then idle = ACT_IDLE; walk = ACT_WALK_HURT; run = ACT_RUN_HURT end
-	self.AnimTbl_IdleStand = {idle}
-	self.AnimTbl_Walk = {walk}
-	self.AnimTbl_Run = {run}
-
 	if self.OnThink then
 		self:OnThink()
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_IDLE or (self.Alerted && ACT_IDLE_STIMULATED or ACT_IDLE)
+	elseif act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_WALK_HURT or (self.Alerted && ACT_WALK_AIM or ACT_WALK)
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_RUN_HURT or (self.Alerted && ACT_RUN_AIM or ACT_RUN)
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)

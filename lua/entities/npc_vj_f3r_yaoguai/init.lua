@@ -112,9 +112,25 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	self.AnimTbl_Walk = {self:Health() <= self:GetMaxHealth() *0.35 && ACT_WALK_HURT or ACT_WALK}
-	self.AnimTbl_Run = {self:Health() <= self:GetMaxHealth() *0.35 && ACT_RUN_HURT or ACT_RUN}
+function ENT:TranslateActivity(act)
+	if act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_WALK_HURT or ACT_WALK
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_RUN_HURT or ACT_RUN
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()

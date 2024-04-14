@@ -252,7 +252,7 @@ if VJExists == true then
 
 	function NPC:Item_Stealthboy()
 		self:SetMaterial("cpthazama/cloak")
-		self.VJ_NoTarget = true
+		self:AddFlags(FL_NOTARGET)
 		self.DisableMakingSelfEnemyToNPCs = true
 		self:DrawShadow(false)
 		if IsValid(self:GetActiveWeapon()) then
@@ -294,7 +294,7 @@ if VJExists == true then
 		timer.Simple(20,function()
 			if IsValid(self) then
 				self:SetMaterial(" ")
-				self.VJ_NoTarget = false
+				self:RemoveFlags(FL_NOTARGET)
 				self:DrawShadow(true)
 				self.DisableMakingSelfEnemyToNPCs = false
 				if IsValid(self:GetActiveWeapon()) then

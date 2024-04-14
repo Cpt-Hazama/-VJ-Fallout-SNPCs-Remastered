@@ -186,7 +186,8 @@ ENT.ConstantlyFaceEnemy_Postures = "Standing" -- "Both" = Moving or standing | "
 ENT.ConstantlyFaceEnemyDistance = 1200 -- How close does it have to be until it starts to face the enemy?
 ENT.NoChaseAfterCertainRange = true -- Should the SNPC not be able to chase when it's between number x and y?
 ENT.NoChaseAfterCertainRange_FarDistance = 1200 -- How far until it can chase again? | "UseRangeDistance" = Use the number provided by the range attack instead
-ENT.NoChaseAfterCertainRange_CloseDistance = 0
+ENT.NoChaseAfterCertainRange_CloseDistance = 1
+ENT.NoChaseAfterCertainRange_Type = "Regular"
 
 ENT.VJ_F3R_InGuardMode = false
 ENT.VJ_F3R_GuardWarnDistance = 800
@@ -425,27 +426,44 @@ function ENT:CustomAttack()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_WALK_HURT or ACT_WALK
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_RUN_HURT or ACT_RUN
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self:GuardAI()
-	if self:Health() <= self:GetMaxHealth() *0.35 then
-		self.AnimTbl_Walk = {ACT_WALK_HURT}
-		self.AnimTbl_Run = {ACT_RUN_HURT}
-	end
 	if !self.VJ_IsBeingControlled then
-		self.ConstantlyFaceEnemy = true
+		-- self.ConstantlyFaceEnemy = true
 		if IsValid(self:GetEnemy()) then
-			self.NoChaseAfterCertainRange = self.NearestPointToEnemyDistance < 200
+			-- self.NoChaseAfterCertainRange = self.NearestPointToEnemyDistance < 200
 			self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
-			if self.NearestPointToEnemyDistance < 200 then
+			if self.NearestPointToEnemyDistance < 600 && self:Visible(self:GetEnemy()) && !self:IsMoving() then
 				self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
-				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
+				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.CanShootWhenMoving = true x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 			end
 		else
-			self.NoChaseAfterCertainRange = false
+			-- self.NoChaseAfterCertainRange = false
 		end
 	else
-		self.NoChaseAfterCertainRange = false
-		self.ConstantlyFaceEnemy = false
+		-- self.NoChaseAfterCertainRange = false
+		-- self.ConstantlyFaceEnemy = false
 	end
 	self.MoveLoopSound:ChangePitch((self:GetMovementActivity() == ACT_RUN || self:GetMovementActivity() == ACT_RUN_HURT) && 100 or 70)
 	if self:IsMoving() then

@@ -80,6 +80,10 @@ SWEP.ViewModelB 				= false
 SWEP.UseHands 					= true
 
 SWEP.Garbage = {}
+--
+local cv_muszzleflash = GetConVar("vj_wep_nomuszzleflash")
+local cv_dynamiclight = GetConVar("vj_wep_nomuszzleflash_dynamiclight")
+local cv_bulletshells = GetConVar("vj_wep_nobulletshells")
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnDoMeleeAttack(anim,time) end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -578,6 +582,14 @@ function SWEP:Deploy()
 	return true -- Or else the player won't be able to get the weapon!
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:NPC_Reload()
+	local owner = self:GetOwner()
+	owner.NextThrowGrenadeT = owner.NextThrowGrenadeT + 2
+	owner.NextChaseTime = 0
+	self:CustomOnReload()
+	if self.NPC_HasReloadSound == true then VJ.EmitSound(owner, self.NPC_ReloadSound, self.NPC_ReloadSoundLevel) end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:Reload()
 	if !IsValid(self) then return end
 	local owner = self:GetOwner()
@@ -678,27 +690,32 @@ function SWEP:PrimaryAttack(UseAlt)
 	
 	if self.Reloading or self:GetNextSecondaryFire() > CurTime() then return end
 	if isNPC && owner.VJ_IsBeingControlled == false && !IsValid(owner:GetEnemy()) then return end -- If the NPC owner isn't being controlled and doesn't have an enemy, then return end
-	if SERVER && self.IsMeleeWeapon == false && ((isPly && self.Primary.AllowFireInWater == false && owner:WaterLevel() == 3) or (self:Clip1() <= 0)) then owner:EmitSound(VJ_PICK(self.DryFireSound),self.DryFireSoundLevel,math.random(self.DryFireSoundPitch.a, self.DryFireSoundPitch.b)) return end
+	if self.IsMeleeWeapon == false && ((isPly && self.Primary.AllowFireInWater == false && owner:WaterLevel() == 3) or (self:Clip1() <= 0)) then
+		if SERVER then
+			owner:EmitSound(VJ.PICK(self.DryFireSound),self.DryFireSoundLevel,math.random(self.DryFireSoundPitch.a, self.DryFireSoundPitch.b))
+		end
+		return
+	end
 	if (!self:CanPrimaryAttack()) then return end
 	if self:CustomOnPrimaryAttack_BeforeShoot() == true then return end
 	
 	if isNPC && owner.IsVJBaseSNPC == true then
 		timer.Simple(self.NPC_ExtraFireSoundTime, function()
 			if IsValid(self) && IsValid(owner) then
-				VJ_EmitSound(owner, self.NPC_ExtraFireSound, self.NPC_ExtraFireSoundLevel, math.Rand(self.NPC_ExtraFireSoundPitch.a, self.NPC_ExtraFireSoundPitch.b))
+				VJ.EmitSound(owner, self.NPC_ExtraFireSound, self.NPC_ExtraFireSoundLevel, math.Rand(self.NPC_ExtraFireSoundPitch.a, self.NPC_ExtraFireSoundPitch.b))
 			end
 		end)
 	end
 	
 	-- Firing Sounds
 	if SERVER then
-		local fireSd = VJ_PICK(self.Primary.Sound)
+		local fireSd = VJ.PICK(self.Primary.Sound)
 		if fireSd != false then
 			sound.Play(fireSd, owner:GetPos(), self.Primary.SoundLevel, math.random(self.Primary.SoundPitch.a, self.Primary.SoundPitch.b), self.Primary.SoundVolume)
 			//self:EmitSound(fireSd, 80, math.random(90,100))
 		end
 		if self.Primary.HasDistantSound == true then
-			local fireFarSd = VJ_PICK(self.Primary.DistantSound)
+			local fireFarSd = VJ.PICK(self.Primary.DistantSound)
 			if fireFarSd != false then
 				sound.Play(fireFarSd, owner:GetPos(), self.Primary.DistantSoundLevel, math.random(self.Primary.DistantSoundPitch.a, self.Primary.DistantSoundPitch.b), self.Primary.DistantSoundVolume)
 			end
@@ -707,14 +724,13 @@ function SWEP:PrimaryAttack(UseAlt)
 	
 	-- Firing Gesture
 	if owner.IsVJBaseSNPC_Human == true && owner.DisableWeaponFiringGesture != true then
-		owner:VJ_ACT_PLAYACTIVITY(owner:TranslateToWeaponAnim(VJ_PICK(owner.AnimTbl_WeaponAttackFiringGesture)), false, false, false, 0, {AlwaysUseGesture=true})
+		owner:VJ_ACT_PLAYACTIVITY(owner:TranslateActivity(VJ.PICK(owner.AnimTbl_WeaponAttackFiringGesture)), false, false, false, 0, {AlwaysUseGesture=true})
 	end
 
 	local animTime, anim
 	if isPly then
 		//self:ShootEffects("ToolTracer") -- Deprecated
 		owner:ViewPunch(Angle(-self.Primary.Recoil, 0, 0))
-		self:TakePrimaryAmmo(self.Primary.TakeAmmo)
 		owner:SetAnimation(PLAYER_ATTACK1)
 		if self.IsMeleeWeapon == true then
 			if UseAlt then
@@ -759,9 +775,37 @@ function SWEP:PrimaryAttack(UseAlt)
 				bullet.Tracer = self.Primary.Tracer
 				bullet.TracerName = self.Primary.TracerType
 				bullet.Force = self.Primary.Force
-				bullet.Dir = owner:GetAimVector()
 				bullet.AmmoType = self.Primary.Ammo
-				bullet.Src = isNPC and self:GetNW2Vector("VJ_CurBulletPos") or owner:GetShootPos() -- Spawn Position
+				
+				-- Bullet spawn position & spread & damage
+				if isPly then
+					bullet.Spread = Vector((self.Primary.Cone / 60) / 4, (self.Primary.Cone / 60) / 4, 0)
+					bullet.Src = owner:GetShootPos()
+					bullet.Dir = owner:GetAimVector()
+					local plyDmg = self.Primary.PlayerDamage
+					if plyDmg == "Same" then
+						bullet.Damage = self.Primary.Damage
+					elseif plyDmg == "Double" then
+						bullet.Damage = self.Primary.Damage * 2
+					elseif isnumber(plyDmg) then
+						bullet.Damage = plyDmg
+					end
+				elseif owner.IsVJBaseSNPC then
+					local ene = owner:GetEnemy()
+					local spawnPos = self:GetNW2Vector("VJ_CurBulletPos")
+					local aimPos = owner:GetAimPosition(ene, spawnPos, 0)
+					local spread = owner:CalcAimSpread(ene, aimPos, self.NPC_CustomSpread or 1) // owner:GetPos():Distance(owner.VJ_TheController:GetEyeTrace().HitPos) -- Was used when NPC was being controlled
+					bullet.Spread = Vector(spread, spread, 0)
+					bullet.Dir = (aimPos - spawnPos):GetNormal()
+					bullet.Src = spawnPos
+					bullet.Damage = owner:VJ_GetDifficultyValue(self.Primary.Damage)
+				else
+					local spawnPos = self:GetNW2Vector("VJ_CurBulletPos")
+					bullet.Spread = Vector(0.05, 0.05, 0)
+					bullet.Dir = (owner:GetEnemy():BodyTarget(spawnPos) - spawnPos):GetNormal()
+					bullet.Src = spawnPos
+					bullet.Damage = self.Primary.Damage
+				end
 				
 				-- Callback
 				bullet.Callback = function(attacker, tr, dmginfo)
@@ -773,32 +817,31 @@ function SWEP:PrimaryAttack(UseAlt)
 					util.Effect("AR2Impact", laserhit)
 					tr.HitPos:Ignite(8,0)*/
 				end
-				
-				-- Damage
-				if isPly then
-					bullet.Spread = Vector((self.Primary.Cone / 60) / 4, (self.Primary.Cone / 60) / 4, 0)
-					if self.Primary.PlayerDamage == "Same" then
-						bullet.Damage = self.Primary.Damage
-					elseif self.Primary.PlayerDamage == "Double" then
-						bullet.Damage = self.Primary.Damage * 2
-					elseif isnumber(self.Primary.PlayerDamage) then
-						bullet.Damage = self.Primary.PlayerDamage
-					end
-				else
-					if owner.IsVJBaseSNPC == true then
-						bullet.Damage = owner:VJ_GetDifficultyValue(self.Primary.Damage)
-					else
-						bullet.Damage = self.Primary.Damage
-					end
-				end
 			owner:FireBullets(bullet)
-		elseif isNPC && owner.IsVJBaseSNPC == true then -- Make sure the VJ SNPC recognizes that it lost a ammunition, even though it was a custom bullet code
-			self:SetClip1(self:Clip1() - 1)
 		end
-		if GetConVar("vj_wep_nomuszzleflash"):GetInt() == 0 then owner:MuzzleFlash() end
+		if cv_muszzleflash:GetInt() == 0 then owner:MuzzleFlash() end
 	end
 	
-	self:PrimaryAttackEffects()
+	if !self.IsMeleeWeapon then -- Melee weapons shouldn't consume ammo!
+		if isPly then -- "TakePrimaryAmmo" calls "Ammo1" and "RemoveAmmo" which do NOT exist in NPCs!
+			self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+		else
+			self:SetClip1(self:Clip1() - self.Primary.TakeAmmo)
+		end
+	end
+	
+	self:PrimaryAttackEffects(owner)
+	
+	-- if isPly then
+	-- 	//self:ShootEffects("ToolTracer") -- Deprecated
+	-- 	owner:ViewPunch(Angle(-self.Primary.Recoil, 0, 0))
+	-- 	owner:SetAnimation(PLAYER_ATTACK1)
+	-- 	local anim = VJ.PICK(self.AnimTbl_PrimaryFire)
+	-- 	local animTime = VJ.AnimDuration(owner:GetViewModel(), anim)
+	-- 	self:SendWeaponAnim(anim)
+	-- 	self.NextIdleT = CurTime() + animTime
+	-- 	self.NextReloadT = CurTime() + animTime
+	-- end
 	self:CustomOnPrimaryAttack_AfterShoot()
 	//self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 end

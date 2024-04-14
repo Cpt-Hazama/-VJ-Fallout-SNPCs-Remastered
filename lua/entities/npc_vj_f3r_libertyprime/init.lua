@@ -149,11 +149,97 @@ function ENT:CustomOnAcceptInput(key, activator, caller, data)
 		self:SetBodygroup(1, 1)
 		self:PlaySoundSystem("BeforeRangeAttack", "vj_fallout/libertyprime/libertyprime_bomb_equip.mp3")
 	elseif key == "event_rattack range" then
-		self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,false,0,true)
+		self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)
 	elseif key == "event_bodygroup 1 0" then
 		self:SetBodygroup(1, 0)
 	elseif key == "event_rattack throw" then
 		self:RangeAttackCode()
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+local finishAttack = {
+	[VJ.ATTACK_TYPE_MELEE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_melee_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Melee, self.NextAnyAttackTime_Melee_DoRand, self.TimeUntilMeleeAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_melee_finished_abletomelee"..self:EntIndex(), self:DecideAttackTimer(self.NextMeleeAttackTime, self.NextMeleeAttackTime_DoRand), 1, function()
+			self.IsAbleToMeleeAttack = true
+		end)
+	end,
+	[VJ.ATTACK_TYPE_RANGE] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_range_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Range, self.NextAnyAttackTime_Range_DoRand, self.TimeUntilRangeAttackProjectileRelease, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_range_finished_abletorange"..self:EntIndex(), self:DecideAttackTimer(self.NextRangeAttackTime, self.NextRangeAttackTime_DoRand), 1, function()
+			self.IsAbleToRangeAttack = true
+		end)
+	end,
+	[VJ.ATTACK_TYPE_LEAP] = function(self, skipStopAttacks)
+		if skipStopAttacks != true then
+			timer.Create("timer_leap_finished"..self:EntIndex(), self:DecideAttackTimer(self.NextAnyAttackTime_Leap, self.NextAnyAttackTime_Leap_DoRand, self.TimeUntilLeapAttackDamage, self.CurrentAttackAnimationDuration), 1, function()
+				self:StopAttacks()
+				self:DoChaseAnimation()
+			end)
+		end
+		timer.Create("timer_leap_finished_abletoleap"..self:EntIndex(), self:DecideAttackTimer(self.NextLeapAttackTime, self.NextLeapAttackTime_DoRand), 1, function()
+			self.IsAbleToLeapAttack = true
+		end)
+	end
+}
+--
+function ENT:RangeAttackCode()
+	if self.Dead or self.Flinching or self.AttackType == VJ.ATTACK_TYPE_MELEE then return end
+	local ene = self:GetEnemy()
+	if IsValid(ene) then
+		self.AttackType = VJ.ATTACK_TYPE_RANGE
+		self.RangeAttacking = true
+		self:PlaySoundSystem("RangeAttack")
+		if self.RangeAttackAnimationStopMovement == true then self:StopMoving() end
+		if self.RangeAttackAnimationFaceEnemy == true then self:SetTurnTarget("Enemy") end
+		//self:PointAtEntity(ene)
+		self:CustomRangeAttackCode()
+		-- Default projectile code
+		if self.DisableDefaultRangeAttackCode == false then
+			local projectile = ents.Create(VJ.PICK(self.RangeAttackEntityToSpawn))
+			local spawnPosOverride = self:RangeAttackCode_OverrideProjectilePos(projectile)
+			if spawnPosOverride == 0 then -- 0 = Let base decide
+				if self.RangeUseAttachmentForPos == false then
+					projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
+				else
+					projectile:SetPos(self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos)
+				end
+			else -- Custom position
+				projectile:SetPos(spawnPosOverride)
+			end
+			projectile:SetAngles((ene:GetPos() - projectile:GetPos()):Angle())
+			self:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
+			projectile:SetOwner(self)
+			projectile:SetPhysicsAttacker(self)
+			projectile:Spawn()
+			projectile:Activate()
+			//constraint.NoCollide(self, projectile, 0, 0)
+			local phys = projectile:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:Wake()
+				local vel = self:RangeAttackCode_GetShootPos(projectile)
+				phys:SetVelocity(vel) //ApplyForceCenter
+				projectile:SetAngles(vel:GetNormal():Angle())
+			end
+			self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
+		end
+	end
+	if self.AttackState < VJ.ATTACK_STATE_EXECUTED then
+		self.AttackState = VJ.ATTACK_STATE_EXECUTED
+		if self.TimeUntilRangeAttackProjectileRelease != false then
+			finishAttack[VJ.ATTACK_TYPE_RANGE](self)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -190,8 +276,8 @@ function ENT:MultipleRangeAttacks()
 		self.LibertyPrime_DoingLaserAttack = true
 		self.RangeDistance = 6000 -- This is how far away it can shoot
 		self.RangeToMeleeDistance = 200 -- How close does it have to be until it uses melee?
-		self.TimeUntilRangeAttackProjectileRelease = 0.01 -- How much time until the projectile code is ran?
-		self.NextAnyAttackTime_Range = 0.25 -- How much time until it can use any attack again? | Counted in Seconds
+		self.TimeUntilRangeAttackProjectileRelease = 0 -- How much time until the projectile code is ran?
+		self.NextAnyAttackTime_Range = 0.2 -- How much time until it can use any attack again? | Counted in Seconds
 		-- self.RangeAttackExtraTimers = {0.25,0.5}
 		self.DisableDefaultRangeAttackCode = true
 		self.RangeAttackAnimationFaceEnemy = false
@@ -202,7 +288,7 @@ end
 function ENT:LibertyPrime_DoLaserTrace()
 	local tr = util.TraceLine({
 		start = self:GetAttachment(self:LookupAttachment("eye")).Pos,
-		endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *25,
+		endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *75,
 		filter = self,
 	})
 	return tr.HitPos
@@ -235,7 +321,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRangeAttack_BeforeStartTimer()
 	if self.LibertyPrime_DoingNukeAttack == true then
-		self:VJ_ACT_PLAYACTIVITY(ACT_ARM, false, 0, true)
+		self:VJ_ACT_PLAYACTIVITY(ACT_ARM, true, false, true)
 		self.PlayingAttackAnimation = true
 		self.CurrentAttackAnimation = ACT_ARM
 		self.CurrentAttackAnimationDuration = VJ_GetSequenceDuration(self, self.CurrentAttackAnimation) + 1.64
@@ -251,7 +337,8 @@ function ENT:CustomOnRangeAttack_BeforeStartTimer()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
-	return self:CalculateProjectile("Line", self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos, self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 5000)
+	print("SPAWNED",projectile)
+	return self:CalculateProjectile("Line", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 5000)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)

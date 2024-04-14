@@ -97,7 +97,23 @@ end
 if SERVER then
 	function SWEP:OnThink()
 		local owner = self:GetOwner()
-		if owner:IsNPC() then return end
+		if owner:IsNPC() then
+			self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
+			if IsValid(self.Owner:GetEnemy()) then
+				if self.Owner.DoingWeaponAttack then
+					if !self.HasSpunUp then
+						self:SpinUp()
+						return
+					end
+					self:PlayFireLoop()
+				else
+					self:StopFireLoop()
+				end
+			else
+				self:StopFireLoop()
+			end
+			return
+		end
 		if owner:KeyDown(IN_ATTACK) && self:Clip1() > 0 && !self.Reloading then
 			if !self.HasSpunUp then
 				self:SpinUp()
@@ -107,23 +123,6 @@ if SERVER then
 		else
 			self:StopFireLoop()
 		end
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnNPC_ServerThink()
-	self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
-	if IsValid(self.Owner:GetEnemy()) then
-		if self.Owner.DoingWeaponAttack then
-			if !self.HasSpunUp then
-				self:SpinUp()
-				return
-			end
-			self:PlayFireLoop()
-		else
-			self:StopFireLoop()
-		end
-	else
-		self:StopFireLoop()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

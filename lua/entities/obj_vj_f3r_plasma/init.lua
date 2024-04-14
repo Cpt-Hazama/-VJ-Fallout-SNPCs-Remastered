@@ -8,7 +8,7 @@ include("shared.lua")
 ENT.Model = {"models/props_junk/watermelon01_chunk02c.mdl"} -- The models it should spawn with | Picks a random one from the table
 ENT.DoesDirectDamage = true -- Should it do a direct damage when it hits something?
 ENT.DirectDamage = 18 -- How much damage should it do when it hits something
-ENT.DirectDamageType = DMG_PLASMA -- Damage type
+ENT.DirectDamageType = bit.bor(DMG_SHOCK,DMG_ENERGYBEAM,DMG_PLASMA) -- Damage type
 ENT.DecalTbl_DeathDecals = {"Scorch"}
 -- ENT.SoundTbl_OnCollide = {"player/general/sonic_damage.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------

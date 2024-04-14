@@ -637,6 +637,17 @@ if VJExists == true then
 	VJ.AddConVar("vj_f3r_human_holster", 1, {FCVAR_ARCHIVE})
 	VJ.AddConVar("vj_f3r_prime_nukes", 1, {FCVAR_ARCHIVE})
 
+	function VJ_GetSequenceName(ent, anim)
+		if VJ_AnimationExists(ent, anim) == false then return 0 end
+		if isnumber(anim) then
+			return ent:GetSequenceName(ent:SelectWeightedSequence(anim))
+		end
+		if isstring(anim) then
+			return ent:GetSequenceName(ent:LookupSequence(anim))
+		end
+		return nil
+	end
+
 	if CLIENT then
 		hook.Add("PopulateToolMenu", "VJ_ADDTOMENU_F3R", function()
 			spawnmenu.AddToolMenuOption("DrVrej", "SNPC Configures", "Fallout Remastered", "Fallout Remastered", "", "", function(Panel)

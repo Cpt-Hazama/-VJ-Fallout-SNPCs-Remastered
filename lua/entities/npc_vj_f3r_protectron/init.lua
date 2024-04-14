@@ -297,17 +297,29 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnThink()
 	self:GuardAI()
-
-	local idle = self.Alerted && ACT_IDLE_AIM_AGITATED or ACT_IDLE
-	local walk = self.Alerted && ACT_WALK_AGITATED or ACT_WALK
-	local run = self.Alerted && ACT_RUN_AGITATED or ACT_RUN
-	if (self:Health() <= self:GetMaxHealth() *0.35) then
-		walk = self.Alerted && ACT_WALK_STIMULATED or ACT_WALK_HURT
-		run = self.Alerted && ACT_WALK_STIMULATED or ACT_RUN_HURT
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		return (self:Health() <= self:GetMaxHealth() *0.25) && ACT_IDLE or (self.Alerted && ACT_IDLE_AIM_AGITATED or ACT_IDLE)
+	elseif act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.25) && ACT_WALK_HURT or (self.Alerted && ACT_WALK_AGITATED or ACT_WALK)
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.25) && ACT_RUN_HURT or (self.Alerted && ACT_RUN_AGITATED or ACT_RUN)
 	end
-	self.AnimTbl_IdleStand = {idle}
-	self.AnimTbl_Walk = {walk}
-	self.AnimTbl_Run = {run}
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

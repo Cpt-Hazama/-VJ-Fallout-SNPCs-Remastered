@@ -140,15 +140,7 @@ function ENT:CustomOnRemove()
 	for _,v in pairs(self.remove) do v:Stop() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	local idle = self.Alerted && ACT_IDLE_STIMULATED or ACT_IDLE
-	local walk = self.Alerted && ACT_WALK_AIM or ACT_WALK
-	local run = self.Alerted && ACT_RUN_AIM or ACT_RUN
-	if (self:Health() <= self:GetMaxHealth() *0.35) then idle = ACT_IDLE; walk = ACT_WALK_HURT; run = ACT_RUN_HURT end
-	self.AnimTbl_IdleStand = {idle}
-	self.AnimTbl_Walk = {walk}
-	self.AnimTbl_Run = {run}
-
+function ENT:OnThink()
 	for i,data in pairs(self.tbl_Flames) do
 		if !data.emitting then
 			if CurTime() >= data.nextEmit then

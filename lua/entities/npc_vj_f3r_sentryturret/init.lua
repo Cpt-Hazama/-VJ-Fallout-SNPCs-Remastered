@@ -105,7 +105,7 @@ function ENT:CustomOnThink_AIEnabled()
 			end
 		end
 	else
-		if CurTime() > self.NextResetEnemyT && self.Alerted == false then
+		if self.Alerted == false then
 			if self.Turret_StandDown == false then
 				self.Turret_StandDown = true
 				VJ_EmitSound(self,self.Turret_RetractSound,65,self:VJ_DecideSoundPitch(100,110))

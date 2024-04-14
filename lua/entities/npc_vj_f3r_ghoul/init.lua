@@ -315,12 +315,28 @@ function ENT:MultipleMeleeAttacks()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	if self:Health() <= self:GetMaxHealth() *0.35 then
-		self.AnimTbl_Walk = {ACT_WALK_HURT}
-		self.AnimTbl_Run = {ACT_RUN_HURT}
+function ENT:TranslateActivity(act)
+	if act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_WALK_HURT or ACT_WALK
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_RUN_HURT or ACT_RUN
 	end
-	
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:CustomOnThink()
 	local cont = self.VJ_TheController
 	if IsValid(self:GetEnemy()) then
 		if self.CanUseRadAttack && ((IsValid(cont) && cont:KeyDown(IN_RELOAD)) or !IsValid(cont) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.RadiationAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,20) == 1) then
@@ -362,6 +378,22 @@ function ENT:CustomOnThink()
 				end)
 				self.NextGrenadeAttackT = CurTime() +math.Rand(6,10)
 			end
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+local bit_band = bit.band
+local math_Clamp = math.Clamp
+--
+function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo, hitgroup)
+	local dmgType = dmginfo:GetDamageType()
+	if bit_band(dmgType, DMG_RADIATION) == DMG_RADIATION then
+		if dmgType == DMG_RADIATION then -- The full thing is radiation
+			self:SetHealth(math_Clamp(self:Health() +dmginfo:GetDamage(),0,self:GetMaxHealth()))
+			dmginfo:SetDamage(0)
+		else
+			self:SetHealth(math_Clamp(self:Health() +(dmginfo:GetDamage() *0.5),0,self:GetMaxHealth()))
+			dmginfo:SetDamage(dmginfo:GetDamage() *0.5)
 		end
 	end
 end

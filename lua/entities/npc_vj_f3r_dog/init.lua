@@ -6,7 +6,11 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/fallout/dogskin.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
-ENT.StartHealth = 30
+ENT.StartHealth = 200
+
+ENT.HasHealthRegeneration = false
+ENT.HealthRegenerationAmount = 1
+ENT.HealthRegenerationDelay = VJ.SET(1, 1)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_DOG"} -- NPCs with the same class with be allied to each other
 ENT.PlayerFriendly = true
@@ -144,6 +148,7 @@ function ENT:CustomOnInitialize()
 	self.DefaultDistance = self.MeleeAttackDistance
 	
 	if self.PlayerFriendly then
+		self.HasHealthRegeneration = true
 		table.insert(self.VJ_NPC_Class,"CLASS_PLAYER_ALLY")
 		self.SoundTbl_OnPlayerSight = {
 			"vj_fallout/dog/dog_bark01.mp3",
@@ -171,14 +176,27 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
-	local idle = self.Alerted && ACT_IDLE_ANGRY or ACT_IDLE
-	local walk = self.Alerted && ACT_WALK_AGITATED or ACT_WALK
-	local run = self.Alerted && ACT_RUN_AGITATED or ACT_RUN
-	if (self:Health() <= self:GetMaxHealth() *0.5) then idle = ACT_IDLE; walk = ACT_WALK_HURT; run = ACT_RUN_HURT end
-	self.AnimTbl_IdleStand = {idle}
-	self.AnimTbl_Walk = {walk}
-	self.AnimTbl_Run = {run}
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_IDLE or (self.Alerted && ACT_IDLE_ANGRY or ACT_IDLE)
+	elseif act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_WALK_HURT or (self.Alerted && ACT_WALK_AGITATED or ACT_WALK)
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.5) && ACT_RUN_HURT or (self.Alerted && ACT_RUN_AGITATED or ACT_RUN)
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()

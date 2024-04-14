@@ -58,7 +58,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnKilled(dmginfo,hitgroup)
 	local pos,ang = self:GetBonePosition(0)
-	VJ_EmitSound(self,"vj_mili_tank/tank_death2.wav",100,100)
+	VJ_EmitSound(self,"vj_fallout/weapons/explode" .. math.random(7,9) .. ".wav",100,100)
 	util.BlastDamage(self,self,pos,200,90)
 	util.ScreenShake(pos,100,200,1,2500)
 	if self.HasGibDeathParticles == true then ParticleEffect("vj_explosion2",pos,Angle(0,0,0),nil) end

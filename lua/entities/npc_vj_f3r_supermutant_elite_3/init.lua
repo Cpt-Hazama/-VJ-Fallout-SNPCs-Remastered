@@ -13,10 +13,14 @@ ENT.PoseParameterLooking_InvertPitch = true
 ENT.GeneralSoundPitch1 = 90
 ENT.GeneralSoundPitch2 = 90
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
-	self.WeaponAnimTranslations[ACT_IDLE] 							= ACT_IDLE
-	self.WeaponAnimTranslations[ACT_WALK] 							= ACT_WALK
-	self.WeaponAnimTranslations[ACT_RUN] 							= ACT_RUN
+function ENT:SetAnimationTranslations(htype)
+	local wep = self:GetActiveWeapon()
+	if wep.AnimationType then
+		htype = wep.AnimationType
+	end
+	self.AnimationTranslations[ACT_IDLE] 							= ACT_IDLE
+	self.AnimationTranslations[ACT_WALK] 							= ACT_WALK
+	self.AnimationTranslations[ACT_RUN] 							= ACT_RUN
 
 	if htype == "2hh" then
 		local aim = VJ_SequenceToActivity(self,"2hhaim")
@@ -25,12 +29,12 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire = VJ_SequenceToActivity(self,"2hhattackloop")
 		local reload = "2hhreloadc"
 
-		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
-		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
-		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
-		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
-		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.AnimationTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.AnimationTranslations[ACT_WALK_AIM] 						= walk
+		self.AnimationTranslations[ACT_RUN_AIM] 						= run
+		self.AnimationTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.AnimationTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	elseif htype == "2hl" then
 		local aim = VJ_SequenceToActivity(self,"2hlaim")
 		local walk = VJ_SequenceToActivity(self,"2hlaim_walk")
@@ -38,12 +42,12 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire = VJ_SequenceToActivity(self,"2hlattackright")
 		local reload = "2hlreloade"
 
-		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
-		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
-		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
-		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
-		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.AnimationTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.AnimationTranslations[ACT_WALK_AIM] 						= walk
+		self.AnimationTranslations[ACT_RUN_AIM] 						= run
+		self.AnimationTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.AnimationTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	elseif htype == "2hr" or htype == "2hr_bolt" or htype == "ar2" or htype == "shotgun" then
 		local aim = VJ_SequenceToActivity(self,"2hraim")
 		local walk = VJ_SequenceToActivity(self,"2hraim_walk")
@@ -51,12 +55,12 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire = VJ_SequenceToActivity(self,"2hrattackright")
 		local reload = "2hrreloadb"
 
-		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
-		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
-		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
-		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
-		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.AnimationTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.AnimationTranslations[ACT_WALK_AIM] 						= walk
+		self.AnimationTranslations[ACT_RUN_AIM] 						= run
+		self.AnimationTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.AnimationTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	elseif htype == "1hm" or htype == "2hm" then
 		local aim = VJ_SequenceToActivity(self,"2hmaim")
 		local walk = VJ_SequenceToActivity(self,"2hmaim_walk")
@@ -65,13 +69,13 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire2 = ACT_MELEE_ATTACK2
 		local reload = "2hrreloadb"
 
-		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
-		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
-		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
-		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK2] 					= fire2
-		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.AnimationTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.AnimationTranslations[ACT_WALK_AIM] 						= walk
+		self.AnimationTranslations[ACT_RUN_AIM] 						= run
+		self.AnimationTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.AnimationTranslations[ACT_RANGE_ATTACK2] 					= fire2
+		self.AnimationTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	else
 		local aim = VJ_SequenceToActivity(self,"2haaim")
 		local walk = VJ_SequenceToActivity(self,"2haaim_walk")
@@ -79,18 +83,18 @@ function ENT:CustomOnSetupWeaponHoldTypeAnims(htype)
 		local fire = VJ_SequenceToActivity(self,"2haattackloop")
 		local reload = "2hareloada"
 
-		self.WeaponAnimTranslations[ACT_IDLE_ANGRY] 					= aim
-		self.WeaponAnimTranslations[ACT_WALK_AIM] 						= walk
-		self.WeaponAnimTranslations[ACT_RUN_AIM] 						= run
-		self.WeaponAnimTranslations[ACT_RANGE_ATTACK1] 					= aim
-		self.WeaponAnimTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
-		self.WeaponAnimTranslations[ACT_RELOAD]							= "vjges_" .. reload
+		self.AnimationTranslations[ACT_IDLE_ANGRY] 					= aim
+		self.AnimationTranslations[ACT_WALK_AIM] 						= walk
+		self.AnimationTranslations[ACT_RUN_AIM] 						= run
+		self.AnimationTranslations[ACT_RANGE_ATTACK1] 					= aim
+		self.AnimationTranslations[ACT_GESTURE_RANGE_ATTACK1] 			= fire
+		self.AnimationTranslations[ACT_RELOAD]							= "vjges_" .. reload
 	end
 
 	if !self.CanHolsterWeapon then
-		self.WeaponAnimTranslations[ACT_IDLE] 							= self.WeaponAnimTranslations[ACT_IDLE_ANGRY]
-		self.WeaponAnimTranslations[ACT_WALK] 							= self.WeaponAnimTranslations[ACT_WALK_AIM]
-		self.WeaponAnimTranslations[ACT_RUN] 							= self.WeaponAnimTranslations[ACT_RUN_AIM]
+		self.AnimationTranslations[ACT_IDLE] 							= self.AnimationTranslations[ACT_IDLE_ANGRY]
+		self.AnimationTranslations[ACT_WALK] 							= self.AnimationTranslations[ACT_WALK_AIM]
+		self.AnimationTranslations[ACT_RUN] 							= self.AnimationTranslations[ACT_RUN_AIM]
 	end
 
 	return true

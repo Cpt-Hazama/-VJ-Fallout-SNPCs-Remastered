@@ -74,7 +74,7 @@ function SWEP:SpinUp()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnNPC_ServerThink()
+function SWEP:CustomOnThink()
 	self.NPC_NextPrimaryFire = self.HasSpunUp && 0.1 or false
 	if IsValid(self.Owner:GetEnemy()) then
 		if self.Owner.DoingWeaponAttack && self.Owner:GetEnemy():GetPos():Distance(self.Owner:GetPos()) <= self.NPC_FiringDistanceMax then

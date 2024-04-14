@@ -6,11 +6,11 @@ include('shared.lua')
 	without the prior written consent of the author, unless otherwise indicated for stand-alone materials.
 -----------------------------------------------*/
 ENT.Model = {"models/fallout/drone_support.mdl"} -- The game will pick a random model from the table when the SNPC is spawned | Add as many as you want 
-ENT.StartHealth = 50
+ENT.StartHealth = 300
 ENT.HullType = HULL_HUMAN
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_MOTHERSHIP_ZETA"} -- NPCs with the same class with be allied to each other
-ENT.Behavior = VJ_BEHAVIOR_NEUTRAL
+-- ENT.Behavior = VJ_BEHAVIOR_NEUTRAL
 
 ENT.Bleeds = false
 
@@ -117,10 +117,27 @@ function ENT:CustomOnThink()
 		self:PlayIdleLoop()
 		self.bMoveLoopPlaying = false
 	end
-	if self:Health() <= self:GetMaxHealth() *0.35 then
-		self.AnimTbl_Walk = {ACT_WALK_HURT}
-		self.AnimTbl_Run = {ACT_RUN_HURT}
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_WALK then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_WALK_HURT or ACT_WALK
+	elseif act == ACT_RUN then
+		return (self:Health() <= self:GetMaxHealth() *0.35) && ACT_RUN_HURT or ACT_RUN
 	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()

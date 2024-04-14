@@ -9,6 +9,7 @@ ENT.Model = {"models/fallout/radroach.mdl"} -- The game will pick a random model
 ENT.StartHealth = 12
 ---------------------------------------------------------------------------------------------------------------------------------------------
 ENT.VJ_NPC_Class = {"CLASS_RADROACH"} -- NPCs with the same class with be allied to each other
+-- ENT.Behavior = VJ_BEHAVIOR_NEUTRAL
 
 ENT.BloodColor = "Yellow" -- The blood type, this will determine what it should use (decal, particle, etc.)
 

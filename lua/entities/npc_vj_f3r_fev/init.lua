@@ -101,10 +101,29 @@ function ENT:CustomOnInitialize()
 	local v1,v2 = self:GetCollisionBounds()
 	self.Height = v2.z
 	self.DefaultDistance = self.MeleeAttackDistance
-	self.AnimTbl_IdleStand = {VJ_SequenceToActivity(self,"h2haim")}
-	self.AnimTbl_Walk = {VJ_SequenceToActivity(self,"h2haim_walk")}
-	self.AnimTbl_Run = {VJ_SequenceToActivity(self,"h2haim_walk")}
-	-- self.AnimTbl_Run = {VJ_SequenceToActivity(self,"h2haim_run")}
+	self.IdleStand = {VJ_SequenceToActivity(self,"h2haim")}
+	self.Walk = {VJ_SequenceToActivity(self,"h2haim_walk")}
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		return self.IdleStand
+	elseif act == ACT_WALK or ct == ACT_RUN then
+		return self.Walk
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
