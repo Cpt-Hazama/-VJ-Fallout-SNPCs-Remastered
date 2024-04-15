@@ -27,7 +27,7 @@ if (CLIENT) then
 		local ent = LocalPlayer()
 		surface.PlaySound("vj_fallout/explosion/nuke_start.wav")
 		if IsValid(ent) then
-			local time = math.Clamp((((self:GetPos() -ent:GetPos()):Length() /16) /343) *0.9,0,8)
+			local time = math.Clamp((((self:GetPos() -ent:GetPos()):Length() /16) /343) *0.6,0,8)
 			timer.Simple(time,function()
 				if IsValid(ent) then
 					ent:EmitSound("vj_fallout/explosion/nuke_end.wav",150,100)

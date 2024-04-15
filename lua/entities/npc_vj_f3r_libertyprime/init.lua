@@ -9,7 +9,7 @@ ENT.Model = {"models/fallout/libertyprime.mdl"} -- The game will pick a random m
 ENT.StartHealth = 5000000
 ENT.HullType = HULL_LARGE
 ENT.VJ_IsHugeMonster = true -- Is this a huge monster?
-ENT.TurningSpeed = 10 -- How fast it can turn
+ENT.TurningSpeed = 5 -- How fast it can turn
 
 ENT.VJ_NPC_Class = {"CLASS_UNITED_STATES_FRIENDLY", "CLASS_PLAYER_ALLY", "CLASS_BOS"}
 
@@ -132,6 +132,18 @@ function ENT:LibertyPrime_DoFootstep(at)
 	effectdata:SetOrigin(attach)
 	effectdata:SetScale(1000)
 	util.Effect("ThumperDust", effectdata)
+
+	for _,v in ipairs(ents.FindInSphere(attach, 130)) do
+		if v != self && self:CheckRelationship(v) != D_LI then
+			local dmginfo = DamageInfo()
+			dmginfo:SetDamage(self.MeleeAttackDamage)
+			dmginfo:SetDamageType(self.MeleeAttackDamageType)
+			dmginfo:SetAttacker(self)
+			dmginfo:SetInflictor(self)
+			dmginfo:SetDamagePosition(attach)
+			v:TakeDamageInfo(dmginfo)
+		end
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key, activator, caller, data)
@@ -286,9 +298,11 @@ function ENT:MultipleRangeAttacks()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:LibertyPrime_DoLaserTrace()
+	local targetPos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter()
+	local dist = self:GetPos():Distance(targetPos)
 	local tr = util.TraceLine({
 		start = self:GetAttachment(self:LookupAttachment("eye")).Pos,
-		endpos = self:GetEnemy():GetPos() +self:GetEnemy():OBBCenter() +VectorRand() *75,
+		endpos = targetPos +VectorRand() *(dist *0.01),
 		filter = self,
 	})
 	return tr.HitPos
@@ -337,7 +351,7 @@ function ENT:CustomOnRangeAttack_BeforeStartTimer()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
-	print("SPAWNED",projectile)
+	-- print("SPAWNED",projectile)
 	return self:CalculateProjectile("Line", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 5000)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -355,14 +355,33 @@ function ENT:CustomOnThink()
 			-- end
 		end
 	end
-	pp_yaw = math.ApproachAngle(pp_yaw,yaw,3)
+	pp_yaw = math.ApproachAngle(pp_yaw,yaw,6)
 	self:SetPoseParameter("aim_yaw",pp_yaw)
-	pp_yaw_right = math.ApproachAngle(pp_yaw_right,yaw_right,3)
+	pp_yaw_right = math.ApproachAngle(pp_yaw_right,yaw_right,6)
 	self:SetPoseParameter("aim_yaw_right",pp_yaw_right)
-	pp_pitch_left = math.ApproachAngle(pp_pitch_left,pitch_left,3)
+	pp_pitch_left = math.ApproachAngle(pp_pitch_left,pitch_left,6)
 	self:SetPoseParameter("aim_pitch_left",pp_pitch_left)
-	pp_pitch_right = math.ApproachAngle(pp_pitch_right,pitch_right,3)
+	pp_pitch_right = math.ApproachAngle(pp_pitch_right,pitch_right,6)
 	self:SetPoseParameter("aim_pitch_right",pp_pitch_right)
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	if act == ACT_IDLE then
+		return self.Alerted && ACT_IDLE_AIM_RELAXED or ACT_IDLE
+	end
+
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if act == ACT_IDLE then
+				self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		else
+			return translation
+		end
+	end
+	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()
