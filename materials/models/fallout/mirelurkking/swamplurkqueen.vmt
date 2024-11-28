@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mirelurkking/swamplurkqueen"
+	"$bumpmap" 	"models/fallout/mirelurkking/swamplurkqueen_n"
+	"$selfillum" 1
+
+	"Proxies"
+	{
+		"IsNPC"
+		{
+			"scale" "1"
+			"resultvar" "$selfillumtint"
+		}
+	}
+
+	$phong			1
+	$phongexponent		60
+	$phongboost		6.0
+	$phongfresnelranges	"[0 0.5 1]"
+}

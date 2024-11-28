@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/combatarmor/mark2combat"
+	"$bumpmap" 	"models/fallout/armor/combatarmor/mark2combat_n"
+	
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 20
+	"$phongtint" "[1.3 0.8 .45]"
+	"$phongfresnelranges" "[.1 .5 1]"
+}

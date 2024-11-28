@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/firebomb/firebombd"
+	"$normalmap"     "models/fallout/weapons/firebomb/firebomb_n"
+	"$translucent" "1"
+}

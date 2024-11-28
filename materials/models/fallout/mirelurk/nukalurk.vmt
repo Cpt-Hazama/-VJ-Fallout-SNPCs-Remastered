@@ -1,0 +1,34 @@
+"VertexLitGeneric"
+{
+    "$basetexture"              "models/fallout/mirelurk/nukalurk"
+	"$bumpmap"					"models/fallout/mirelurk/nukalurk_n"
+	"$phongexponenttexture" 	"vj_base/exponent"
+
+	"$phong"                     "1"
+	"$phongboost"                "20"
+	"$phongexponent"             "60"
+	"$phongfresnelranges"        "[0 0.5 1]"
+	"$phongtint"        	 	 "[1 1.2 2]"
+
+	"$rimlight"                  "1"
+	"$rimlightexponent"          "100"
+	"$rimmask"                   "1"
+	"$rimlightboost"             "1"
+
+	"$emissiveBlendEnabled" "1"
+	"$emissiveBlendTexture" "models/cpthazama/fallout/noise"
+	"$emissiveBlendBaseTexture" "models/fallout/mirelurk/mirelurk_i"
+	"$emissiveBlendFlowTexture" "models/cpthazama/fallout/flow"
+	"$emissiveBlendTint" "[1.15 1.9 6]"
+	"$emissiveBlendStrength" "1"
+	"$emissiveBlendScrollVector" "[0.1 0]"
+
+	"Proxies"
+	{
+		"IsNPC"
+		{
+			"scale" "1"
+			"resultvar" "$emissiveBlendEnabled"
+		}
+	}
+}

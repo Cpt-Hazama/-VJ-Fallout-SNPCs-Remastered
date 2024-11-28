@@ -44,7 +44,7 @@ SWEP.Category					= "VJ Base - Fallout: Remastered"
 SWEP.Spawnable 					= true
 SWEP.ViewModelFOV 				= 65
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
+function SWEP:OnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
 	local vjeffectmuz = EffectData()
 	vjeffectmuz:SetOrigin(tr.HitPos)
 	util.Effect("vj_fo3_laserhit",vjeffectmuz)

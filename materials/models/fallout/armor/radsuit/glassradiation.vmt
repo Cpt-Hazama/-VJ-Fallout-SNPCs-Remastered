@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/radsuit/glassradiation"
+	"$bumpmap" 	"models/fallout/armor/radsuit/glassradiation_n"
+	//"$translucent" "1"
+	//"$selfillum" "1"
+	"$surfaceprop" 	"glass"
+	"$phong" 1
+	"$phongboost" 12
+	"$phongexponent" 10
+	"$phongtint" "[0.75 1 0.75]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "4"
+	"$rimlightboost" "1"
+}

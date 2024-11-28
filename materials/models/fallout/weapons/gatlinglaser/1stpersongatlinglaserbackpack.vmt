@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/gatlinglaser/1stpersongatlinglaserbackpack"
+	"$normalmap"     "models/fallout/weapons/gatlinglaser/1stpersongatlinglaserbackpack_n"
+	"$translucent" "1"
+	"$selfillum" "1"
+	"$selfillummask" "models/fallout/weapons/gatlinglaser/gatlinglaserbackpack_g"
+}

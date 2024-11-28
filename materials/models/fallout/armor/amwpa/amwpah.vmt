@@ -1,0 +1,20 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 	"models/fallout/armor/amwpa/amwpah"
+	"$bumpmap" 	"models/fallout/armor/amwpa/amwpah_n"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 0.25
+	"$phongexponent" 10
+	"$phongtint" "[.75 .75 1]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+
+	"$selfillum" 1
+	"$selfillummask" "models/fallout/armor/amwpa/amwpah_g"
+}

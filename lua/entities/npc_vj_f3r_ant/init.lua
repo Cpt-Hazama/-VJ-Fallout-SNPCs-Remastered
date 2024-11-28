@@ -155,7 +155,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if (self:GetActivity() != ACT_RANGE_ATTACK1 && self:GetActivity() != ACT_ARM) && self.FlameLP:IsPlaying() && CurTime() > self.LastFlameT then
 		SafeRemoveEntity(self.Flame)
 		self.FlameLP:Stop()

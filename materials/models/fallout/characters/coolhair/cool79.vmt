@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/fallout/characters/coolhair/Cool79"
+	"$bumpmap" "models/fallout/characters/coolhair/Cool79_n"
+	"$alphatest" 	"1"
+	"$allowalphatocoverage"	"1"
+	"$nocull"	"1"
+}

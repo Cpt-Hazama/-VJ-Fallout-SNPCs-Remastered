@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/raider/raiderarmorhelmet"
+	"$bumpmap" 	"models/fallout/armor/raider/raiderarmorhelmet_n"
+	"$alphatest" "1"
+}

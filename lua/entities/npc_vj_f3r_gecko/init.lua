@@ -242,7 +242,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if (self:GetActivity() != ACT_RANGE_ATTACK1 && !self:IsPlayingGesture(ACT_GESTURE_RANGE_ATTACK1)) && self.FlameLP:IsPlaying() then
 		SafeRemoveEntity(self.Flame)
 		self.FlameLP:Stop()

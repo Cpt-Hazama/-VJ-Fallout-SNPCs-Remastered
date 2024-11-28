@@ -32,7 +32,7 @@ SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
+function SWEP:OnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
 	local vjeffectmuz = EffectData()
 	vjeffectmuz:SetOrigin(tr.HitPos)
 	util.Effect("vj_fo3_laserhit_green",vjeffectmuz)
@@ -40,9 +40,6 @@ function SWEP:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PrimaryAttackEffects()
-	local customeffects = self:CustomOnPrimaryAttackEffects()
-	if customeffects != true then return end
-
 	if self.PrimaryEffects_MuzzleFlash == true && GetConVarNumber("vj_wep_nomuszzleflash") == 0 then
 		local muzzleattach = self.PrimaryEffects_MuzzleAttachment
 		if isnumber(muzzleattach) == false then muzzleattach = self:LookupAttachment(muzzleattach) end

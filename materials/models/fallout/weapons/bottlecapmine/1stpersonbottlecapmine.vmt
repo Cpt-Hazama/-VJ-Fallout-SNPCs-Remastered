@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/bottlecapmine/1stpersonbottlecapmine"
+	"$normalmap"     "models/fallout/weapons/bottlecapmine/1stpersonbottlecapmine_n"
+	"$selfillum" "1"
+}

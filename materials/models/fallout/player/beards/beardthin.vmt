@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/player/beards/beardthin"
+	"$bumpmap" 	"models/fallout/player/beards/beardthin_n"
+	"$alphatest" "1"
+}

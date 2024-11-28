@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/enclavepowerarmor/enclaveglove01"
+	"$bumpmap" 	"models/fallout/armor/enclavepowerarmor/enclaveglove01_n"
+}

@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/projectpuritydoctor/outfitm"
+	"$bumpmap" 	"models/fallout/armor/projectpuritydoctor/outfitm_n"
+	"$nocull"	"1"
+	// "$phong" 1
+	// "$phongboost" 7
+	// "$phongexponent" 10
+	// "$phongtint" "[0.85 0.75 0.75]"
+	// "$phongfresnelranges" "[.2 .2 1]"
+}

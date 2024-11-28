@@ -16,7 +16,7 @@ ENT.tbl_ApparelModels = {"models/fallout/headgear/chinesestealthhelmf.mdl"}
 -- ENT.SpawnWithHairChance = 1
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BeforeApparelSpawned()
-	self.HairColor = VJ_PICK({Color(0,0,0),Color(61,30,0)})
+	self.HairColor = VJ.PICK({Color(0,0,0),Color(61,30,0)})
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInit()

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/adpowerarmor/adpowerarmordec"
+	"$translucent" "1"
+}

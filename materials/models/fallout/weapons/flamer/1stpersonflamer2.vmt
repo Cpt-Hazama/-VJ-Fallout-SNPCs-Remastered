@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/flamer/1stpersonflamer2"
+	"$normalmap"     "models/fallout/weapons/flamer/1stpersonflamer2_n"
+}

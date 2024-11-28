@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/player/hair/hairmessy02"
+	"$bumpmap" 	"models/fallout/player/hair/hairmessy02_n"
+	"$alphatest" "1"
+}

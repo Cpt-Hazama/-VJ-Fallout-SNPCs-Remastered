@@ -106,7 +106,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if self:IsMoving() then
 		if !self.bMoveLoopPlaying then
 			self.bMoveLoopPlaying = true

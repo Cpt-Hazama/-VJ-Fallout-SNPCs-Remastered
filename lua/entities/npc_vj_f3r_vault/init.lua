@@ -38,7 +38,7 @@ ENT.HairColors = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BeforeApparelSpawned()
-	self.HairColor = self.Gender == 1 && VJ_PICK(self.HairColors["m"]) or VJ_PICK(self.HairColors["f"])
+	self.HairColor = self.Gender == 1 && VJ.PICK(self.HairColors["m"]) or VJ.PICK(self.HairColors["f"])
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInit()

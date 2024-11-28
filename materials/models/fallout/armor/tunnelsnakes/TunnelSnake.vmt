@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/tunnelsnakes/ts"
+	"$bumpmap" 	"models/fallout/armor/tunnelsnakes/ts_n"
+}

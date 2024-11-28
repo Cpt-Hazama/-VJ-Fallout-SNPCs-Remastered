@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 				"models/fallout/supermutant/nightkinleader"
+	"$bumpmap" 					"models/fallout/supermutant/nightkinleader_n"
+	"$phongexponenttexture" 	"vj_base/exponent"
+
+	"$alphatest" "1"
+
+	"$phong"                     "1"
+	"$phongboost"                "4.9934895"
+	"$phongfresnelranges"        "[0.05 0.115 0.945]"
+	"$phongalbedotint"           "1"
+	"$phongalbedoboost"          "3"
+
+	"$rimlight"                  "1"
+	"$rimlightexponent"          "100"
+	"$rimmask"                   "1"
+	"$rimlightboost"             "1"
+
+	"$normalmapalphaenvmapmask"  "1"
+	"$envmapfresnel"             "1"
+	"$envmap"                    "env_cubemap"
+	"$envmaptint"                "[0.02 0.02 0.02]"
+}

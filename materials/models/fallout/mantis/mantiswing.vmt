@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mantis/mantiswing"
+	"$bumpmap" 	"models/fallout/mantis/mantiswing_n"
+	"$translucent" "1"
+}

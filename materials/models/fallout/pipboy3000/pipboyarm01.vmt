@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/pipboy3000/pipboyarm01"
+	"$bumpmap" 	"models/fallout/pipboy3000/pipboyarm01_n"
+	"$nocull"	"1"
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 29
+	"$phongtint" "[0.7 1.1 0.7]"
+	"$phongfresnelranges" "[.1 4 1]"
+	
+}

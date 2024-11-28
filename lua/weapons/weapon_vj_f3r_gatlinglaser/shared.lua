@@ -54,7 +54,7 @@ function SWEP:CustomOnReload()
 	self:PlayWeaponSoundTimed("vj_fallout/weapons/gatlinglaser/gatlinglaser_reload.wav",0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
+function SWEP:OnPrimaryAttack_BulletCallback(attacker,tr,dmginfo)
 	local vjeffectmuz = EffectData()
 	vjeffectmuz:SetOrigin(tr.HitPos)
 	util.Effect("vj_fo3_laserhit",vjeffectmuz)
@@ -95,7 +95,7 @@ function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 if SERVER then
-	function SWEP:OnThink()
+	function SWEP:WeaponThink()
 		local owner = self:GetOwner()
 		if owner:IsNPC() then
 			self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false

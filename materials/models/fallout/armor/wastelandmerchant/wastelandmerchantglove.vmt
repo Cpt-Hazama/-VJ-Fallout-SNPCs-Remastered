@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/wastelandmerchant/wastelandmerchantglove"
+	"$bumpmap" 	"models/fallout/armor/wastelandmerchant/wastelandmerchantglove_n"
+}

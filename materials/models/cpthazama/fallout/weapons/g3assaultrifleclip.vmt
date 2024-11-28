@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/weapons/g3assaultrifleclip"
+	"$normalmap"     "models/cpthazama/fallout/weapons/g3assaultrifleclip_n"
+}

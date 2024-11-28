@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/weapons/sledgehammer"
+	"$normalmap"     "models/cpthazama/fallout/weapons/sledgehammer_n"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/protectron/decals"
+	"$bumpmap" 	"models/fallout/protectron/decals_n"
+	"$translucent" "1"
+}

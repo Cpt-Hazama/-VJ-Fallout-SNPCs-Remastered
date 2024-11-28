@@ -113,7 +113,7 @@ local defAngle = Angle(0, 0, 0)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
 	self:SetCollisionBounds(Vector(100, 100, 490), Vector(-100, -100, 0))
-	self:StopAllCommonSpeechSounds()
+	self:StopAllSounds()
 	self.StartSound = VJ_CreateSound(self,"vj_fallout/libertyprime/mq11_mq11primeactivationli_00071ef7_1.mp3",110)
 	local dur = SoundDuration("vj_fallout/libertyprime/mq11_mq11primeactivationli_00071ef7_1.mp3") +1 -- .MP3's always return 1 second shorter than what they really are
 	self.NextIdleSoundT = CurTime() +dur
@@ -220,16 +220,7 @@ function ENT:RangeAttackCode()
 		-- Default projectile code
 		if self.DisableDefaultRangeAttackCode == false then
 			local projectile = ents.Create(VJ.PICK(self.RangeAttackEntityToSpawn))
-			local spawnPosOverride = self:RangeAttackCode_OverrideProjectilePos(projectile)
-			if spawnPosOverride == 0 then -- 0 = Let base decide
-				if self.RangeUseAttachmentForPos == false then
-					projectile:SetPos(self:GetPos() + self:GetUp()*self.RangeAttackPos_Up + self:GetForward()*self.RangeAttackPos_Forward + self:GetRight()*self.RangeAttackPos_Right)
-				else
-					projectile:SetPos(self:GetAttachment(self:LookupAttachment(self.RangeUseAttachmentForPosID)).Pos)
-				end
-			else -- Custom position
-				projectile:SetPos(spawnPosOverride)
-			end
+			projectile:SetPos(self:GetAttachment(self:LookupAttachment("bomb")).Pos)
 			projectile:SetAngles((ene:GetPos() - projectile:GetPos()):Angle())
 			self:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
 			projectile:SetOwner(self)
@@ -255,7 +246,7 @@ function ENT:RangeAttackCode()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if self.RangeAttacking == false then
 		self:SetBodygroup(1,0)
 	end
@@ -352,7 +343,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:RangeAttackCode_GetShootPos(projectile)
 	-- print("SPAWNED",projectile)
-	return self:CalculateProjectile("Line", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 5000)
+	return self:CalculateProjectile("Line", projectile:GetPos(), self:GetEnemy():GetPos() + self:GetEnemy():OBBCenter(), 8000)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_OnBleed(dmginfo, hitgroup)

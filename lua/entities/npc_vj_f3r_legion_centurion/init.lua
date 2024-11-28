@@ -45,13 +45,13 @@ ENT.Data = {
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInit()
 	self.Gender = 1
-	self.SpawnData = self.Gender == 1 && VJ_PICK(self.Data["m"]) or VJ_PICK(self.Data["f"])
+	self.SpawnData = self.Gender == 1 && VJ.PICK(self.Data["m"]) or VJ.PICK(self.Data["f"])
 
 	local hp = math.random(self.SpawnData.hp -10,self.SpawnData.hp +10)
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
 
-	self:SetModel(VJ_PICK(self.SpawnData.mdl))
+	self:SetModel(VJ.PICK(self.SpawnData.mdl))
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

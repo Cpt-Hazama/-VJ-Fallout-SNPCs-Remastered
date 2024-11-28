@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/goopile/goopuddle"
+	"$bumpmap" 	"models/fallout/goopile/goopuddle_n"
+	"$translucent" "1"
+}

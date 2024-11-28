@@ -74,7 +74,7 @@ function ENT:CustomAttackCheck_RangeAttack()
 	return self.Sentry_HasLOS
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	local parameter = self:GetPoseParameter("aim_yaw")
 	if parameter != self.Turret_CurrentParameter then
 		self.turret_turningsd = CreateSound(self,self.Turret_TurningSound) 
@@ -86,7 +86,7 @@ function ENT:CustomOnThink()
 	self.Turret_CurrentParameter = parameter
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink_AIEnabled()
+function ENT:OnThink()
 	if IsValid(self:GetEnemy()) then
 		self.Turret_StandDown = false
 		if self:GetEnemy():Visible(self) && (self:GetForward():Dot((self:GetEnemy():GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(self.RangeAttackAngleRadius))) then

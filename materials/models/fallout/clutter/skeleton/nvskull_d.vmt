@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/clutter/skeleton/nvskull_d"
+	"$bumpmap" 	"models/fallout/clutter/skeleton/nvskull_n"
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/hazmat/nvdlc03ghelmet"
+	"$bumpmap" 	"models/fallout/armor/hazmat/nvdlc03ghelmet_n"
+	"$selfillum" "1"
+}

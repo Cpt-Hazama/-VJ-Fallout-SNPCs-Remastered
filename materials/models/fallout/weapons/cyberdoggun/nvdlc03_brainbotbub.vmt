@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/cyberdoggun/nvdlc03_brainbotbub"
+	"$translucent" "1"
+}

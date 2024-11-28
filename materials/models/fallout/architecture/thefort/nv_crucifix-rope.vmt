@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\fallout\architecture\thefort\nv_crucifix-rope"
+	"$bumpmap"     "models\fallout\architecture\thefort\nv_crucifix-rope_n"
+	"$alphatest"	"1"
+	"$surfaceprop" 	"metal"
+	"$alphatest"	"1"
+}

@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/securitron/secrocket"
+	"$bumpmap" 	"models/cpthazama/fallout/securitron/secrocket_n"
+	"$phongexponenttexture" "vj_base/exponent"
+
+	"$phong" 						"1"
+	"$phongexponent" 				"6"
+	"$phongboost" 					"2"
+	"$phongfresnelranges" 			"[0.75 0.35 1]"
+	"$phongalbedotint" 				"1"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+}

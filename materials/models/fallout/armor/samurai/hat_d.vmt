@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/samurai/hat_d"
+	"$bumpmap" 	"models/fallout/armor/samurai/hat_n"
+	
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 1
+	"$phongexponent" 20
+	"$phongtint" "[0.6 0.6 1]"
+	"$phongfresnelranges" "[.2 .2 1]"
+}

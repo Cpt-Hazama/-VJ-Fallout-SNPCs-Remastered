@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/spacesuit/spacehelm"
+	"$bumpmap" 	"models/fallout/armor/spacesuit/spacehelm_n"
+}

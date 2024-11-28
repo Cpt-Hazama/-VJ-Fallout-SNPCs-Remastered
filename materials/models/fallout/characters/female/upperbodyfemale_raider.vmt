@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/female/upperbodyfemale_raider"
+	"$bumpmap" 	"models/fallout/characters/female/upperbodyfemale_n"
+	"$phong" 1
+	"$phongboost" 10 
+	"$phongexponent" 10
+	"$phongtint" "[0.3 0.3 0.3]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+}

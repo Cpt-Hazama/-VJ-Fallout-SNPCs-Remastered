@@ -1,0 +1,22 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mirelurk/magmalurk"
+	"$bumpmap" 	"models/fallout/mirelurk/nukalurk_n"
+
+	"$emissiveBlendEnabled" "1"
+	"$emissiveBlendTexture" "models/cpthazama/fallout/noise"
+	"$emissiveBlendBaseTexture" "models/fallout/mirelurk/magmalurk_i"
+	"$emissiveBlendFlowTexture" "models/cpthazama/fallout/flow"
+	"$emissiveBlendTint" "[5 0 0]"
+	"$emissiveBlendStrength" "1"
+	"$emissiveBlendScrollVector" "[0.1 0]"
+
+	"Proxies"
+	{
+		"IsNPC"
+		{
+			"scale" "1"
+			"resultvar" "$emissiveBlendEnabled"
+		}
+	}
+}

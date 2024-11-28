@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/fallout/characters/coolhair/cool56"
+	"$bumpmap" "models/fallout/characters/coolhair/cool56_n"
+	"$alphatest" 	"1"
+	"$allowalphatocoverage"	"1"
+	//"$nocull"	"1"
+	"$color2"	"{143 133 124}"
+	
+	"$phong" 1
+	"$phongboost" 6
+	"$phongexponent" 40
+	"$phongtint" "[1 1 1]"
+	"$phongfresnelranges" "[0.1 3 2]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.3"
+}

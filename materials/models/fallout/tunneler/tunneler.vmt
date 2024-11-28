@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/tunneler/tunneler"
+	"$bumpmap" 	"models/fallout/tunneler/tunneler_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.4
+	$phongfresnelranges	"[0 0.5 1]"
+}

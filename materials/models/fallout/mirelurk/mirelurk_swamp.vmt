@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+    "$basetexture"              "models/fallout/mirelurk/mirelurk_swamp"
+	"$bumpmap"					"models/fallout/mirelurk/mirelurk_swamp_n"
+	"$phongexponenttexture" 	"vj_base/exponent"
+
+	"$phong"                     "1"
+	"$phongboost"                "25"
+	"$phongexponent"             "40"
+	"$phongfresnelranges"        "[0 0.5 1]"
+
+	"$rimlight"                  "1"
+	"$rimlightexponent"          "100"
+	"$rimmask"                   "1"
+	"$rimlightboost"             "1"
+}

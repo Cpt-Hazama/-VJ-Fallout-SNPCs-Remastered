@@ -1,0 +1,22 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 	"models/fallout/armor/asukaiv/asukacsarmor"
+	"$bumpmap" "models/fallout/armor/asukaiv/asukacsarmor_n"
+	"$halflambert"	"1"
+	"$nocull"	"1"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 3
+	"$phongexponent" 10
+	"$phongtint" "[0.6 0.6 1]"
+	"$phongfresnelranges" "[.2 .2 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "2"
+	
+	"$selfillum" 1
+	"$selfillummask" "models/fallout/armor/asukaiv/asukacsarmor_g"	
+}

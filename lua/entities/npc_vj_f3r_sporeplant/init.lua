@@ -200,7 +200,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self.AnimTbl_IdleStand = {self.Alerted && ACT_IDLE_AGITATED or ACT_IDLE}
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

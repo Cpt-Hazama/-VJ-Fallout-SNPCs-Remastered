@@ -39,7 +39,7 @@ function ENT:ModelInit()
 			"models/fallout/player/female/raider03.mdl",
 			"models/fallout/player/female/raider04.mdl",
 		}
-		self:SetModel(VJ_PICKRANDOMTABLE(tbl))
+		self:SetModel(VJ.PICK(tbl))
 	end
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 	if self.Gender == 1 then

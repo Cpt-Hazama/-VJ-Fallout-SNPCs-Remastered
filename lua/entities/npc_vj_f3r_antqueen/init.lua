@@ -100,7 +100,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	local enemy = self:GetEnemy()
 	local cont = self.VJ_TheController
 	if IsValid(enemy) then

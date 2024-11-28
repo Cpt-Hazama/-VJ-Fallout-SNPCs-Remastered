@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/male/headhuman_boone"
+	"$bumpmap" 	"models/fallout/characters/male/headhuman_boone_n"
+
+	"$phong" 1
+	"$phongboost" 0.4
+	"$phongexponent" 20
+	"$phongtint" "[1 0.75 0.75]"
+	"$phongfresnelranges" "[.2 .2 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"		
+	
+}

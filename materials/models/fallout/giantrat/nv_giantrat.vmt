@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/giantrat/nv_giantrat"
+	"$bumpmap" 	"models/fallout/giantrat/nv_giantrat_n"
+	"$alphatest" "1"
+	//"$selfillumtexture" "models/fallout/giantrat/nv_giantrat_g" // Doesn't work with $alphatest
+}

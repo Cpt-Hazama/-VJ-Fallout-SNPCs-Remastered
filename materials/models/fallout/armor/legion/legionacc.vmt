@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/legion/legionACC"
+	"$bumpmap" 	"models/fallout/armor/legion/legionACC_n"
+	"$phong" 1
+	"$phongboost" 2
+	"$phongexponent" 20
+	"$phongtint" "[1 .75 .75]"
+	"$phongfresnelranges" "[.1 .5 1]"
+	
+	"$alphatest"	"1"
+	
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.05"
+}

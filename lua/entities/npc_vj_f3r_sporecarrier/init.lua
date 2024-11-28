@@ -149,7 +149,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if self.Glow && self:Health() <= self:GetMaxHealth() *0.2 && math.random(1,20) == 1 && self:GetActivity() != ACT_RANGE_ATTACK1_LOW then
 		self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1_LOW,true,false,false)
 	end

@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/sporecarrier/sporecarrier"
+	"$bumpmap" 	"models/fallout/sporecarrier/sporecarrier_n"
+
+	$phong			1
+	$phongexponent		1
+	$phongboost		0.4
+	$phongfresnelranges	"[0 0.5 1]"
+}

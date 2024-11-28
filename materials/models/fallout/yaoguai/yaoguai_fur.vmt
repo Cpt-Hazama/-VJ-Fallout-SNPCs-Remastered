@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/yaoguai/yaoguai_fur"
+	"$bumpmap" 	"models/fallout/yaoguai/yaoguai_fur_n"
+	"$translucent" 1
+}

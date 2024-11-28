@@ -68,7 +68,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self:SetCollisionGroup(self.IsHiding && COLLISION_GROUP_IN_VEHICLE or COLLISION_GROUP_NPC)
 	self:SetNoDraw(self.IsHiding)
 	self:DrawShadow(!self.IsHiding)

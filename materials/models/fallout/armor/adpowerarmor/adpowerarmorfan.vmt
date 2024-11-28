@@ -1,0 +1,40 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/adpowerarmor/adpowerarmorfan"
+	"$bumpmap" 	"models/fallout/armor/adpowerarmor/adpowerarmorfan_n"
+	//"$translucent" "1"
+	$Alphatest 1
+	"$phong" 1
+	"$phongboost" 1.5
+	"$phongexponent" 10
+	"$phongtint" "[1.3 0.8 .45]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+
+	"$angle" 0.0
+	"$translate" "[0.0 0.0]"
+	"$center" "[0.5 0.5]"
+
+	"Proxies"
+	{
+		"LinearRamp"
+		{
+			"rate" -530
+			"initialValue" 0.0
+			"resultVar" "$angle"
+		}
+
+		"TextureTransform"
+		{
+			"translateVar" "$translate"
+			"rotateVar" "$angle"
+			"centerVar" "$center"
+			"resultVar" "$basetexturetransform"
+		}
+	}
+}

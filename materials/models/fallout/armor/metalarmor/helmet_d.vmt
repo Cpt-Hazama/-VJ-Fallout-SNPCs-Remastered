@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/metalarmor/helmet_d"
+	"$bumpmap" 	"models/fallout/armor/metalarmor/helmet_n"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 3
+	"$phongexponent" 20
+	"$phongtint" "[1 1 1]"
+	"$phongfresnelranges" "[.1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+}

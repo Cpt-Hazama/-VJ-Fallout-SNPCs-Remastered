@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/blowfly/blowfly"
+	"$bumpmap" 	"models/fallout/blowfly/blowfly_n"
+}

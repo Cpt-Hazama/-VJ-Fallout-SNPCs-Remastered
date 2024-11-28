@@ -1,0 +1,19 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/chinesecommando/ss_outfit"
+	"$bumpmap" 	"models/fallout/armor/chinesecommando/outfitm_n"
+
+	"$phong" 1
+	"$phongboost" 6
+	"$phongexponent" 10
+	"$phongtint" "[0.7 1 0.86]"
+	"$phongfresnelranges" "[.1 .6 1]"
+	
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "2"
+	"$rimlightboost" "0.1"
+
+	"$halflambert" "1"
+}

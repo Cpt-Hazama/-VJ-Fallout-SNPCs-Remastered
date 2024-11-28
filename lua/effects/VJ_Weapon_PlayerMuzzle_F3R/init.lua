@@ -13,7 +13,7 @@ function EFFECT:Init(data)
 
 	local muzEnt = ((owner != LocalPlayer()) or owner:ShouldDrawLocalPlayer()) && ent or ent.VJ_CModel or owner:GetViewModel()
 
-	ParticleEffectAttach(VJ_PICK(ent.PrimaryEffects_MuzzleParticles), PATTACH_POINT, muzEnt, 1)
+	ParticleEffectAttach(VJ.PICK(ent.PrimaryEffects_MuzzleParticles), PATTACH_POINT, muzEnt, 1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function EFFECT:Think()

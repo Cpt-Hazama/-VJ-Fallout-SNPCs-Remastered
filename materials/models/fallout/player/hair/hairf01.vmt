@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/player/hair/hairF01"
+	"$bumpmap" 	"models/fallout/player/hair/hairF01_n"
+	"$alphatest" 	"1"
+	"$allowalphatocoverage"	"1"	
+	"$phong" 1
+	"$phongboost" 5
+	"$phongexponent" 35
+	"$phongtint" "[1 1 1]"
+	"$phongfresnelranges" "[0.1 3 2]"
+	
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.3"	
+}

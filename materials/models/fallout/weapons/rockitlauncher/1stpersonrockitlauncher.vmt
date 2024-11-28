@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/rockitlauncher/1stpersonrockitlauncher"
+	"$normalmap"     "models/fallout/weapons/rockitlauncher/1stpersonrockitlauncher_n"
+}

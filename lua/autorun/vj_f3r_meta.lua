@@ -153,7 +153,7 @@ if VJExists == true then
 			elseif sndType == 2 && IsValid(ent) then
 				VJ_EmitSound(ent,snd,vol,pit)
 			elseif sndType == 3 then
-				sound.Play(VJ_PICK(snd),type(ent) == "Vector" && ent or (IsValid(ent) && ent:GetPos()) or VJ_Vec0,vol,pit,1)
+				sound.Play(VJ.PICK(snd),type(ent) == "Vector" && ent or (IsValid(ent) && ent:GetPos()) or VJ_Vec0,vol,pit,1)
 			end
 		end)
 	end

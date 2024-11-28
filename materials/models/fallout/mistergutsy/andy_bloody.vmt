@@ -1,0 +1,35 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 				"models/fallout/mistergutsy/andy_bloody"
+	"$bumpmap" 					"models/fallout/mistergutsy/andy_bloody_n"
+	"$phongexponenttexture" 	"vj_base/exponent"
+
+	"$alphatest"                 "1"
+
+	"$phong"                     "1"
+	"$phongboost"                "9.9934895"
+	"$phongfresnelranges"        "[0.05 0.115 0.945]"
+	"$phongalbedotint"           "1"
+	"$phongalbedoboost"          "30"
+
+	"$rimlight"                  "1"
+	"$rimlightexponent"          "100"
+	"$rimmask"                   "1"
+	"$rimlightboost"             "1"
+
+	"$normalmapalphaenvmapmask"  "1"
+	"$envmapfresnel"             "1"
+	"$envmap"                    "env_cubemap"
+	"$envmaptint"                "[0.5 0.5 0.5]"
+
+	"$DEM_TintScale" 			"[1 1 1]"
+	"$DEM_Multiplier" 			"1"
+
+	"Proxies" 
+	{
+		"DynamicEnvMap"
+		{
+			resultVar	"$envmaptint"
+		}
+	}
+}

@@ -2919,18 +2919,18 @@ function ENT:SetupApparel(ent)
 		if #self.tbl_ApparelModels > 0 then
 			if math.random(1,self.SpawnWithApparelChance) == 1 then
 				self.HasApparel = true
-				self:AddApparel(ent,VJ_PICKRANDOMTABLE(self.tbl_ApparelModels))
+				self:AddApparel(ent,VJ.PICK(self.tbl_ApparelModels))
 			end
 		end
 		if #self.tbl_HairModels > 0 then
 			if self.CantHaveHairWithApparel && self.HasApparel then return end
 			if math.random(1,self.SpawnWithHairChance) == 1 then
-				self:AddApparel(ent,VJ_PICKRANDOMTABLE(self.tbl_HairModels),true,self.HairColor)
+				self:AddApparel(ent,VJ.PICK(self.tbl_HairModels),true,self.HairColor)
 			end
 		end
 		if #self.tbl_BeardModels > 0 then
 			if math.random(1,self.SpawnWithBeardChance) == 1 then
-				self:AddApparel(ent,VJ_PICKRANDOMTABLE(self.tbl_BeardModels),true,self.HairColor)
+				self:AddApparel(ent,VJ.PICK(self.tbl_BeardModels),true,self.HairColor)
 			end
 		end
 		if self.CustomApparel then self:CustomApparel(ent) end
@@ -3016,7 +3016,7 @@ function ENT:SetupInventory(opWep)
 	if self.CustomInventory then self:CustomInventory() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnInitialize()
+function ENT:Init()
 	self.tbl_Inventory = {}
 	self.tbl_CurrentApparel = {}
 	self.tbl_Apparel = {}
@@ -3065,6 +3065,15 @@ function ENT:CustomOnInitialize()
 	if self.AfterInit then self:AfterInit() end
 	
 	-- self:SetVoice("female01")
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:Controller_Initialize(ply,controlEnt)
+	function controlEnt:OnThink()
+		local npc = self.VJCE_NPC
+		local canTurnAndStuph = (IsValid(npc:GetActiveWeapon()) && npc:GetWeaponState() == VJ.NPC_WEP_STATE_READY) or self.VJC_Camera_Mode == 2
+		self.VJC_NPC_CanTurn = canTurnAndStuph
+		self.VJC_BullseyeTracking = npc:IsMoving() && canTurnAndStuph
+	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnPlayCreateSound(SoundData,SoundFile)
@@ -3344,7 +3353,7 @@ function ENT:Equip()
 	self.AnimationTranslations[ACT_WALK] = self.AnimationTranslations[ACT_WALK_AIM]
 	self.AnimationTranslations[ACT_RUN] = self.AnimationTranslations[ACT_RUN_AIM]
 	-- self.NextIdleStandTime = 0
-	self:SetIdleAnimation({ACT_IDLE},true)
+	-- self:SetIdleAnimation({ACT_IDLE},true)
 	if self:IsMoving() then
 		local lastPos = self:GetLastPosition()
 		local curSched = self.CurrentSchedule
@@ -3373,7 +3382,7 @@ function ENT:Unequip()
 	self.AnimationTranslations[ACT_WALK] = ACT_WALK
 	self.AnimationTranslations[ACT_RUN] = ACT_RUN
 	-- self.NextIdleStandTime = 0
-	self:SetIdleAnimation({ACT_IDLE},true)
+	-- self:SetIdleAnimation({ACT_IDLE},true)
 	if self:IsMoving() then
 		local lastPos = self:GetLastPosition()
 		local curSched = self.CurrentSchedule
@@ -3395,51 +3404,6 @@ function ENT:Unequip()
 	self:SetWeaponState(VJ.NPC_WEP_STATE_HOLSTERED)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:TranslateActivity(act)
-	-- if act == ACT_GESTURE_RANGE_ATTACK1 then
-	-- 	return ACT_GESTURE_RANGE_ATTACK_AR1
-	-- end
-	//print("TranslateActivity ", act)
-	-- Handle idle scared and angry animations
-	if act == ACT_IDLE then
-		if self.NoWeapon_UseScaredBehavior_Active == true then
-			//return VJ.PICK(self.AnimTbl_ScaredBehaviorStand)
-			return ACT_COWER
-		elseif self.Alerted && self:GetWeaponState() != VJ.NPC_WEP_STATE_HOLSTERED && IsValid(self:GetActiveWeapon()) then
-			//return VJ.PICK(self.AnimTbl_WeaponAim)
-			return ACT_IDLE_ANGRY
-		end
-	-- Handle running while scared animation
-	elseif act == ACT_RUN && self.NoWeapon_UseScaredBehavior_Active == true && !self.VJ_IsBeingControlled then
-		// VJ.PICK(self.AnimTbl_ScaredBehaviorMovement)
-		return ACT_RUN_PROTECTED
-	-- Handle aiming while moving animations
-	elseif (act == ACT_RUN or act == ACT_WALK) && self.HasShootWhileMoving == true && IsValid(self:GetEnemy()) then
-		if (self.EnemyData.IsVisible or (self.EnemyData.LastVisibleTime + 5) > CurTime()) && self.CurrentSchedule != nil && self.CurrentSchedule.CanShootWhenMoving == true && self:IsAbleToShootWeapon(true, false) == true then
-			local anim = self:TranslateActivity(act == ACT_RUN and ACT_RUN_AIM or ACT_WALK_AIM)
-			if VJ.AnimExists(self, anim) == true then
-				self.DoingWeaponAttack = true
-				self.DoingWeaponAttack_Standing = false
-				return anim
-			end
-		end
-	end
-	
-	-- Handle translations table
-	local translation = self.AnimationTranslations[act]
-	if translation then
-		if istable(translation) then
-			if act == ACT_IDLE then
-				self:ResolveAnimation(translation)
-			end
-			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
-		else
-			return translation
-		end
-	end
-	return act
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:HumanThink() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAlert(argent)
@@ -3448,7 +3412,7 @@ function ENT:CustomOnAlert(argent)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self.NextHolsterT = self.NextHolsterT or CurTime()
 	if !IsValid(self.VJ_TheController) then
 		self:GuardAI()

@@ -1,0 +1,7 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "cpthazama/reflection"
+	"$surfaceprop" "water"
+	"$envmap" "env_cubemap"
+	"$envmapmask" "cpthazama/reflection_n"
+}

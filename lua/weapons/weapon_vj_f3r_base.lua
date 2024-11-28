@@ -50,9 +50,9 @@ SWEP.ViewModelZoomAdjust = {
 	Ang = {Right = 0,Up = 0,Forward = 0}
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:OnEquip() end
+function SWEP:WeaponEquip() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:OnThink() end
+function SWEP:WeaponThink() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_base"
 SWEP.Author 					= "Cpt. Hazama"
@@ -244,19 +244,11 @@ function SWEP:PlayWeaponSoundTimed(snd,time,vol)
 	end)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:PrimaryAttackEffects()
-	if self:CustomOnPrimaryAttackEffects() != true or self.IsMeleeWeapon == true then return end
-	local owner = self:GetOwner()
+function SWEP:PrimaryAttackEffects(owner)
+	if self.IsMeleeWeapon == true then return end
+	owner = owner or self:GetOwner()
 	
-	/*local muzzleFlashEffect = EffectData()
-	muzzleFlashEffect:SetOrigin(owner:GetShootPos())
-	muzzleFlashEffect:SetEntity(self)
-	muzzleFlashEffect:SetStart(owner:GetShootPos())
-	muzzleFlashEffect:SetNormal(owner:GetAimVector())
-	muzzleFlashEffect:SetAttachment(1)
-	util.Effect("VJ_Weapon_RifleMuzzle1",muzzleFlashEffect)*/
-	
-	if GetConVar("vj_wep_nomuszzleflash"):GetInt() == 0 then
+	if cv_muszzleflash:GetInt() == 0 then
 		-- MUZZLE FLASH
 		if self.PrimaryEffects_MuzzleFlash == true then
 			local muzzleAttach = self.PrimaryEffects_MuzzleAttachment
@@ -272,23 +264,21 @@ function SWEP:PrimaryAttackEffects()
 				util.Effect("VJ_Weapon_PlayerMuzzle_F3R", muzzleFlashEffect)
 			else -- NPCs
 				if self.PrimaryEffects_MuzzleParticlesAsOne == true then -- Combine all of the particles in the table!
-					for _,v in pairs(self.PrimaryEffects_MuzzleParticles) do
-						if !istable(v) then
-							ParticleEffectAttach(v, PATTACH_POINT_FOLLOW, self, muzzleAttach)
-						end
+					for _, v in ipairs(self.PrimaryEffects_MuzzleParticles) do
+						ParticleEffectAttach(v, PATTACH_POINT_FOLLOW, self, muzzleAttach)
 					end
 				else
-					ParticleEffectAttach(VJ_PICK(self.PrimaryEffects_MuzzleParticles), PATTACH_POINT_FOLLOW, self, muzzleAttach)
+					ParticleEffectAttach(VJ.PICK(self.PrimaryEffects_MuzzleParticles), PATTACH_POINT_FOLLOW, self, muzzleAttach)
 				end
 			end
 		end
 		
-		-- MUZZLE LIGHT
-		if SERVER && self.PrimaryEffects_SpawnDynamicLight == true && GetConVar("vj_wep_nomuszzleflash_dynamiclight"):GetInt() == 0 then
+		-- MUZZLE DYNAMIC LIGHT
+		if SERVER && self.PrimaryEffects_SpawnDynamicLight == true && cv_dynamiclight:GetInt() == 0 then
 			local muzzleLight = ents.Create("light_dynamic")
 			muzzleLight:SetKeyValue("brightness", self.PrimaryEffects_DynamicLightBrightness)
 			muzzleLight:SetKeyValue("distance", self.PrimaryEffects_DynamicLightDistance)
-			if owner:IsPlayer() then muzzleLight:SetLocalPos(owner:GetShootPos() +self:GetForward()*40 + self:GetUp()*-10) else muzzleLight:SetLocalPos(self:GetNW2Vector("VJ_CurBulletPos")) end
+			if owner:IsPlayer() then muzzleLight:SetLocalPos(owner:GetShootPos() + self:GetForward()*40 + self:GetUp()*-10) else muzzleLight:SetLocalPos(self:GetBulletPos()) end
 			muzzleLight:SetLocalAngles(self:GetAngles())
 			muzzleLight:Fire("Color", self.PrimaryEffects_DynamicLightColor.r.." "..self.PrimaryEffects_DynamicLightColor.g.." "..self.PrimaryEffects_DynamicLightColor.b)
 			//muzzleLight:SetParent(self)
@@ -301,22 +291,25 @@ function SWEP:PrimaryAttackEffects()
 	end
 
 	-- SHELL CASING
-	if !owner:IsPlayer() && self.PrimaryEffects_SpawnShells == true && GetConVar("vj_wep_nobulletshells"):GetInt() == 0 then
+	if !owner:IsPlayer() && self.PrimaryEffects_SpawnShells == true && cv_bulletshells:GetInt() == 0 then
 		local shellAttach = self.PrimaryEffects_ShellAttachment
 		if !isnumber(shellAttach) then shellAttach = self:LookupAttachment(shellAttach) end
-		local shellEffect = EffectData()
-		shellEffect:SetEntity(self)
-		shellEffect:SetOrigin(owner:GetShootPos())
-		shellEffect:SetNormal(owner:GetAimVector())
-		shellEffect:SetAttachment(shellAttach)
-		util.Effect(self.PrimaryEffects_ShellType, shellEffect)
+		shellAttach = self:GetAttachment(shellAttach)
+		if !shellAttach then -- No attachment found, so just use some default pos & ang
+			shellAttach = {Pos = owner:GetShootPos(), Ang = self:GetAngles()}
+		end
+		local effectData = EffectData()
+		effectData:SetEntity(self)
+		effectData:SetOrigin(shellAttach.Pos)
+		effectData:SetAngles(shellAttach.Ang)
+		util.Effect(self.PrimaryEffects_ShellType, effectData, true, true)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnThink()
+function SWEP:OnThink()
 	local owner = self:GetOwner()
-	if self.OnThink then
-		self:OnThink(owner)
+	if self.WeaponThink then
+		self:WeaponThink(owner)
 	end
 
 	if self.IsMeleeWeapon then
@@ -334,8 +327,8 @@ function SWEP:CustomOnThink()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnEquip(owner)
-	if self.OnEquip then
-		self:OnEquip()
+	if self.WeaponEquip then
+		self:WeaponEquip()
 	end
 	if CLIENT then
 		if owner:IsPlayer() then
@@ -345,8 +338,8 @@ function SWEP:CustomOnEquip(owner)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnDeploy()
-	if self.OnDeploy then
-		self:OnDeploy()
+	if self.WeaponDeploy then
+		self:WeaponDeploy()
 	end
 	local owner = self:GetOwner()
 	if owner:IsPlayer() then
@@ -371,6 +364,8 @@ function SWEP:CustomOnDeploy()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:WeaponHolstered(newWep) return true end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:Holster(newWep)
 	if self == newWep or self.Reloading == true then return end
 	self.HasIdleAnimation = false
@@ -384,7 +379,7 @@ function SWEP:Holster(newWep)
 	if SERVER && self:GetOwner():IsPlayer() then
 		self:ResetPlayerSpeed(self:GetOwner())
 	end
-	return self:CustomOnHolster(newWep)
+	return self:WeaponHolstered(newWep)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CleanUpGarbage()
@@ -541,7 +536,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:PlayAnimation(anim)
 	local owner = self:GetOwner()
-	local anim, useSeq = self:TranslateAnim(istable(anim) && VJ_PICK(anim) or anim)
+	local anim, useSeq = self:TranslateAnim(istable(anim) && VJ.PICK(anim) or anim)
 	local animTime = VJ_GetSequenceDuration(owner:GetViewModel(), anim)
 	if useSeq then
 		self:SendWeaponSeq(anim)
@@ -553,7 +548,6 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:DoIdleAnimation()
 	if !self.HasIdleAnimation or CurTime() < self.NextIdleT then return end
-	self:CustomOnIdle()
 	local owner = self:GetOwner()
 	if IsValid(owner) then
 		if self.IsMeleeWeapon == true then
@@ -570,7 +564,7 @@ function SWEP:Deploy()
 	local owner = self:GetOwner()
 	if owner:IsPlayer() then
 		self:CustomOnDeploy()
-		if self.HasDeploySound == true then self:EmitSound(VJ_PICK(self.DeploySound),50,math.random(90,100)) end
+		if self.HasDeploySound == true then self:EmitSound(VJ.PICK(self.DeploySound),50,math.random(90,100)) end
 		
 		local curTime = CurTime()
 		local animTime = self:PlayAnimation(self.AnimTbl_Deploy)
@@ -590,6 +584,8 @@ function SWEP:NPC_Reload()
 	if self.NPC_HasReloadSound == true then VJ.EmitSound(owner, self.NPC_ReloadSound, self.NPC_ReloadSoundLevel) end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomOnReload() end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:Reload()
 	if !IsValid(self) then return end
 	local owner = self:GetOwner()
@@ -597,24 +593,29 @@ function SWEP:Reload()
 	if self:Clip1() < self.Primary.ClipSize then
 		self.Reloading = true
 		self:SetZoomed(false)
+		self:OnReload("Start")
 		self:CustomOnReload()
-		if SERVER && self.HasReloadSound == true then owner:EmitSound(VJ_PICK(self.ReloadSound), 50, math.random(90, 100)) end
-		-- Handle animation
-		owner:SetAnimation(PLAYER_RELOAD)
+		if SERVER && self.HasReloadSound == true then
+			local reloadSD = VJ.PICK(self.ReloadSound)
+			if reloadSD then
+				owner:EmitSound(reloadSD, 50, math.random(90, 100))
+			end
+		end
 		local animTime = self:PlayAnimation(self.AnimTbl_Reload)
 		self.NextIdleT = CurTime() + animTime
-		timer.Simple(animTime, function()
-			if IsValid(self) then
-				self.Reloading = false
-			end
-		end)
 		-- Handle clip
 		timer.Simple(self.Reload_TimeUntilAmmoIsSet or animTime, function()
-			if IsValid(self) && self:CustomOnReload_Finish() != false then
+			if IsValid(self) && self:OnReload("Finish") != true then
 				local ammoUsed = math.Clamp(self.Primary.ClipSize - self:Clip1(), 0, owner:GetAmmoCount(self:GetPrimaryAmmoType())) -- Amount of ammo that it will use (Take from the reserve)
 				owner:RemoveAmmo(ammoUsed, self.Primary.Ammo)
 				self:SetClip1(self:Clip1() + ammoUsed)
-				self:CustomOnReload_Finish()
+			end
+		end)
+		-- Handle animation
+		owner:SetAnimation(PLAYER_RELOAD)
+		timer.Simple(animTime, function()
+			if IsValid(self) then
+				self.Reloading = false
 			end
 		end)
 		return true
@@ -641,18 +642,18 @@ function SWEP:OnMeleeHit(entTbl,UseAlt)
 		})
 		if tr.Hit then
 			if self.SoundTbl_MeleeAttackHitWorld then
-				sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackHitWorld), tr.HitPos, 75)
+				sound.Play(VJ.PICK(self.SoundTbl_MeleeAttackHitWorld), tr.HitPos, 75)
 			end
 			hitType = 1
 		else
 			if self.SoundTbl_MeleeAttackMiss then
-				sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackMiss), owner:GetShootPos(), 70)
+				sound.Play(VJ.PICK(self.SoundTbl_MeleeAttackMiss), owner:GetShootPos(), 70)
 			end
 			hitType = 2
 		end
 	else
 		if self.SoundTbl_MeleeAttackHit then
-			sound.Play(VJ_PICK(self.SoundTbl_MeleeAttackHit), owner:EyePos(), 75)
+			sound.Play(VJ.PICK(self.SoundTbl_MeleeAttackHit), owner:EyePos(), 75)
 		end
 		for _,v in pairs(entTbl) do
 			local applyDmg = DamageInfo()
@@ -669,6 +670,12 @@ function SWEP:OnMeleeHit(entTbl,UseAlt)
 
 	self:OnHit(entTbl,hitType)
 end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomOnPrimaryAttack_BeforeShoot()
+	return false
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomOnPrimaryAttack_AfterShoot() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 local function IsValidEntity(v)
 	if !IsValid(v) then return false end
@@ -809,7 +816,7 @@ function SWEP:PrimaryAttack(UseAlt)
 				
 				-- Callback
 				bullet.Callback = function(attacker, tr, dmginfo)
-					self:CustomOnPrimaryAttack_BulletCallback(attacker, tr, dmginfo)
+					self:OnPrimaryAttack_BulletCallback(attacker, tr, dmginfo)
 					/*local laserhit = EffectData()
 					laserhit:SetOrigin(tr.HitPos)
 					laserhit:SetNormal(tr.HitNormal)

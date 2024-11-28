@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/supermutant/nvbridgtwig"
+	"$bumpmap" 	"models/cpthazama/fallout/supermutant/nvbridgtwig_n"
+	"$translucent" "1"
+}

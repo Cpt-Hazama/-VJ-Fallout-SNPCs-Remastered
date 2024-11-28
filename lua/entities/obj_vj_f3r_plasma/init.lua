@@ -37,7 +37,7 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(self.StartLight1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:SetVelocity(self:GetAngles():Forward() *4000)

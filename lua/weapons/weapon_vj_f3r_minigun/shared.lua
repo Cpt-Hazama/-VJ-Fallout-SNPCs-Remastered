@@ -36,8 +36,6 @@ SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
 SWEP.HoldType 					= "2hh"
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnPrimaryAttackEffects() self:GetOwner():RestartGesture(ACT_SLAM_DETONATOR_DRAW) return true end -- Return false to disable the base effects
----------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnInitialize()
 	self.CurrentFireSound = CreateSound(self,"vj_fallout/weapons/minigun/wpn_minigun_fire_loop-old1.wav")
 	self.CurrentFireSound:SetSoundLevel(95)
@@ -63,7 +61,7 @@ function SWEP:SpinUp()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnThink()
+function SWEP:WeapWeaponThink()
 	self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
 	if IsValid(self.Owner:GetEnemy()) then
 		print(self.Owner.DoingWeaponAttack)

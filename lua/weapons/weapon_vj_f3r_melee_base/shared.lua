@@ -43,5 +43,5 @@ function SWEP:MeleeThink()
 		end
 	end
 
-	if self.OnThink then self:OnThink(noDraw) end
+	if self.ExtraMeleeThink then self:ExtraMeleeThink(noDraw) end
 end

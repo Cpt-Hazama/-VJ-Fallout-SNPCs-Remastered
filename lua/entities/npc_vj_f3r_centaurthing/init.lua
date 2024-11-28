@@ -76,7 +76,7 @@ function ENT:ExplodeEf()
 	self:Remove()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	if GetConVarNumber("ai_disabled") == 1 then return end
 	if IsValid(self:GetEnemy()) then
 		local enemy = self:GetEnemy()

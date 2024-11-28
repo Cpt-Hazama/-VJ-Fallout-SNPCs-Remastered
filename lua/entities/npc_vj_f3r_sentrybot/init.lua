@@ -447,7 +447,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self:GuardAI()
 	if !self.VJ_IsBeingControlled then
 		-- self.ConstantlyFaceEnemy = true

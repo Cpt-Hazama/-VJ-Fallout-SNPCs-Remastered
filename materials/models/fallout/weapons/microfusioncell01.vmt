@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/microfusioncell01"
+	"$normalmap"     "models/fallout/weapons/microfusioncell01_n"
+}

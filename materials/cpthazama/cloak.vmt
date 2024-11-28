@@ -1,0 +1,13 @@
+"Refract"
+{
+	"$refracttexture" "cpthazama/reflection"
+	"$nocull" 1
+	"$halflambert" 1
+	"$model" 1
+	"$refractamount" "0.1"
+	"$refracttint" "[1 1 1]"
+	"$reflectentities" 1
+	"$dudvmap" "dev/water_dudv"
+	"$normalmap" "dev/water_normal"
+	$nodecal 1
+}

@@ -65,7 +65,7 @@ SWEP.Vars = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:MeleeInit()
-	self:SetLaserEffect(VJ_PICK({"vj_f3r_laserkatana_red","vj_f3r_laserkatana_blue","vj_f3r_laserkatana_green"}))
+	self:SetLaserEffect(VJ.PICK({"vj_f3r_laserkatana_red","vj_f3r_laserkatana_blue","vj_f3r_laserkatana_green"}))
 
 	local owner = self:GetOwner()
 	if owner:IsNPC() then

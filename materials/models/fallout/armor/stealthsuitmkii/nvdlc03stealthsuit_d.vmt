@@ -1,0 +1,20 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/stealthsuitmkii/nvdlc03stealthsuit_d"
+	"$bumpmap" 	"models/fallout/armor/stealthsuitmkii/nvdlc03stealthsuit_n"
+	"$selfillum" "1"
+	
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 2.5
+	"$phongexponent" 10
+	"$phongtint" "[0.6 0.6 1]"
+	"$phongfresnelranges" "[.2 .2 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "4"	
+	
+}

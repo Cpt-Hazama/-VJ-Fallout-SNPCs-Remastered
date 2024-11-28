@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/dungeons/vaultruined/controlpanelvaultr01"
+	"$normalmap"     "models/fallout/dungeons/vaultruined/controlpanelvault01_n"
+	"$selfillum" "1"
+}

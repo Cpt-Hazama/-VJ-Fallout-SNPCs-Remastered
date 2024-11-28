@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/plasmarifle/plasmarifle01_tube"
+	"$translucent" "1"
+}

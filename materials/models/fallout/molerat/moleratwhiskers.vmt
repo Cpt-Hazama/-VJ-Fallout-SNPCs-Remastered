@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/molerat/moleratwhiskers"
+	"$bumpmap" 	"models/fallout/molerat/moleratwhiskers_n"
+	"$alphatest" "1"
+}

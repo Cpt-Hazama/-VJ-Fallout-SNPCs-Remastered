@@ -1,0 +1,17 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/t60paytonquinn/T60suittile"
+	"$bumpmap" 	"models/fallout/armor/t60paytonquinn/T60suittile_n"
+
+	
+	"$surfaceprop" 	"flesh"
+	
+	"$phong" 1
+	"$nocull"	"1"
+	"$phongboost" 0.2
+	"$phongexponent" 10
+	"$phongtint" "[1 1 0]"
+	"$phongfresnelranges" "[0.7 .5 1]"
+
+	"$model" 1
+}

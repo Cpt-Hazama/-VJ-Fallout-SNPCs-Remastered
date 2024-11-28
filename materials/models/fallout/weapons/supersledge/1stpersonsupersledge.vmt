@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/supersledge/1stpersonsupersledge"
+	"$normalmap"     "models/fallout/weapons/supersledge/1stpersonsupersledge_n"
+}

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ammo/smallenergycell/smallenergycell"
+	"$normalmap"     "models/fallout/ammo/smallenergycell/smallenergycell_n"
+}

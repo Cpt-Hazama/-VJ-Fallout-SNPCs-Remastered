@@ -204,18 +204,18 @@ ENT.Data = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BeforeApparelSpawned()
-	self.HairColor = self.Gender == 1 && VJ_PICK(self.HairColors["m"]) or VJ_PICK(self.HairColors["f"])
+	self.HairColor = self.Gender == 1 && VJ.PICK(self.HairColors["m"]) or VJ.PICK(self.HairColors["f"])
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInit()
 	self.Gender = math.random(1,2)
-	self.SpawnData = self.Gender == 1 && VJ_PICK(self.Data["m"]) or VJ_PICK(self.Data["f"])
+	self.SpawnData = self.Gender == 1 && VJ.PICK(self.Data["m"]) or VJ.PICK(self.Data["f"])
 
 	local hp = math.random(self.SpawnData.hp -10,self.SpawnData.hp +10)
 	self:SetHealth(hp)
 	self:SetMaxHealth(hp)
 
-	self:SetModel(VJ_PICK(self.SpawnData.mdl))
+	self:SetModel(VJ.PICK(self.SpawnData.mdl))
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
 
 	if self.SpawnData.hair then
@@ -264,7 +264,7 @@ function ENT:CustomInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()
-	self:SetVoice(self.Gender == 1 && VJ_PICK({"male01","male02"}) or VJ_PICK({"female01","female06"}))
+	self:SetVoice(self.Gender == 1 && VJ.PICK({"male01","male02"}) or VJ.PICK({"female01","female06"}))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)

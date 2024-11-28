@@ -11,7 +11,7 @@ ENT.PlayerFriendly = false
 
 ENT.StartedEffects = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self.RangeDistance = 325
 	local parameter = self:GetPoseParameter("aim_yaw")
 	if parameter != self.Turret_CurrentParameter then

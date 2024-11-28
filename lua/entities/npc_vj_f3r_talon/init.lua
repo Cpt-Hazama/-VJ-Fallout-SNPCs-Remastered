@@ -36,7 +36,7 @@ ENT.HairColors = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:BeforeApparelSpawned()
-	self.HairColor = self.Gender == 1 && VJ_PICK(self.HairColors["m"]) or VJ_PICK(self.HairColors["f"])
+	self.HairColor = self.Gender == 1 && VJ.PICK(self.HairColors["m"]) or VJ.PICK(self.HairColors["f"])
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInit()
@@ -102,7 +102,7 @@ function ENT:CustomInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:AfterInit()
-	self:SetVoice(self.Gender == 1 && VJ_PICK({"male01","male02"}) or VJ_PICK({"female01","female06"}))
+	self:SetVoice(self.Gender == 1 && VJ.PICK({"male01","male02"}) or VJ.PICK({"female01","female06"}))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnTakeDamage_BeforeDamage(dmginfo,hitgroup)

@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/minecryo/minecryo"
+	"$normalmap"     "models/fallout/weapons/minecryo/minecryo_n"
+}

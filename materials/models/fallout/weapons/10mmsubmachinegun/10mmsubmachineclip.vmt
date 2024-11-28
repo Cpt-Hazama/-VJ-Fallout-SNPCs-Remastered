@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/10mmsubmachinegun/10mmsubmachineclip"
+	"$normalmap"     "models/fallout/weapons/10mmsubmachinegun/10mmsubmachineclip_n"
+}

@@ -160,7 +160,7 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	local act = self:GetActivity()
 	if VJ_HasValue({ACT_MELEE_ATTACK1,ACT_MELEE_ATTACK2,ACT_ARM,ACT_DISARM,ACT_FLINCH_CHEST,ACT_FLINCH_LEFTLEG,ACT_FLINCH_STOMACH,ACT_IDLE_ANGRY,ACT_RUN,ACT_WALK_AIM},act) then
 		if !self.FlyLoop:IsPlaying() then

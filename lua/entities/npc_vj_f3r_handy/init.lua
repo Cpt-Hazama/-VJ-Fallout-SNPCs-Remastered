@@ -255,7 +255,7 @@ function ENT:InFront(vec,ene,rad)
 	return (vec:Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	self:GuardAI()
 	if self:IsMoving() then
 		if !self.bMoveLoopPlaying then

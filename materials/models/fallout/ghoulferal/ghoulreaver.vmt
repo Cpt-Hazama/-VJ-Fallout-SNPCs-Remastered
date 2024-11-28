@@ -1,0 +1,13 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/ghoulferal/ghoulreaver"
+	"$bumpmap" 	"models/fallout/ghoulferal/ghoulreaver_n"
+	"$selfillum" "1"
+	"$selfillummask" "models/fallout/ghoulferal/ghoulreaver_g"
+
+	$phong			1
+	$phongexponent		25
+	$phongboost		2.0
+	$phongfresnelranges	"[0 0.5 1]"
+	$translucent 1
+}

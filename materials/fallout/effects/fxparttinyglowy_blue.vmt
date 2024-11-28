@@ -1,0 +1,38 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"fallout/effects/fxparttinyglowy"
+
+	"$model" 1
+	"$additive" 1
+	"$translucent" 1
+	"$nocull" 1
+	
+	"$color"	"{0 130 255}"
+	
+	"$s-low" 0
+	"$s-low2" "0.35"
+	"$s-low3" 0	
+
+
+	"Proxies"
+	{
+		"EntityRandom"
+		{
+			"scale" 	"10"
+			"resultVar" 	"$s-low"
+		}
+		"Add"
+		{
+			"srcVar1"	"$s-low"
+			"srcVar2"	"$s-low2"
+			"resultVar"	"$s-low3"
+		}
+		"Sine"
+		{
+			"sineperiod"	"$s-low3"
+			"sinemin"	".001"
+			"sinemax"	"0.03"
+			"resultVar"	"$alpha"
+		}
+	}
+}

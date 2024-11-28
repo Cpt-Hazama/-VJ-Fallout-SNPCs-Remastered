@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cpthazama/fallout/securitron/screen_police"
+	"$bumpmap" 	"models/cpthazama/fallout/securitron/screen_n"
+	"$phongexponenttexture" "vj_base/exponent"
+	
+	"$selfillum" "1"
+	"$selfillummask" "models/cpthazama/fallout/securitron/screen_i"
+	"$selfillumtint" "[1 1 1]"
+
+	"$phong" 						"1"
+	"$phongexponent" 				"1"
+	"$phongboost" 					"0.5"
+	"$phongfresnelranges" 			"[0.75 0.35 1]"
+	"$phongalbedotint" 				"1"
+}

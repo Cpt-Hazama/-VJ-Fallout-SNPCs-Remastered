@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/bighorner/bighorner"
+	"$bumpmap" 	"models/fallout/bighorner/bighorner_n"
+}

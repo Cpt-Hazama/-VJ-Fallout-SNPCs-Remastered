@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/hair/hairbun"
+	"$bumpmap" 	"models/fallout/characters/hair/hairbun_n"
+	"$alphatest" 	"1"
+	"$allowalphatocoverage"	"1"
+}

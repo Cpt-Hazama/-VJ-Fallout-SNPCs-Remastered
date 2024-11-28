@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/deathclawgauntlet/deathclawgauntletglove"
+	"$normalmap"     "models/fallout/weapons/deathclawgauntlet/deathclawgauntletglove_n"
+}

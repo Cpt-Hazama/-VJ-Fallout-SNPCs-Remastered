@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/radsuit/radiationsuitm"
+	"$bumpmap" 	"models/fallout/armor/radsuit/radiationsuitm_n"
+}

@@ -1,0 +1,18 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/characters/female/headhuman_aisan"
+	"$bumpmap" 	"models/fallout/characters/female/headhuman_n"
+	"$color2"	"{255 255 200}"
+	
+	"$phong" 1
+	"$phongboost" 2.5
+	"$phongexponent" 6
+	"$phongtint" "[1 0.75 0.75]"
+	"$phongfresnelranges" "[.2 .2 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"		
+}

@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/partyhat/partyhat"
+	"$bumpmap" 	"models/fallout/armor/partyhat/partyhat_n"
+	"$alphatest" "1"
+}

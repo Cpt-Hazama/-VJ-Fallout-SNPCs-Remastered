@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/laserkatana/laser_katana"
+	"$normalmap"     "models/fallout/weapons/laserkatana/laser_katana_n"
+	"$selfillum" "1"
+}

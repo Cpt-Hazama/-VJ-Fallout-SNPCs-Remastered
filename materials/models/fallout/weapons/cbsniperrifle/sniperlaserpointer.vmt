@@ -1,0 +1,24 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/cbsniperrifle/sniperlaserpointer"
+	"$translucent" "1"
+	"$alpha" "0"
+	"$additive" "1"
+	"$selfillum" "1"
+
+	"Proxies"
+	{
+		"TextureScroll"
+		{
+			"texturescrollvar" "$basetexturetransform"
+			"texturescrollrate" 0.2
+			"texturescrollangle" 75
+		}
+		"TextureScroll"
+		{
+			"texturescrollvar" "$texture2transform"
+			"texturescrollrate" 0.8
+			"texturescrollangle" 150
+		}
+	}
+}

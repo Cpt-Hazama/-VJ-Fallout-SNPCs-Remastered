@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/coyote/coyote"
+	"$bumpmap" 	"models/fallout/coyote/coyote_n"
+	"$alphatest" "1"
+}

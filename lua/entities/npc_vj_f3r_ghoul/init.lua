@@ -248,7 +248,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 					-- Entity(1):ChatPrint(tostring(750 *self.RadStrength))
 					for _,v in ipairs(ents.FindInSphere(self:GetPos(),750 *self.RadStrength)) do
 						if (v:IsNPC() && v != self) or (v:IsPlayer() && GetConVarNumber("ai_ignoreplayers") == 0) then
-							if self:Disposition(v) != D_LI && !v.VJ_F3R_Ghoul then
+							if self:CheckRelationship(v) != D_LI && !v.VJ_F3R_Ghoul then
 								local dmginfo = DamageInfo()
 								dmginfo:SetDamage(self.RadDamage +(self.RadDamage *self.RadStrength))
 								dmginfo:SetAttacker(self)
@@ -336,11 +336,11 @@ function ENT:TranslateActivity(act)
 	return act
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThinkActive()
 	local cont = self.VJ_TheController
 	if IsValid(self:GetEnemy()) then
 		if self.CanUseRadAttack && ((IsValid(cont) && cont:KeyDown(IN_RELOAD)) or !IsValid(cont) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.RadiationAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,20) == 1) then
-			if CurTime() > self.NextRadAttackT && !self.RadAttacking && !self.MeleeAttacking && !self.RangeAttacking then
+			if CurTime() > self.NextRadAttackT && !self.RadAttacking && !self:IsBusy() then
 				self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 				self.RadAttacking = true
 				self.RangeAttacking = true
@@ -354,7 +354,7 @@ function ENT:CustomOnThink()
 			end
 		end
 		if self.HasGrenadeAttack && self:Health() > 50 && ((IsValid(cont) && cont:KeyDown(IN_ATTACK2)) or !IsValid(cont) && self:GetEnemy():Visible(self) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.GrenadeAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,8) == 1) then
-			if CurTime() > self.NextGrenadeAttackT && !self.RadAttacking && !self.MeleeAttacking && !self.RangeAttacking then
+			if CurTime() > self.NextGrenadeAttackT && !self.RadAttacking && !self:IsBusy() then
 				self:VJ_ACT_PLAYACTIVITY(ACT_ARM,true,false,true)
 				timer.Simple(self:DecideAnimationLength(ACT_ARM,false),function()
 					if IsValid(self) then

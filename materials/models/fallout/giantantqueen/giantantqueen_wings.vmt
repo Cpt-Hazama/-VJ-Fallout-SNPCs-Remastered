@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/giantantqueen/giantantqueen"
+	"$bumpmap" 	"models/fallout/giantantqueen/giantantqueen_n"
+
+	//"$alphatest" "1"
+}

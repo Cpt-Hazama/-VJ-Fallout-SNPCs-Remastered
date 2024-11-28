@@ -1,0 +1,23 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/weapons/minigun/minigun"
+	"$bumpmap"     "models/fallout/weapons/minigun/minigun_n"
+	"$normalmap"     "models/fallout/weapons/minigun/minigun_n"
+	//"$selfillummask" "models/fallout/weapons/turbo_plasmarifle/p95_g"
+	//"$selfillum" 1
+	
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 0.35
+	"$phongexponent" 10
+	"$phongtint" "[0.5 0.4 0.3]"
+	"$phongfresnelranges" "[0.5 .9 1]"
+	
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" "1"
+	"$envmaptint" "[0.06 0.06 0.06]"
+	
+	"$model" "1"
+
+	
+}

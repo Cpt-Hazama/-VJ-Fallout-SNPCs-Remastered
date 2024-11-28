@@ -1,0 +1,14 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/legion/lecloak"
+	"$bumpmap" 	"models/fallout/armor/legion/lecloak_n"
+	"$phong" 1
+	"$phongboost" 2
+	"$phongexponent" 20
+	"$phongtint" "[1 .5 .5]"
+	"$phongfresnelranges" "[.1 .5 1]"
+	
+	"$alphatest"	"1"
+	
+	"$model" 1
+}

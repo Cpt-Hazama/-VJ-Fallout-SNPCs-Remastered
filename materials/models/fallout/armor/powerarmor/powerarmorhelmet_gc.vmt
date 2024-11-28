@@ -1,0 +1,21 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/armor/powerarmor/powerarmorhelmet_gc"
+	"$bumpmap" 	"models/fallout/armor/powerarmor/powerarmorhelmet_n"
+	"$surfaceprop" 	"metal"
+	"$phong" 1
+	"$phongboost" 0.2
+	"$phongexponent" 50
+	"$phongtint" "[1 1 1]"
+	"$phongfresnelranges" "[1 .5 1]"
+
+	"$model" 1
+
+	"$rimlight" "1"
+	"$rimlightexponent" "5"
+	"$rimlightboost" "0.15"
+	
+	"$selfillum" 1
+	"$selfillummask" "models/fallout/armor/powerarmor/powerarmorhelmet_g"
+	"$selfillumtint" "[2 2 2]"
+}

@@ -56,7 +56,7 @@ function SWEP:SpinUp()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:CustomOnThink()
+function SWEP:WeapWeaponThink()
 	self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
 	if IsValid(self.Owner:GetEnemy()) then
 		if self.Owner.DoingWeaponAttack then

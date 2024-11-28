@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/mongrel/nv_mongrel_d"
+	"$bumpmap" 	"models/fallout/mongrel/nv_mongrel_n"
+}

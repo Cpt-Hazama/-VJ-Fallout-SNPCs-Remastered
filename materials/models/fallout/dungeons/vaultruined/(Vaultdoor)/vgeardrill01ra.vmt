@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/fallout/dungeons/vaultruined/vgeardrill01ra"
+	"$normalmap"     "models/fallout/dungeons/vaultruined/vgeardrill01a_n"
+}
