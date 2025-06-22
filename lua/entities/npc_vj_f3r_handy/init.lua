@@ -225,7 +225,7 @@ function ENT:Gesture(ges)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttack()
-	if IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_ATTACK) or (!IsValid(self.VJ_TheController) && IsValid(self:GetEnemy()) && self.NearestPointToEnemyDistance <= self.RangeToMeleeDistance) then
+	if IsValid(self.VJ_TheController) && self.VJ_TheController:KeyDown(IN_ATTACK) or (!IsValid(self.VJ_TheController) && IsValid(self:GetEnemy()) && self.EnemyData.DistanceNearest <= self.RangeToMeleeDistance) then
 		self:StartFlamer()
 	end
 end
@@ -270,7 +270,7 @@ function ENT:OnThinkActive()
 	
 	if IsValid(self:GetEnemy()) then
 		self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
-		if self.NearestPointToEnemyDistance < 150 && !IsValid(self.VJ_TheController) then
+		if self.EnemyData.DistanceNearest < 150 && !IsValid(self.VJ_TheController) then
 			self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-250,-400))
 			self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
 		end
@@ -286,7 +286,7 @@ function ENT:OnThinkActive()
 	local yaw_right = 0
 	local pitch_left = 0
 	local pitch_right = 0
-	local dist = self.NearestPointToEnemyDistance
+	local dist = self.EnemyData.DistanceNearest
 	if self.CurrentAttack == 1 then
 		local att = self:GetAttachment(self:LookupAttachment("flamethrower_muzzle"))
 		if CurTime() >= self.NextFlameDMGT then

@@ -104,7 +104,7 @@ function ENT:OnThinkActive()
 	local enemy = self:GetEnemy()
 	local cont = self.VJ_TheController
 	if IsValid(enemy) then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		if IsValid(cont) && cont:KeyDown(IN_ATTACK2) or !IsValid(cont) && dist <= self.RangeDistance && self:Visible(enemy) then
 			if !(!self.MeleeAttacking && CurTime() > self.NextRangeAttackT) then return end
 			self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,true)

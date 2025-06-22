@@ -300,7 +300,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()
 	local time = self:GetPathTimeToGoal()
-	if self.NearestPointToEnemyDistance > self.DefaultDistance && time > 0.5 && time < 1.5 && math.random(1,3) == 1 then
+	if self.EnemyData.DistanceNearest > self.DefaultDistance && time > 0.5 && time < 1.5 && math.random(1,3) == 1 then
 		self.MeleeAttackDistance = self.DefaultDistance *2
 		self.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK2}
 		self.HasMeleeAttackKnockBack = true
@@ -339,7 +339,7 @@ end
 function ENT:OnThinkActive()
 	local cont = self.VJ_TheController
 	if IsValid(self:GetEnemy()) then
-		if self.CanUseRadAttack && ((IsValid(cont) && cont:KeyDown(IN_RELOAD)) or !IsValid(cont) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.RadiationAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,20) == 1) then
+		if self.CanUseRadAttack && ((IsValid(cont) && cont:KeyDown(IN_RELOAD)) or !IsValid(cont) && (type(self.EnemyData.DistanceNearest) == "number" && self.EnemyData.DistanceNearest <= self.RadiationAttackDistance) && (type(self.EnemyData.DistanceNearest) == "number" && self.EnemyData.DistanceNearest > self.MeleeAttackDistance) && math.random(1,20) == 1) then
 			if CurTime() > self.NextRadAttackT && !self.RadAttacking && !self:IsBusy() then
 				self:VJ_ACT_PLAYACTIVITY(ACT_RANGE_ATTACK1,true,false,false)
 				self.RadAttacking = true
@@ -353,7 +353,7 @@ function ENT:OnThinkActive()
 				self.NextRadAttackT = CurTime() +math.Rand(10,25)
 			end
 		end
-		if self.HasGrenadeAttack && self:Health() > 50 && ((IsValid(cont) && cont:KeyDown(IN_ATTACK2)) or !IsValid(cont) && self:GetEnemy():Visible(self) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance <= self.GrenadeAttackDistance) && (type(self.NearestPointToEnemyDistance) == "number" && self.NearestPointToEnemyDistance > self.MeleeAttackDistance) && math.random(1,8) == 1) then
+		if self.HasGrenadeAttack && self:Health() > 50 && ((IsValid(cont) && cont:KeyDown(IN_ATTACK2)) or !IsValid(cont) && self:GetEnemy():Visible(self) && (type(self.EnemyData.DistanceNearest) == "number" && self.EnemyData.DistanceNearest <= self.GrenadeAttackDistance) && (type(self.EnemyData.DistanceNearest) == "number" && self.EnemyData.DistanceNearest > self.MeleeAttackDistance) && math.random(1,8) == 1) then
 			if CurTime() > self.NextGrenadeAttackT && !self.RadAttacking && !self:IsBusy() then
 				self:VJ_ACT_PLAYACTIVITY(ACT_ARM,true,false,true)
 				timer.Simple(self:DecideAnimationLength(ACT_ARM,false),function()

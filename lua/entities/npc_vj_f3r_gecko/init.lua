@@ -254,7 +254,7 @@ function ENT:OnThinkActive()
 	if !self.VJ_IsBeingControlled then
 		local enemy = self:GetEnemy()
 		if IsValid(enemy) then
-			local dist = self.NearestPointToEnemyDistance
+			local dist = self.EnemyData.DistanceNearest
 			if self.HasFlameAttack or self.HasSpitAttack then
 				if dist <= self.RangeDistance && self:Visible(enemy) && !self.MeleeAttacking && CurTime() > self.NextRangeAttackT then
 					if self.HasFlameAttack then
@@ -330,7 +330,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()
 	local time = self:GetPathTimeToGoal()
-	if self.NearestPointToEnemyDistance > self.DefaultDistance && time > 0.5 && time < 1.5 && math.random(1,2) == 1 then
+	if self.EnemyData.DistanceNearest > self.DefaultDistance && time > 0.5 && time < 1.5 && math.random(1,2) == 1 then
 		self.MeleeAttackDistance = self.DefaultDistance *2
 		self.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK2}
 		self.HasMeleeAttackKnockBack = true

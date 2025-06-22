@@ -56,7 +56,7 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(self.StartLight1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThinkActive()
+function ENT:OnThink()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:SetVelocity(self:GetAngles():Forward() *3000)
@@ -64,7 +64,7 @@ function ENT:OnThinkActive()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnDoDamage(data,phys,hitent)
-	if hitent:IsPlayer() then
+	if IsValid(hitent) && hitent:IsPlayer() then
 		hitent:SetDSP(32,false)
 	end
 end

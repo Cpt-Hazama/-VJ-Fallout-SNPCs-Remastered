@@ -18,5 +18,12 @@
 			"scale" "1"
 			"resultvar" "$emissiveBlendEnabled"
 		}
+		"EfxEmissive"
+		{
+			"index" 		1
+			"color" 		$emissiveBlendTint
+			"brightness" 	0.1
+			"emissivetexture" $emissiveBlendBaseTexture
+		}
 	}
 }

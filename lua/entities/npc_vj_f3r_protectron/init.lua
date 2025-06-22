@@ -267,7 +267,7 @@ end
 function ENT:CustomAttack()
 	if !self.VJ_IsBeingControlled then
 		if IsValid(self:GetEnemy()) then
-			local dist = self.NearestPointToEnemyDistance
+			local dist = self.EnemyData.DistanceNearest
 			if CurTime() > self.NextFireT && dist <= 2000 && dist > self.MeleeAttackDistance && self:Visible(self:GetEnemy()) && (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(90))) then
 				self:FireWeapon(70)
 				self.NextFireT = CurTime() +0.6

@@ -334,7 +334,7 @@ end
 function ENT:CustomAttack()
 	if !self.VJ_IsBeingControlled then
 		if IsValid(self:GetEnemy()) then
-			local dist = self.NearestPointToEnemyDistance
+			local dist = self.EnemyData.DistanceNearest
 			if !self.HasSpunUp && dist <= 2000 && !self.SpinningUp then
 				self:SpinUp()
 			end
@@ -389,9 +389,9 @@ function ENT:OnThinkActive()
 	if !self.VJ_IsBeingControlled then
 		self.ConstantlyFaceEnemy = true
 		if IsValid(self:GetEnemy()) then
-			self.NoChaseAfterCertainRange = self.NearestPointToEnemyDistance < 200
+			self.NoChaseAfterCertainRange = self.EnemyData.DistanceNearest < 200
 			self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
-			if self.NearestPointToEnemyDistance < 200 then
+			if self.EnemyData.DistanceNearest < 200 then
 				self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
 				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH",function(x) x:EngTask("TASK_FACE_ENEMY",0) x.ConstantlyFaceEnemy = true end)
 			end

@@ -66,7 +66,7 @@ function ENT:CustomOnInitialize()
 	ParticleEffectAttach("rocket_smoke_trail",PATTACH_ABSORIGIN_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnThink()
+function ENT:OnThink()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:SetVelocity(self:GetAngles():Forward() *1200)

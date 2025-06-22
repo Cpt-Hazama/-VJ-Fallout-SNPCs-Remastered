@@ -2971,14 +2971,14 @@ function ENT:CustomOnPlayerSight(argent)
 	if self.Human_IsSoldier && !IsValid(self:GetEnemy()) && self:Disposition(argent) == D_LI then
 		self:StopMoving()
 		self:VJ_ACT_PLAYACTIVITY(ACT_MP_GESTURE_VC_NODNO,true,false,true)
-		if IsValid(self:GetActiveWeapon()) && self:GetWeaponState() == VJ.NPC_WEP_STATE_READY then
+		if IsValid(self:GetActiveWeapon()) && self:GetWeaponState() == VJ.WEP_STATE_READY then
 			self:GetActiveWeapon():SetNoDraw(true)
 			if self:GetActiveWeapon().NPC_UnequipSound then
 				VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_UnequipSound,75,100)
 			end
 		end
 		timer.Simple(self:DecideAnimationLength(ACT_MP_GESTURE_VC_NODNO,false),function()
-			if IsValid(self) && IsValid(self:GetActiveWeapon()) && self:GetWeaponState() == VJ.NPC_WEP_STATE_READY then
+			if IsValid(self) && IsValid(self:GetActiveWeapon()) && self:GetWeaponState() == VJ.WEP_STATE_READY then
 				self:GetActiveWeapon():SetNoDraw(false)
 				if self:GetActiveWeapon().NPC_EquipSound then
 					VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_EquipSound,75,100)
@@ -3027,17 +3027,13 @@ function ENT:Init()
 	self.CanHolsterWeapon = GetConVar("vj_f3r_human_holster"):GetBool()
 	
 	self:SetCollisionBounds(Vector(18,18,82),Vector(-18,-18,0))
-	timer.Simple(0.02,function()
+	self:Equip()
+	timer.Simple(0,function()
 		if IsValid(self) then
 			if IsValid(self:GetActiveWeapon()) then
 				local wep = self:GetActiveWeapon()
-				-- if wep.AnimationType == nil then self:Remove() end
-				-- if wep.AnimationType then
-					-- self:SetupHoldTypes(wep,wep.AnimationType)
-				-- end
-
 				if self.CanHolsterWeapon && !self.VJ_F3R_InGuardMode then
-					if !IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.NPC_WEP_STATE_READY then
+					if !IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.WEP_STATE_READY then
 						self:Unequip()
 					end
 				elseif !self.CanHolsterWeapon then
@@ -3062,6 +3058,7 @@ function ENT:Init()
 		self:ManipulateBoneJiggle(92,1)
 		self:ManipulateBoneJiggle(93,1)
 	end
+	self.NextHolsterT = 0
 	if self.AfterInit then self:AfterInit() end
 	
 	-- self:SetVoice("female01")
@@ -3070,7 +3067,7 @@ end
 function ENT:Controller_Initialize(ply,controlEnt)
 	function controlEnt:OnThink()
 		local npc = self.VJCE_NPC
-		local canTurnAndStuph = (IsValid(npc:GetActiveWeapon()) && npc:GetWeaponState() == VJ.NPC_WEP_STATE_READY) or self.VJC_Camera_Mode == 2
+		local canTurnAndStuph = (IsValid(npc:GetActiveWeapon()) && npc:GetWeaponState() == VJ.WEP_STATE_READY) or self.VJC_Camera_Mode == 2
 		self.VJC_NPC_CanTurn = canTurnAndStuph
 		self.VJC_BullseyeTracking = npc:IsMoving() && canTurnAndStuph
 	end
@@ -3111,6 +3108,60 @@ function ENT:ItemThink()
 			self.NextStealthBoyT = CurTime() +math.Rand(25,30)
 		end
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:TranslateActivity(act)
+	local wep = self:GetActiveWeapon()
+	local oldAct = act
+	if IsValid(wep) && self:GetWeaponState() != VJ.WEP_STATE_HOLSTERED then
+		if act == ACT_IDLE then
+			act = ACT_IDLE_ANGRY
+		elseif act == ACT_WALK then
+			act = ACT_WALK_AIM
+		elseif act == ACT_RUN then
+			act = ACT_RUN_AIM
+		end
+	end
+
+	if oldAct == ACT_IDLE then
+		if self.Weapon_UnarmedBehavior_Active then
+			return ACT_COWER
+		elseif self.Alerted && self:GetWeaponState() != VJ.WEP_STATE_HOLSTERED && IsValid(self:GetActiveWeapon()) then
+			return ACT_IDLE_ANGRY
+		end
+	elseif oldAct == ACT_RUN && self.Weapon_UnarmedBehavior_Active && !self.VJ_IsBeingControlled then
+		return ACT_RUN_PROTECTED
+	elseif (oldAct == ACT_RUN or oldAct == ACT_WALK) && self.Alerted then
+		if self.Weapon_CanMoveFire && IsValid(self:GetEnemy()) && (self.EnemyData.Visible or (self.EnemyData.VisibleTime + 5) > CurTime()) && self.CurrentSchedule != nil && self.CurrentSchedule.CanShootWhenMoving && self:CanFireWeapon(true, false) then
+			local anim = self:TranslateActivity(oldAct == ACT_RUN and ACT_RUN_AIM or ACT_WALK_AIM)
+			if VJ.AnimExists(self, anim) then
+				if self.EnemyData.Visible then
+					self.WeaponAttackState = VJ.WEP_ATTACK_STATE_FIRE
+				else -- Not visible but keep aiming
+					self.WeaponAttackState = VJ.WEP_ATTACK_STATE_AIM_MOVE
+				end
+				return anim
+			end
+		end
+		local anim = self:TranslateActivity(oldAct == ACT_RUN and ACT_RUN_AGITATED or ACT_WALK_AGITATED)
+		if VJ.AnimExists(self, anim) then
+			return anim
+		end
+	end
+	
+	local translation = self.AnimationTranslations[act]
+	if translation then
+		if istable(translation) then
+			if oldAct == ACT_IDLE then
+				return self:ResolveAnimation(translation)
+			end
+			return translation[math.random(1, #translation)] or act -- "or act" = To make sure it doesn't return nil when the table is empty!
+		end
+		return translation
+	end
+	return act
+
+	-- return baseclass.Get("npc_vj_human_base").TranslateActivity(self,act)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetAnimationTranslations(htype)
@@ -3348,10 +3399,11 @@ function ENT:SetAnimationTranslations(htype)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Equip()
+	if CurTime() < (self.NextHolsterStateT or 0) then return end
 	-- self.IsHolstered = false
-	self.AnimationTranslations[ACT_IDLE] = self.AnimationTranslations[ACT_IDLE_ANGRY]
-	self.AnimationTranslations[ACT_WALK] = self.AnimationTranslations[ACT_WALK_AIM]
-	self.AnimationTranslations[ACT_RUN] = self.AnimationTranslations[ACT_RUN_AIM]
+	-- self.AnimationTranslations[ACT_IDLE] = self.AnimationTranslations[ACT_IDLE_ANGRY]
+	-- self.AnimationTranslations[ACT_WALK] = self.AnimationTranslations[ACT_WALK_AIM]
+	-- self.AnimationTranslations[ACT_RUN] = self.AnimationTranslations[ACT_RUN_AIM]
 	-- self.NextIdleStandTime = 0
 	-- self:SetIdleAnimation({ACT_IDLE},true)
 	if self:IsMoving() then
@@ -3373,14 +3425,17 @@ function ENT:Equip()
 		end
 	end
 	-- print("1")
-	self:SetWeaponState(VJ.NPC_WEP_STATE_READY)
+	self:SetWeaponState(VJ.WEP_STATE_READY)
+	self.NextHolsterStateT = CurTime() +1
+	-- print("Equipped: " .. self:GetActiveWeapon():GetClass())
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:Unequip()
+	if CurTime() < (self.NextHolsterStateT or 0) then return end
 	-- self.IsHolstered = true
-	self.AnimationTranslations[ACT_IDLE] = ACT_IDLE
-	self.AnimationTranslations[ACT_WALK] = ACT_WALK
-	self.AnimationTranslations[ACT_RUN] = ACT_RUN
+	-- self.AnimationTranslations[ACT_IDLE] = ACT_IDLE
+	-- self.AnimationTranslations[ACT_WALK] = ACT_WALK
+	-- self.AnimationTranslations[ACT_RUN] = ACT_RUN
 	-- self.NextIdleStandTime = 0
 	-- self:SetIdleAnimation({ACT_IDLE},true)
 	if self:IsMoving() then
@@ -3401,7 +3456,9 @@ function ENT:Unequip()
 			VJ_EmitSound(self:GetActiveWeapon(),self:GetActiveWeapon().NPC_UnequipSound,75,100)
 		end
 	end
-	self:SetWeaponState(VJ.NPC_WEP_STATE_HOLSTERED)
+	self:SetWeaponState(VJ.WEP_STATE_HOLSTERED)
+	self.NextHolsterStateT = CurTime() +1
+	-- print("Unequipped: " .. self:GetActiveWeapon():GetClass())
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:HumanThink() end
@@ -3421,22 +3478,21 @@ function ENT:OnThinkActive()
 		end
 		if self.CanHolsterWeapon then
 			if !self.VJ_F3R_InGuardMode then
-				if !IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.NPC_WEP_STATE_READY && CurTime() > self.NextHolsterT && self.CanHolsterWeapon == true then
+				if !IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.WEP_STATE_READY && CurTime() > self.NextHolsterT && self.CanHolsterWeapon == true then
 					self:Unequip()
 					-- self.NextHolsterT = CurTime() +5
-				elseif IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.NPC_WEP_STATE_HOLSTERED then
+				elseif IsValid(self:GetEnemy()) && self:GetWeaponState() == VJ.WEP_STATE_HOLSTERED then
 					self:Equip()
 				end
-			elseif self:GetWeaponState() == VJ.NPC_WEP_STATE_HOLSTERED && self.VJ_F3R_InGuardMode then
+			elseif self:GetWeaponState() == VJ.WEP_STATE_HOLSTERED && self.VJ_F3R_InGuardMode then
 				self:Equip()
 			end
 		end
 	else
 		if self.VJ_TheController:KeyDown(IN_RELOAD) then
 			local wep = self:GetActiveWeapon()
-			if wep:Clip1() < wep.Primary.ClipSize then return end
-			if CurTime() < self.NextHolsterT then return end
-			if self:GetWeaponState() == VJ.NPC_WEP_STATE_HOLSTERED then
+			if wep:Clip1() < wep.Primary.ClipSize or CurTime() < self.NextHolsterT then return end
+			if self:GetWeaponState() == VJ.WEP_STATE_HOLSTERED then
 				self:Equip()
 			else
 				self:Unequip()
@@ -3496,7 +3552,7 @@ function ENT:MeleeAttackCode()
 	if self.StopMeleeAttackAfterFirstHit == true && self.AlreadyDoneMeleeAttackFirstHit == true then return end
 	if /*self.VJ_IsBeingControlled == false &&*/ self.MeleeAttackAnimationFaceEnemy == true then self:FaceCertainEntity(self:GetEnemy(),true) end
 	//self.MeleeAttacking = true
-	local FindEnts = ents.FindInSphere(self:GetMeleeAttackDamageOrigin(),self.MeleeAttackDamageDistance)
+	local FindEnts = ents.FindInSphere(self:MeleeAttackTraceOrigin(),self.MeleeAttackDamageDistance)
 	local hitentity = false
 	local HasHitNonPropEnt = false
 	if FindEnts != nil then
@@ -3528,7 +3584,11 @@ function ENT:MeleeAttackCode()
 		self:PlaySoundSystem("MeleeAttack")
 		if self.StopMeleeAttackAfterFirstHit == true then self.AlreadyDoneMeleeAttackFirstHit = true /*self:StopMoving()*/ end
 	else
-		self:CustomOnMeleeAttack_Miss()
+		if self.CustomOnMeleeAttack_Miss then
+			self:CustomOnMeleeAttack_Miss()
+		else
+			self:OnMeleeAttackExecute("Miss")
+		end
 		self:PlaySoundSystem("MeleeAttackMiss", {}, VJ_EmitSound)
 	end
 	if self.AlreadyDoneFirstMeleeAttack == false && self.TimeUntilMeleeAttackDamage != false then

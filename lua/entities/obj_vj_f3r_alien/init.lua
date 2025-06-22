@@ -44,6 +44,14 @@ function ENT:OnThinkActive()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnDealDamage(data, phys, hitEnts)
+	for _, ent in ipairs(hitEnts or {}) do
+		if IsValid(ent) then
+			self:SetHitEnt(ent)
+		end
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:DeathEffects(data,phys)
 	self.StartLight1:SetKeyValue("brightness","8")
 	self.StartLight1:SetKeyValue("distance","100")

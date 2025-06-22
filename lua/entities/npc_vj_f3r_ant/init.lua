@@ -163,7 +163,7 @@ function ENT:OnThinkActive()
 	
 	local enemy = self:GetEnemy()
 	if IsValid(enemy) then
-		local dist = self.NearestPointToEnemyDistance
+		local dist = self.EnemyData.DistanceNearest
 		local cont = self.VJ_IsBeingControlled
 		if self.HasFlameAttack then
 			if cont then

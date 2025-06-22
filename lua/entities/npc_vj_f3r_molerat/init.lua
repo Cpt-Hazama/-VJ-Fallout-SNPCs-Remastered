@@ -102,7 +102,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()
 	local time = self:GetPathTimeToGoal()
-	if !(self:Health() <= self:GetMaxHealth() *0.5) && self.NearestPointToEnemyDistance > self.DefaultDistance && time > 0.5 && time < 1.5 then
+	if !(self:Health() <= self:GetMaxHealth() *0.5) && self.EnemyData.DistanceNearest > self.DefaultDistance && time > 0.5 && time < 1.5 then
 		self.MeleeAttackDistance = self.DefaultDistance *2
 		self.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK2}
 	else

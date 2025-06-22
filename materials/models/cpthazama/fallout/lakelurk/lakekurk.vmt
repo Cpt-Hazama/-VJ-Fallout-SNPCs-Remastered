@@ -15,4 +15,15 @@
 	$phongexponent		60
 	$phongboost		6.0
 	$phongfresnelranges	"[0 0.5 1]"
+
+	"Proxies"
+	{
+		"EfxEmissive"
+		{
+			"index" 		1
+			"color" 		$emissiveBlendTint
+			"brightness" 	0.3
+			"emissivetexture" $emissiveBlendBaseTexture
+		}
+	}
 }

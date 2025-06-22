@@ -222,7 +222,7 @@ function ENT:RangeAttackCode()
 			local projectile = ents.Create(VJ.PICK(self.RangeAttackEntityToSpawn))
 			projectile:SetPos(self:GetAttachment(self:LookupAttachment("bomb")).Pos)
 			projectile:SetAngles((ene:GetPos() - projectile:GetPos()):Angle())
-			self:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
+			-- self:CustomRangeAttackCode_BeforeProjectileSpawn(projectile)
 			projectile:SetOwner(self)
 			projectile:SetPhysicsAttacker(self)
 			projectile:Spawn()
@@ -235,7 +235,7 @@ function ENT:RangeAttackCode()
 				phys:SetVelocity(vel) //ApplyForceCenter
 				projectile:SetAngles(vel:GetNormal():Angle())
 			end
-			self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
+			-- self:CustomRangeAttackCode_AfterProjectileSpawn(projectile)
 		end
 	end
 	if self.AttackState < VJ.ATTACK_STATE_EXECUTED then

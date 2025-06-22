@@ -37,10 +37,18 @@ function ENT:CustomOnInitialize()
 	self:DeleteOnRemove(self.StartLight1)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:OnThinkActive()
+function ENT:OnThink()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:SetVelocity(self:GetAngles():Forward() *4000)
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:OnDealDamage(data, phys, hitEnts)
+	for _, ent in ipairs(hitEnts or {}) do
+		if IsValid(ent) then
+			self:SetHitEnt(ent)
+		end
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
