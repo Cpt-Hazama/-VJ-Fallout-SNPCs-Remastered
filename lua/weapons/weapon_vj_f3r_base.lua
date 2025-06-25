@@ -228,12 +228,13 @@ else
 				self.CrouchSpeed = tbl.CrouchSpeed or 1
 				self.ClimbSpeed = tbl.ClimbSpeed or 1
 				self.JumpPower = tbl.JumpPower or 1
-
-				self.Original_WalkSpeed = owner:GetWalkSpeed() or 200
-				self.Original_RunSpeed = owner:GetRunSpeed() or 400
-				self.Original_CrouchSpeed = owner:GetCrouchedWalkSpeed() or 0.3
-				self.Original_ClimbSpeed = owner:GetLadderClimbSpeed() or 200
-				self.Original_JumpPower = owner:GetJumpPower() or 200
+				owner.VJ_F3R_OriginalMoveStats = {
+					WalkSpeed = owner:GetWalkSpeed() or 200,
+					RunSpeed = owner:GetRunSpeed() or 400,
+					CrouchSpeed = owner:GetCrouchedWalkSpeed() or 0.3,
+					ClimbSpeed = owner:GetLadderClimbSpeed() or 200,
+					JumpPower = owner:GetJumpPower() or 200
+				}
 			end
 
 			self.Original_Cone = self.Primary.Cone
@@ -366,21 +367,16 @@ function SWEP:CustomOnDeploy()
 	local owner = self:GetOwner()
 	if owner:IsPlayer() then
 		self:InitializeCModel()
-		timer.Simple(0,function()
-			if self.WalkSpeed then
-				owner:SetWalkSpeed(owner:GetWalkSpeed() *self.WalkSpeed)
-			end
-			if self.RunSpeed then
-				owner:SetRunSpeed(owner:GetRunSpeed() *self.RunSpeed)
-			end
-			if self.CrouchSpeed then
-				owner:SetCrouchedWalkSpeed(owner:GetCrouchedWalkSpeed() *self.CrouchSpeed)
-			end
-			if self.ClimbSpeed then
-				owner:SetLadderClimbSpeed(owner:GetLadderClimbSpeed() *self.ClimbSpeed)
-			end
-			if self.JumpPower then
-				owner:SetJumpPower(owner:GetJumpPower() *self.JumpPower)
+		timer.Simple(0, function()
+			if IsValid(owner) && owner.VJ_F3R_OriginalMoveStats then
+				local stats = owner.VJ_F3R_OriginalMoveStats
+				local weight = self.Weights
+				if !weight then return end
+				owner:SetWalkSpeed(stats.WalkSpeed *weight.WalkSpeed)
+				owner:SetRunSpeed(stats.RunSpeed *weight.RunSpeed)
+				owner:SetCrouchedWalkSpeed(stats.CrouchSpeed *weight.CrouchSpeed)
+				owner:SetLadderClimbSpeed(stats.ClimbSpeed *weight.ClimbSpeed)
+				owner:SetJumpPower(stats.JumpPower *weight.JumpPower)
 			end
 		end)
 	end
@@ -398,7 +394,7 @@ function SWEP:Holster(newWep)
 			self:CleanUpGarbage()
 		end
 	end
-	if SERVER && self:GetOwner():IsPlayer() then
+	if self:GetOwner():IsPlayer() then
 		self:ResetPlayerSpeed(self:GetOwner())
 	end
 	return self:WeaponHolstered(newWep)
@@ -418,17 +414,19 @@ function SWEP:OnRemove()
 	self:StopParticles()
 	self:CustomOnRemove()
 	self:CleanUpGarbage()
-	if SERVER && self:GetOwner():IsPlayer() then
+	if self:GetOwner():IsPlayer() then
 		self:ResetPlayerSpeed(self:GetOwner())
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:ResetPlayerSpeed(owner)
-	owner:SetWalkSpeed(self.Original_WalkSpeed or 200)
-	owner:SetRunSpeed(self.Original_RunSpeed or 400)
-	owner:SetCrouchedWalkSpeed(self.Original_CrouchSpeed or 0.3)
-	owner:SetLadderClimbSpeed(self.Original_ClimbSpeed or 200)
-	owner:SetJumpPower(self.Original_JumpPower or 200)
+	local stats = owner.VJ_F3R_OriginalMoveStats
+	if !stats then return end
+	owner:SetWalkSpeed(stats.WalkSpeed)
+	owner:SetRunSpeed(stats.RunSpeed)
+	owner:SetCrouchedWalkSpeed(stats.CrouchSpeed)
+	owner:SetLadderClimbSpeed(stats.ClimbSpeed)
+	owner:SetJumpPower(stats.JumpPower)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:GetZoomViewModelPosition()

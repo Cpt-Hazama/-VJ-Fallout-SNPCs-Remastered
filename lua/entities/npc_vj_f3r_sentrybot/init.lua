@@ -456,7 +456,7 @@ function ENT:OnThinkActive()
 			self.AnimTbl_IdleStand = {ACT_IDLE_AIM_RELAXED}
 			if self.EnemyData.DistanceNearest < 600 && self:Visible(self:GetEnemy()) && !self:IsMoving() then
 				self:SetLastPosition(self:GetPos() +self:GetForward() *math.random(-400,-800))
-				self:VJ_TASK_GOTO_LASTPOS("TASK_RUN_PATH", function(x) x:EngTask("TASK_FACE_ENEMY", 0) x.CanShootWhenMoving = true x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
+				self:SCHEDULE_GOTO_POSITION("TASK_RUN_PATH", function(x) x.CanShootWhenMoving = true x.FaceData = {Type = VJ.NPC_FACE_ENEMY} end)
 			end
 		else
 			-- self.NoChaseAfterCertainRange = false
