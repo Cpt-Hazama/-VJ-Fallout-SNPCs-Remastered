@@ -24,8 +24,8 @@ ENT.HasMeleeAttack = true -- Should the SNPC have a melee attack?
 ENT.MeleeAttackDamage = 800
 ENT.AnimTbl_MeleeAttack = {ACT_MELEE_ATTACK1} -- Melee Attack Animations
 ENT.MeleeAttackDamageType = bit.bor(DMG_CRUSH,DMG_ALWAYSGIB) -- Type of Damage
-ENT.MeleeAttackDistance = 125 -- How close does it have to be until it attacks?
-ENT.MeleeAttackDamageDistance = 250 -- How far does the damage go?
+ENT.MeleeAttackDistance = 250 -- How close does it have to be until it attacks?
+ENT.MeleeAttackDamageDistance = 350 -- How far does the damage go?
 ENT.TimeUntilMeleeAttackDamage = false
 ENT.NextAnyAttackTime_Melee = 3.6 -- How much time until it can use any attack again? | Counted in Seconds
 ENT.HasExtraMeleeAttackSounds = true -- Set to true to use the extra melee attack sounds
@@ -34,6 +34,7 @@ ENT.MeleeAttackWorldShakeOnMissAmplitude = 30 -- How much the screen will shake 
 ENT.MeleeAttackWorldShakeOnMissRadius = 7000 -- How far the screen shake goes, in world units
 
 ENT.HasRangeAttack = true -- Should the SNPC have a range attack?
+ENT.RangeAttackMinDistance = 220
 ENT.DisableRangeAttackAnimation = true -- if true, it will disable the animation code
 ENT.NextRangeAttackTime = 0 -- How much time until it can use a range attack?
 
@@ -441,7 +442,7 @@ function ENT:CustomOnKilled(dmginfo, hitgroup)
 		ParticleEffect("mininuke_explosion_shrapnel_fire_child", pos, defAngle)
 		ParticleEffect("mininuke_explosion_shrapnel_smoke_child", pos, defAngle)
 	end
-	self:RunGibOnDeathCode(dmginfo, hitgroup)
+	self:HandleGibOnDeath(dmginfo, hitgroup)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

@@ -136,13 +136,13 @@ end
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_emit FootLeft" then
 		if CurTime() > self.NextPflupSoundT then
-			VJ_EmitSound(self,"vj_fallout/gecko/gecko_panting0" .. math.random(1,6) .. ".mp3",75,math.random(self.GeneralSoundPitch1,self.GeneralSoundPitch2))
+			VJ_EmitSound(self,"vj_fallout/gecko/gecko_panting0" .. math.random(1,6) .. ".mp3",75,math.random(self.MainSoundPitch.a, self.MainSoundPitch.b))
 			self.NextPflupSoundT = CurTime() +0.5
 		end
 		VJ_EmitSound(self,self.SoundTbl_FootStepL,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))
 	elseif key == "event_emit FootRight" then
 		if CurTime() > self.NextPflupSoundT then
-			VJ_EmitSound(self,"vj_fallout/gecko/gecko_panting0" .. math.random(1,6) .. ".mp3",75,math.random(self.GeneralSoundPitch1,self.GeneralSoundPitch2))
+			VJ_EmitSound(self,"vj_fallout/gecko/gecko_panting0" .. math.random(1,6) .. ".mp3",75,math.random(self.MainSoundPitch.a, self.MainSoundPitch.b))
 			self.NextPflupSoundT = CurTime() +0.5
 		end
 		VJ_EmitSound(self,self.SoundTbl_FootStepR,self.FootStepSoundLevel,self:VJ_DecideSoundPitch(self.FootStepPitch1,self.FootStepPitch2))

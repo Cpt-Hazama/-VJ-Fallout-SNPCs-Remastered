@@ -100,7 +100,7 @@ if SERVER then
 		if owner:IsNPC() then
 			self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
 			if IsValid(self.Owner:GetEnemy()) then
-				if self.Owner.DoingWeaponAttack then
+				if self.Owner.WeaponAttackState && self.Owner.WeaponAttackState >= 10 then
 					if !self.HasSpunUp then
 						self:SpinUp()
 						return

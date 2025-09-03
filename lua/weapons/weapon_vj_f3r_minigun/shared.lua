@@ -61,11 +61,10 @@ function SWEP:SpinUp()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:WeapWeaponThink()
+function SWEP:WeaponThink()
 	self.NPC_NextPrimaryFire = self.HasSpunUp && 0.16 or false
 	if IsValid(self.Owner:GetEnemy()) then
-		print(self.Owner.DoingWeaponAttack)
-		if self.Owner.DoingWeaponAttack && self.Owner:GetEnemy():GetPos():Distance(self.Owner:GetPos()) <= self.NPC_FiringDistanceMax then
+		if self.Owner.WeaponAttackState && self.Owner.WeaponAttackState >= 10 && self.Owner:GetEnemy():GetPos():Distance(self.Owner:GetPos()) <= self.NPC_FiringDistanceMax then
 			if !self.HasSpunUp then
 				self:SpinUp()
 				return

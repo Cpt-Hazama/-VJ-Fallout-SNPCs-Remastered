@@ -401,12 +401,12 @@ if VJExists == true then
 	VJ.AddNPC("Sentry Turret (Raiders)","npc_vj_f3r_sentryturret_flame",vRob)
 	VJ.AddNPC("Sentry Turret (Enclave)","npc_vj_f3r_sentryturret_plasma",vRob)
 	VJ.AddNPC("Chinese Spider Mine","npc_vj_f3r_spidermine",vRob)
-	VJ.AddNPC("Securitron Mark I","npc_vj_f3r_securitron",vRob)
-	VJ.AddNPC("Securitron Mark II","npc_vj_f3r_securitron_infatry",vRob)
-	VJ.AddNPC("Yes Man","npc_vj_f3r_securitron_yesman",vRob)
-	VJ.AddNPC("Victor","npc_vj_f3r_securitron_victor",vRob)
-	VJ.AddNPC("Jane","npc_vj_f3r_securitron_jane",vRob)
-	VJ.AddNPC("Marilyn","npc_vj_f3r_securitron_marilyn",vRob)
+	-- VJ.AddNPC("Securitron Mark I","npc_vj_f3r_securitron",vRob)
+	-- VJ.AddNPC("Securitron Mark II","npc_vj_f3r_securitron_infatry",vRob)
+	-- VJ.AddNPC("Yes Man","npc_vj_f3r_securitron_yesman",vRob)
+	-- VJ.AddNPC("Victor","npc_vj_f3r_securitron_victor",vRob)
+	-- VJ.AddNPC("Jane","npc_vj_f3r_securitron_jane",vRob)
+	-- VJ.AddNPC("Marilyn","npc_vj_f3r_securitron_marilyn",vRob)
 
 		-- FEV Mutants --
 	VJ.AddNPC_HUMAN("Super Mutant","npc_vj_f3r_supermutant",{
@@ -584,6 +584,7 @@ if VJExists == true then
 		"vj_f3r_laserkatana_blue",
 		"vj_f3r_laserkatana_green",
 	})
+	VJ.AddParticle("particles/vj_fo3_glowingone.pcf",{})
 	VJ.AddParticle("particles/glowingone.pcf",{})
 	VJ.AddParticle("particles/flame_gargantua.pcf",{})
 	VJ.AddParticle("particles/flame_gojira.pcf",{})

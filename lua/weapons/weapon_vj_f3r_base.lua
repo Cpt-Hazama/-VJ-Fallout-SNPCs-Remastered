@@ -402,7 +402,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CleanUpGarbage()
 	for _,v in pairs(self.Garbage) do
-		if v.StopEmissionAndDestroyImmediately then
+		if v:IsValid() && v.StopEmissionAndDestroyImmediately then
 			v:StopEmissionAndDestroyImmediately()
 		else
 			SafeRemoveEntity(v)

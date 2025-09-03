@@ -313,6 +313,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnAcceptInput(key,activator,caller,data)
 	if key == "event_firemissile" then
+		VJ.EmitSound(self,"vj_fallout/weapons/missilelauncher/missilelauncher_fire_2d.wav",85)
 		self:RangeAttackCode()
 	end
 end
@@ -322,7 +323,8 @@ function ENT:GetMuzzle()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:FireWeapon(rad)
-	if (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(rad))) then
+	self.CanShootWeapon = (self:GetForward():Dot((self:GetEnemy():GetPos() - self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
+	if self.CanShootWeapon then
 		local start = self:GetAttachment(self.Weapon +1).Pos
 		if self.Weapon == 0 then
 			local bullet = {}

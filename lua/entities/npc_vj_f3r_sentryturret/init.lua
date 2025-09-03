@@ -71,6 +71,10 @@ function ENT:CustomOn_PoseParameterLookingCode(pitch,yaw,roll)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomAttackCheck_RangeAttack()
+	local enemy = self:GetEnemy()
+	if IsValid(enemy) && enemy:GetPos():Distance(self:GetPos()) > self.RangeDistance then
+		return false
+	end
 	return self.Sentry_HasLOS
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,13 +163,12 @@ function ENT:CustomRangeAttackCode()
 	VJ_EmitSound(self,"vj_fallout/weapons/laserpistol/pistollaser_fire_3d.wav",110)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDeath_AfterCorpseSpawned(dmginfo,hitgroup,GetCorpse)
-	GetCorpse.tbl_Inventory = self.tbl_Inventory
-	ParticleEffect("explosion_turret_break_fire", self:GetPos() +self:OBBCenter(), Angle(0,0,0), GetCorpse)
-	ParticleEffect("explosion_turret_break_flash", self:GetPos() +self:OBBCenter(), Angle(0,0,0), GetCorpse)
-	ParticleEffect("explosion_turret_break_pre_smoke Version #2", self:GetPos() +self:OBBCenter(), Angle(0,0,0), GetCorpse)
-	ParticleEffect("explosion_turret_break_sparks", self:GetPos() +self:OBBCenter(), Angle(0,0,0), GetCorpse)
-	ParticleEffectAttach("smoke_exhaust_01a",PATTACH_POINT_FOLLOW,GetCorpse,2)
+function ENT:CustomOnKilled()
+	util.BlastDamage(self, self, self:GetPos(), 200, 40)
+	ParticleEffect("vj_explosion2", self:GetPos(), Angle())
+	local effectdata = EffectData()
+	effectdata:SetOrigin(self:GetPos())
+	util.Effect("Explosion", effectdata)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

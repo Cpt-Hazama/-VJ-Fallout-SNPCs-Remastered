@@ -126,9 +126,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInitialize()
 	if self.CanUseRadAttack then
-		for _,v in pairs(self.tbl_Caps) do
-			if self:LookupAttachment(v) then ParticleEffectAttach("glowingone_testc",PATTACH_POINT_FOLLOW,self,self:LookupAttachment(v)) end
-		end
+		ParticleEffectAttach("vj_f3r_glowingone_idle",PATTACH_POINT_FOLLOW,self,0)
 		self.Glow = ents.Create("light_dynamic")
 		self.Glow:SetKeyValue("brightness","1")
 		self.Glow:SetKeyValue("distance","150")
@@ -296,6 +294,7 @@ function ENT:ResetParticles()
 	end
 	if IsValid(self.radlight) then self.radlight:Fire("TurnOff","",0) end
 	self:StopParticles()
+	ParticleEffectAttach("vj_f3r_glowingone_idle",PATTACH_POINT_FOLLOW,self,0)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:MultipleMeleeAttacks()
