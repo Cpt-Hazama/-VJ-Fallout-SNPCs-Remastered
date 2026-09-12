@@ -203,7 +203,7 @@ if VJExists == true then
 		self:SetPoseParameter("aim_yaw", ang_app(self:GetPoseParameter("aim_yaw"), y_enemy, self.PoseParameterLooking_TurningSpeed))
 	end
 
-	function NPC:OnGuardEnabled(pos)
+	function NPC:VJF_OnGuardEnabled(pos)
 		self.PlayerFriendly = true
 		self.BecomeEnemyToPlayerLevel = 1
 		self.OnPlayerSightDistance = self.VJ_F3R_GuardWarnDistance
@@ -212,7 +212,7 @@ if VJExists == true then
 		if pos then self.VJ_F3R_GuardPosition = self:GetPos() end
 	end
 	
-	function NPC:OnGuardDisabled()
+	function NPC:VJF_OnGuardDisabled()
 		self.PlayerFriendly = self.OriginalFriendly
 		self.BecomeEnemyToPlayerLevel = OriginalBecomeEnemyToPlayerLevel
 		self.OnPlayerSightDistance = self.OriginalPlayerSightDistance
@@ -220,7 +220,7 @@ if VJExists == true then
 		self.OnPlayerSightNextTime2 = self.OriginalPlayerSightTime2
 	end
 	
-	function NPC:GuardInit()
+	function NPC:VJF_GuardInit()
 		self.OriginalClass = self.VJ_NPC_Class
 		self.OriginalFriendly = self.PlayerFriendly
 		self.OriginalBecomeEnemyToPlayerLevel = self.BecomeEnemyToPlayerLevel
@@ -228,14 +228,14 @@ if VJExists == true then
 		self.OriginalPlayerSightTime1 = self.OnPlayerSightNextTime1
 		self.OriginalPlayerSightTime2 = self.OnPlayerSightNextTime2
 		if self.VJ_F3R_InGuardMode then
-			self:OnGuardEnabled(true)
+			self:VJF_OnGuardEnabled(true)
 		end
 	end
 	
-	function NPC:GuardAI()
+	function NPC:VJF_GuardAI()
 		if self.VJ_F3R_InGuardMode then
 			if !self.VJ_F3R_RanGuardStatusChange then
-				self:OnGuardEnabled(false)
+				self:VJF_OnGuardEnabled(false)
 				self.VJ_F3R_RanGuardStatusChange = true
 			end
 			if !IsValid(self:GetEnemy()) && self:GetPos():Distance(self.VJ_F3R_GuardPosition) >= self.VJ_F3R_MaxGuardDistance then
@@ -244,13 +244,13 @@ if VJExists == true then
 			end
 		else
 			if self.VJ_F3R_RanGuardStatusChange then
-				self:OnGuardDisabled()
+				self:VJF_OnGuardDisabled()
 				self.VJ_F3R_RanGuardStatusChange = false
 			end
 		end
 	end
 
-	function NPC:Item_Stealthboy()
+	function NPC:VJF_Item_Stealthboy()
 		self:SetMaterial("cpthazama/cloak")
 		self:AddFlags(FL_NOTARGET)
 		self.DisableMakingSelfEnemyToNPCs = true
@@ -321,17 +321,17 @@ if VJExists == true then
 		end)
 	end
 	
-	function ENT:InFront(ene,rad)
+	function ENT:VJF_InFront(ene,rad)
 		return (self:GetForward():Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
 	end
 
-	function ENT:DoFlameDamage(dist,dmg,attacker,rad,ign,pos,dir)
+	function ENT:VJF_DoFlameDamage(dist,dmg,attacker,rad,ign,pos,dir)
 		util.VJ_SphereDamage(self,self,pos or (self:GetPos() +(self:GetForward() *self:OBBMaxs().y)),dist,dmg,DMG_BURN,true,true,{UseCone=true,UseConeDegree=rad,UseConeDirection=dir or false}, function(ent) if !ent:IsOnFire() && (ent:IsPlayer() or ent:IsNPC()) && ign then ent:Ignite(ign) end end)
 		-- local dispCheck = self:IsNPC() && true or false
 		-- for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
 		-- 	if (ent != self && ent != attacker && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
 		-- 		if self:IsNPC() && self:Disposition(ent) != D_HT then return end
-		-- 		if self:InFront(ent,rad or 45) then
+		-- 		if self:VJF_InFront(ent,rad or 45) then
 		-- 			if ent:IsNPC() or ent:IsPlayer() then
 		-- 				ent:Ignite(ign or 4)
 		-- 			end
@@ -346,23 +346,7 @@ if VJExists == true then
 		-- end
 	end
 
-	-- function ENT:DoFlameDamage(dist,dmg,attacker,ign)
-		-- for _,ent in pairs(ents.FindInSphere(self:GetPos() +(self:GetForward() *self:OBBMaxs().y),dist)) do
-			-- if ((self:Disposition(ent) == D_HT) && self:Visible(ent)) && ent != self.VJ_TheControllerBullseye then
-				-- if self:InFront(ent,45) then
-					-- ent:Ignite(ign or 4,0)
-					-- local dmginfo = DamageInfo()
-					-- dmginfo:SetDamageType(DMG_BURN)
-					-- dmginfo:SetDamage(dmg)
-					-- dmginfo:SetAttacker(attacker || self)
-					-- dmginfo:SetInflictor(self)
-					-- ent:TakeDamageInfo(dmginfo)
-				-- end
-			-- end
-		-- end
-	-- end
-
-	function ENT:FindInventoryItem(itemID)
+	function ENT:VJF_FindInventoryItem(itemID)
 		local rTbl = {}
 		for i = 1,#self.tbl_Inventory do
 			if self.tbl_Inventory[i].id == itemID then
@@ -374,35 +358,35 @@ if VJExists == true then
 		end
 	end
 
-	function ENT:GetInventory()
+	function ENT:VJF_GetInventory()
 		return self.tbl_Inventory
 	end
 
-	function ENT:RemoveFromInventory(itemID,removeCount)
-		local index = self:FindInventoryItem(itemID).index
-		local class = self:FindInventoryItem(itemID).class
-		local count = self:FindInventoryItem(itemID).count
+	function ENT:VJF_RemoveFromInventory(itemID,removeCount)
+		local index = self:VJF_FindInventoryItem(itemID).index
+		local class = self:VJF_FindInventoryItem(itemID).class
+		local count = self:VJF_FindInventoryItem(itemID).count
 		if count -removeCount <= 0 then
-			if self:GetInventory()[index] == nil || type(self:GetInventory()[index]) == "table" then
-				self:GetInventory()[index] = nil
+			if self:VJF_GetInventory()[index] == nil || type(self:VJF_GetInventory()[index]) == "table" then
+				self:VJF_GetInventory()[index] = nil
 			else
-				table.remove(self:GetInventory(),self:GetInventory()[index])
+				table.remove(self:VJF_GetInventory(),self:VJF_GetInventory()[index])
 			end
 			MsgN("Removed item " .. itemID .. " from " .. tostring(self))
 		else
-			self:GetInventory()[index].count = self:GetInventory()[index].count -removeCount
+			self:VJF_GetInventory()[index].count = self:VJF_GetInventory()[index].count -removeCount
 			MsgN("Removed " .. removeCount .. " " .. itemID .. " from " .. tostring(self))
 		end
 	end
 
-	function ENT:AddToInventory(itemID,itemClass,itemCount)
+	function ENT:VJF_AddToInventory(itemID,itemClass,itemCount)
 		if itemID == nil then return end
-		if self:GetInventory()[index] then
-			local index = self:FindInventoryItem(itemID).index
-			local class = self:FindInventoryItem(itemID).class
-			local count = self:FindInventoryItem(itemID).count
-			if self:GetInventory()[index].id == itemID then
-				self:GetInventory()[index].count = self:GetInventory()[index].count +itemCount
+		if self:VJF_GetInventory()[index] then
+			local index = self:VJF_FindInventoryItem(itemID).index
+			local class = self:VJF_FindInventoryItem(itemID).class
+			local count = self:VJF_FindInventoryItem(itemID).count
+			if self:VJF_GetInventory()[index].id == itemID then
+				self:VJF_GetInventory()[index].count = self:VJF_GetInventory()[index].count +itemCount
 			else
 				local index = #self.tbl_Inventory
 				self.tbl_Inventory[index +1] = {id=itemID,class=itemClass,count=itemCount}

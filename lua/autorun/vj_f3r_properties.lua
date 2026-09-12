@@ -31,7 +31,7 @@ if VJExists == true then
 			local ent = net.ReadEntity()
 			if !self:Filter(ent,player) then return end
 			ent.VJ_F3R_InGuardMode = true
-			ent:OnGuardEnabled(true)
+			ent:VJF_OnGuardEnabled(true)
 			player:ChatPrint("Guard Mode: Enabled")
 		end
 	})
@@ -58,7 +58,7 @@ if VJExists == true then
 			local ent = net.ReadEntity()
 			if !self:Filter(ent,player) then return end
 			ent.VJ_F3R_InGuardMode = false
-			ent:OnGuardDisabled()
+			ent:VJF_OnGuardDisabled()
 			player:ChatPrint("Guard Mode: Disabled")
 		end
 	})

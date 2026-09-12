@@ -80,5 +80,5 @@ ENT.SoundTbl_Death = {
 }
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInventory()
-	self:AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(3,6))
+	self:VJF_AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(3,6))
 end

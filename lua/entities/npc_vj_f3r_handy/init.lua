@@ -9,6 +9,7 @@ ENT.Model = {"models/fallout/mistergutsy.mdl"} -- The game will pick a random mo
 ENT.StartHealth = 500
 ENT.HullType = HULL_MEDIUM_TALL
 ENT.PlayerFriendly = true
+ENT.AlliedWithPlayerAllies = true
 ENT.BecomeEnemyToPlayer = true
 ENT.SightAngle = 320
 ENT.TurningSpeed = 10
@@ -160,7 +161,7 @@ function ENT:CustomOnInitialize()
 	
 	self:SetBodygroup(1,1)
 	self:SetBodygroup(2,1)
-	self:GuardInit()
+	self:VJF_GuardInit()
 	
 	if self.GustyInit then self:GustyInit() end
 end
@@ -251,12 +252,12 @@ function ENT:CustomOnRangeAttack_AfterStartTimer()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:InFront(vec,ene,rad)
+function ENT:VJF_InFront(vec,ene,rad)
 	return (vec:Dot((ene:GetPos() -self:GetPos()):GetNormalized()) > math.cos(math.rad(rad)))
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	self:GuardAI()
+	self:VJF_GuardAI()
 	if self:IsMoving() then
 		if !self.bMoveLoopPlaying then
 			self.bMoveLoopPlaying = true
@@ -299,7 +300,7 @@ function ENT:OnThinkActive()
 			-- 		end
 			-- 	end
 			-- end
-			self:DoFlameDamage(300,5,self,35,10,att.Pos,att.Ang:Forward())
+			self:VJF_DoFlameDamage(300,5,self,35,10,att.Pos,att.Ang:Forward())
 			self.NextFlameDMGT = CurTime() +0.125
 		end
 		if IsValid(self.VJ_TheController) && !self.VJ_TheController:KeyDown(IN_ATTACK) or !IsValid(self.VJ_TheController) && (!IsValid(self:GetEnemy()) || self:GetEnemy():Health() <= 0 || !self:Visible(self:GetEnemy()) || dist > self.RangeToMeleeDistance) then

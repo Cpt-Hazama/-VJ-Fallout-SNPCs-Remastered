@@ -72,7 +72,7 @@ SWEP.WorldModel_UseCustomPosition = false
 SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
 SWEP.Primary.Ammo				= "Pistol" -- Ammo type
 SWEP.PrimaryEffects_SpawnShells = false
-SWEP.Reload_TimeUntilAmmoIsSet 	= false
+SWEP.Reload_TimeUntilAmmoIsSet 	= 1
 SWEP.Primary.PlayerDamage 		= "Double"
 SWEP.HoldType 					= SWEP.AnimationType
 SWEP.ViewModel 					= "models/cpthazama/fallout/weapons/c_arms.mdl"
@@ -87,6 +87,18 @@ local vj_wep_shells = GetConVar("vj_wep_shells")
 local metaEntity = FindMetaTable("Entity")
 local metaAngle = FindMetaTable("Angle")
 local funcGetTable = metaEntity.GetTable
+local metaEntity = FindMetaTable("Entity")
+local fDrawModel = metaEntity.DrawModel
+local fGetTable = metaEntity.GetTable
+local fGetPos = metaEntity.GetPos
+local fGetOwner = metaEntity.GetOwner
+local fGetAttachment = metaEntity.GetAttachment
+local fGetBonePosition = metaEntity.GetBonePosition
+local fLookupBone = metaEntity.LookupBone
+--
+local metaNPC = FindMetaTable("NPC")
+local fGetActiveWeapon = metaNPC.GetActiveWeapon
+--
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnDoMeleeAttack(anim,time) end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -329,6 +341,33 @@ function SWEP:PrimaryAttackEffects(owner)
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:Think()
+	self:OnThink()
+	if !SERVER then return end
+	local owner = fGetOwner(self)
+	if !IsValid(owner) then return end
+	local selfData = fGetTable(self)
+	local curTime = CurTime()
+	selfData.PLY_NextIdleAnimT = selfData.PLY_NextIdleAnimT or 0
+	self:MaintainWorldModel(selfData, owner)
+	-- Idle Animation
+	if curTime > selfData.PLY_AnimLockTime then
+		if curTime > selfData.PLY_NextIdleAnimT then
+			local anim = VJ.PICK(selfData.AnimTbl_Idle)
+			if anim then
+				if self.IsMeleeWeapon == true then
+					self.SwingSide = 0
+				end
+				owner:SetAnimation(PLAYER_IDLE)
+				local animTime = self:PlayAnimation(anim)
+				selfData.PLY_NextIdleAnimT = curTime + animTime
+			end
+		end
+	else
+		selfData.PLY_NextIdleAnimT = 0
+	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:OnThink()
 	local owner = self:GetOwner()
 	if self.WeaponThink then
@@ -566,19 +605,6 @@ function SWEP:PlayAnimation(anim)
 	return animTime, anim
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function SWEP:DoIdleAnimation()
-	if !self.HasIdleAnimation or CurTime() < self.NextIdleT then return end
-	local owner = self:GetOwner()
-	if IsValid(owner) then
-		if self.IsMeleeWeapon == true then
-			self.SwingSide = 0
-		end
-		owner:SetAnimation(PLAYER_IDLE)
-		local animTime = self:PlayAnimation(self.AnimTbl_Idle)
-		self.NextIdleT = CurTime() + animTime
-	end
-end
----------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:Deploy()
 	if self.InitHasIdleAnimation == true then self.HasIdleAnimation = true end
 	local owner = self:GetOwner()
@@ -590,8 +616,32 @@ function SWEP:Deploy()
 		local animTime = self:PlayAnimation(self.AnimTbl_Deploy)
 		self:SetNextPrimaryFire(curTime + animTime)
 		self:SetNextSecondaryFire(curTime + animTime)
-		self.NextIdleT = curTime + animTime
+		self.PLY_AnimLockTime = curTime + animTime
 		self.NextReloadT = curTime + animTime
+	end
+	return true -- Or else the player won't be able to get the weapon!
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:Deploy()
+	local owner = fGetOwner(self)
+	self:OnDeploy()
+	if owner:IsNPC() then
+		hook.Add("Think", self, self.NPC_Think)
+	elseif owner:IsPlayer() then
+		if self.HasDeploySound then
+			local deploySD = VJ.PICK(self.DeploySound)
+			if deploySD then
+				self:EmitSound(deploySD, 50, math.random(90, 100))
+			end
+		end
+		local anim = VJ.PICK(self.AnimTbl_Deploy)
+		if anim then
+			local animTime = self:PlayAnimation(anim)
+			local delay = CurTime() + animTime
+			self:SetNextPrimaryFire(delay)
+			self:SetNextSecondaryFire(delay)
+			self.PLY_AnimLockTime = delay
+		end
 	end
 	return true -- Or else the player won't be able to get the weapon!
 end
@@ -608,36 +658,41 @@ function SWEP:CustomOnReload() end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:Reload()
 	if !IsValid(self) then return end
-	local owner = self:GetOwner()
-	if !IsValid(owner) or !owner:IsPlayer() or !owner:Alive() or owner:GetAmmoCount(self.Primary.Ammo) == 0 or self.Reloading or CurTime() < self.NextReloadT then return end // or !owner:KeyDown(IN_RELOAD)
+	local owner = fGetOwner(self)
+	if !IsValid(owner) or !owner:IsPlayer() or !owner:Alive() or owner:GetAmmoCount(self.Primary.Ammo) == 0 or self.Reloading or CurTime() < self.PLY_AnimLockTime then return end
 	if self:Clip1() < self.Primary.ClipSize then
 		self.Reloading = true
 		self:SetZoomed(false)
 		self:OnReload("Start")
-		self:CustomOnReload()
-		if SERVER && self.HasReloadSound == true then
+		if SERVER && self.HasReloadSound then
 			local reloadSD = VJ.PICK(self.ReloadSound)
 			if reloadSD then
 				owner:EmitSound(reloadSD, 50, math.random(90, 100))
 			end
 		end
-		local animTime = self:PlayAnimation(self.AnimTbl_Reload)
-		self.NextIdleT = CurTime() + animTime
 		-- Handle clip
-		timer.Simple(self.Reload_TimeUntilAmmoIsSet or animTime, function()
-			if IsValid(self) && self:OnReload("Finish") != true then
+		timer.Simple(self.Reload_TimeUntilAmmoIsSet, function()
+			if IsValid(self) && IsValid(owner) && fGetOwner(self) == owner && self:OnReload("Finish") != true then
 				local ammoUsed = math.Clamp(self.Primary.ClipSize - self:Clip1(), 0, owner:GetAmmoCount(self:GetPrimaryAmmoType())) -- Amount of ammo that it will use (Take from the reserve)
 				owner:RemoveAmmo(ammoUsed, self.Primary.Ammo)
 				self:SetClip1(self:Clip1() + ammoUsed)
 			end
 		end)
 		-- Handle animation
-		owner:SetAnimation(PLAYER_RELOAD)
-		timer.Simple(animTime, function()
-			if IsValid(self) then
-				self.Reloading = false
-			end
-		end)
+		local anim = VJ.PICK(self.AnimTbl_Reload)
+		if anim then
+			owner:SetAnimation(PLAYER_RELOAD)
+			local animTime = self:PlayAnimation(anim)
+			-- local animTime = VJ.AnimDuration(owner:GetViewModel(), anim)
+			self.PLY_AnimLockTime = CurTime() + animTime
+			timer.Simple(animTime, function()
+				if IsValid(self) then
+					self.Reloading = false
+				end
+			end)
+		else
+			self.Reloading = false
+		end
 		return true
 	end
 end
@@ -782,7 +837,7 @@ function SWEP:PrimaryAttack(UseAlt)
 		else
 			animTime, anim = self:PlayAnimation(self.AnimTbl_PrimaryFire)
 		end
-		self.NextIdleT = CurTime() + animTime
+		self.PLY_AnimLockTime = CurTime() + animTime
 		self.NextReloadT = CurTime() + animTime
 	end
 	

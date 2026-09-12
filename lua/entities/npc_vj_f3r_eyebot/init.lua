@@ -140,7 +140,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	self:GuardAI()
+	self:VJF_GuardAI()
 	if self:IsMoving() then
 		if !self.bMoveLoopPlaying then
 			self.bMoveLoopPlaying = true

@@ -202,7 +202,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 			end
 		end
 		if atk == "flame" then
-			self:DoFlameDamage(self.RangeDistance,self.FlameDamage,self)
+			self:VJF_DoFlameDamage(self.RangeDistance,self.FlameDamage,self)
 		end
 		if atk == "end" then
 			if self.FlameLP:IsPlaying() then

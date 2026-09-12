@@ -63,9 +63,17 @@ function ENT:OnThink()
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
-function ENT:CustomOnDoDamage(data,phys,hitent)
-	if IsValid(hitent) && hitent:IsPlayer() then
-		hitent:SetDSP(32,false)
+function ENT:OnDealDamage(data, phys, hitEnts)
+	for _, ent in ipairs(hitEnts or {}) do
+		if IsValid(ent) then
+			-- self:SetHitEnt(ent)
+			if ent:IsPlayer() then
+				ent:SetDSP(32,false)
+			end
+			net.Start("VJ.F3R.ProjOverlay.Alien")
+				net.WriteEntity(ent)
+			net.Broadcast()
+		end
 	end
 end
 /*-----------------------------------------------

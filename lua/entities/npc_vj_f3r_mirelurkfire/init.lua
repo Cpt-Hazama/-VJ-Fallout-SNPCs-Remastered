@@ -138,8 +138,8 @@ function ENT:OnThink()
 	if self.InFlameAttack then
 		local att1 = self:GetAttachment(1)
 		local att2 = self:GetAttachment(2)
-		self:DoFlameDamage(225,2,self,30,1,att1.Pos,att1.Ang:Forward())
-		self:DoFlameDamage(225,2,self,30,1,att2.Pos,att2.Ang:Forward())
+		self:VJF_DoFlameDamage(225,2,self,30,1,att1.Pos,att1.Ang:Forward())
+		self:VJF_DoFlameDamage(225,2,self,30,1,att2.Pos,att2.Ang:Forward())
 	end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------

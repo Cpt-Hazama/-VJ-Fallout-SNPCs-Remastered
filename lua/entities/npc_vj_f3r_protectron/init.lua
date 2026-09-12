@@ -296,7 +296,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	self:GuardAI()
+	self:VJF_GuardAI()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:TranslateActivity(act)

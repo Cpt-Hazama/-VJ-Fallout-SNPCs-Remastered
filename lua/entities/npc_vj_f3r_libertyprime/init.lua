@@ -113,7 +113,7 @@ local defVector = Vector(0, 0, 0)
 local defAngle = Angle(0, 0, 0)
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnInitialize()
-	self:SetCollisionBounds(Vector(100, 100, 490), Vector(-100, -100, 0))
+	self:SetCollisionBounds(Vector(60, 60, 490), Vector(-60, -60, 0))
 	self:StopAllSounds()
 	self.StartSound = VJ_CreateSound(self,"vj_fallout/libertyprime/mq11_mq11primeactivationli_00071ef7_1.mp3",110)
 	local dur = SoundDuration("vj_fallout/libertyprime/mq11_mq11primeactivationli_00071ef7_1.mp3") +1 -- .MP3's always return 1 second shorter than what they really are
@@ -123,6 +123,14 @@ function ENT:CustomOnInitialize()
 	if GetConVar("vj_f3r_prime_nukes"):GetInt() == 0 then
 		self.LibertyPrime_NextNukeAttackT = CurTime() +999999999
 	end
+end
+---------------------------------------------------------------------------------------------------------------------------------------------
+function ENT:SelectSchedule()
+	local selfData = self:GetTable()
+	if selfData.Dead then return end
+	self:PlayIdleSound(nil, nil, IsValid(self:GetEnemy()))
+
+	baseclass.Get("npc_vj_creature_base").SelectSchedule(self)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:LibertyPrime_DoFootstep(at)

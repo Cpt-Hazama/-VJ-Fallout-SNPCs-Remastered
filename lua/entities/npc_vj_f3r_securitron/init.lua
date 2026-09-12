@@ -226,7 +226,7 @@ function ENT:CustomOnInitialize()
 	
 	self:SetSkin(self.Skin)
 	-- self:SetBodygroup(1,self.Weapon)
-	self:GuardInit()
+	self:VJF_GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SpinUp()
@@ -385,7 +385,7 @@ function ENT:TranslateActivity(act)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:OnThinkActive()
-	self:GuardAI()
+	self:VJF_GuardAI()
 	if !self.VJ_IsBeingControlled then
 		self.ConstantlyFaceEnemy = true
 		if IsValid(self:GetEnemy()) then

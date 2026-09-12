@@ -40,7 +40,7 @@ function ENT:CustomRangeAttackCode()
 		self.StartedEffects = true
 	end
 	local att = self:GetAttachment(1)
-	self:DoFlameDamage(300,5,self,35,2,att.Pos,att.Ang:Forward())
+	self:VJF_DoFlameDamage(300,5,self,35,2,att.Pos,att.Ang:Forward())
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomOnRemove()

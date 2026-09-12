@@ -33,7 +33,7 @@ SWEP.NPC_FiringDistanceMax = 375
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttack_BeforeShoot()
 	if (CLIENT) then return end
-	self:DoFlameDamage(370,5,self:GetOwner(),30)
+	self:VJF_DoFlameDamage(370,5,self:GetOwner(),30)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnInitialize()

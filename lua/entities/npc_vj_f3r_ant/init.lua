@@ -129,7 +129,7 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 			self.Flame = spawnparticle
 		end
 		if atk == "flame" then
-			self:DoFlameDamage(225,5,self)
+			self:VJF_DoFlameDamage(225,5,self)
 		end
 	end
 end

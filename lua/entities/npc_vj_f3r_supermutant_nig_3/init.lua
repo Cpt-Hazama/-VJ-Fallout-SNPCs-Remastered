@@ -18,5 +18,5 @@ ENT.BecomeEnemyToPlayer = true
 ENT.BecomeEnemyToPlayerLevel = 5
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInventory()
-	self:AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(3,6))
+	self:VJF_AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(3,6))
 end

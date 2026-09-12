@@ -272,7 +272,7 @@ ENT.SoundTbl_Death = {
 ENT.MouthParameter = "mouth"
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupInventory(opWep)
-	self:AddToInventory(opWep.ID,opWep:GetClass(),1)
+	self:VJF_AddToInventory(opWep.ID,opWep:GetClass(),1)
 	if self.CustomInventory then self:CustomInventory() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -309,7 +309,7 @@ function ENT:CustomOnInitialize()
 	self.NextStealthBoyT = CurTime()
 
 	if self.OnInit then self:OnInit() end
-	self:GuardInit()
+	self:VJF_GuardInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ExtraInput(key,activator,caller,data)
@@ -321,10 +321,10 @@ function ENT:ExtraInput(key,activator,caller,data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ItemThink()
-	if self:FindInventoryItem(ITEM_VJ_STIMPACK) then
+	if self:VJF_FindInventoryItem(ITEM_VJ_STIMPACK) then
 		if IsValid(self:GetEnemy()) && CurTime() > self.NextStealthBoyT && math.random(1,200) == 1 then
-			self:RemoveFromInventory(ITEM_VJ_STIMPACK,1)
-			self:Item_Stealthboy()
+			self:VJF_RemoveFromInventory(ITEM_VJ_STIMPACK,1)
+			self:VJF_Item_Stealthboy()
 			self.NextStealthBoyT = CurTime() +math.Rand(25,30)
 		end
 	end

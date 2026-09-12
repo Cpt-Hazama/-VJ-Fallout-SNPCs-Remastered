@@ -47,7 +47,10 @@ end
 function ENT:OnDealDamage(data, phys, hitEnts)
 	for _, ent in ipairs(hitEnts or {}) do
 		if IsValid(ent) then
-			self:SetHitEnt(ent)
+			-- self:SetHitEnt(ent)
+			net.Start("VJ.F3R.ProjOverlay.Alien")
+				net.WriteEntity(ent)
+			net.Broadcast()
 		end
 	end
 end

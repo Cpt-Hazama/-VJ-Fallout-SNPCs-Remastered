@@ -48,7 +48,7 @@ function ENT:AfterInit()
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomInventory()
-	self:AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(12,15))
+	self:VJF_AddToInventory(ITEM_VJ_STIMPACK,nil,math.random(12,15))
 end
 /*-----------------------------------------------
 	*** Copyright (c) 2023 by Cpt. Hazama, All rights reserved. ***

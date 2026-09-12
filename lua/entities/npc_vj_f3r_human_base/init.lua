@@ -19,6 +19,7 @@ ENT.MeleeAttackAnimationAllowOtherTasks = true
 ENT.HasGrenadeAttack = false -- Should the SNPC have a grenade attack?
 ENT.BecomeEnemyToPlayer = true
 ENT.BecomeEnemyToPlayerLevel = 2
+ENT.AlliedWithPlayerAllies = true
 
 ENT.Weapon_AimTurnDiff_Def = 0.83
 
@@ -3012,7 +3013,7 @@ function ENT:CustomOnPlayerSight(argent)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:SetupInventory(opWep)
-	if opWep then self:AddToInventory(opWep.ID,opWep:GetClass(),1) end
+	if opWep then self:VJF_AddToInventory(opWep.ID,opWep:GetClass(),1) end
 	if self.CustomInventory then self:CustomInventory() end
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -3053,7 +3054,7 @@ function ENT:Init()
 	self.NPC_NextMouthDistance = 0
 	self.NextStimPackT = CurTime()
 	self.NextStealthBoyT = CurTime()
-	self:GuardInit()
+	self:VJF_GuardInit()
 	if self.Gender && self.Gender == 2 then
 		self:ManipulateBoneJiggle(92,1)
 		self:ManipulateBoneJiggle(93,1)
@@ -3101,10 +3102,10 @@ function ENT:CustomOnAcceptInput(key,activator,caller,data)
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:ItemThink()
-	if self:FindInventoryItem(ITEM_VJ_STIMPACK) then
+	if self:VJF_FindInventoryItem(ITEM_VJ_STIMPACK) then
 		if IsValid(self:GetEnemy()) && CurTime() > self.NextStealthBoyT && math.random(1,200) == 1 then
-			self:RemoveFromInventory(ITEM_VJ_STIMPACK,1)
-			self:Item_Stealthboy()
+			self:VJF_RemoveFromInventory(ITEM_VJ_STIMPACK,1)
+			self:VJF_Item_Stealthboy()
 			self.NextStealthBoyT = CurTime() +math.Rand(25,30)
 		end
 	end
@@ -3472,7 +3473,7 @@ end
 function ENT:OnThinkActive()
 	self.NextHolsterT = self.NextHolsterT or CurTime()
 	if !IsValid(self.VJ_TheController) then
-		self:GuardAI()
+		self:VJF_GuardAI()
 		if IsValid(self:GetEnemy()) then
 			self.NextHolsterT = CurTime() +15
 		end
