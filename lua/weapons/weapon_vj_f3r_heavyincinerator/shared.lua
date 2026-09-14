@@ -28,7 +28,7 @@ SWEP.Primary.Automatic = true
 SWEP.AnimTbl_Deploy 					= {ACT_VM_DEPLOY_4}
 SWEP.AnimTbl_Idle 						= {ACT_VM_IDLE_5}
 SWEP.AnimTbl_PrimaryFire 				= {ACT_SLAM_DETONATOR_DRAW}
-SWEP.AnimTbl_Reload 					= {ACT_SLAM_DETONATOR_DETONATE}
+SWEP.AnimTbl_Reload                     = {"2hhreloadb"}
 
 SWEP.NPC_EquipSound 			= "vj_fallout/weapons/minigun/minigun_equip.wav"
 SWEP.NPC_UnequipSound 			= "vj_fallout/weapons/minigun/minigun_unequip.wav"

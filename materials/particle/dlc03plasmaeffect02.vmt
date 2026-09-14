@@ -1,0 +1,14 @@
+// "Sprite"
+// {
+// 	"$spriteorientation" "vp_parallel_oriented"
+// 	"$spriteorigin" "[ 0.50 0.50 ]"
+// 	"$spriterendermode" 5
+// 	"$basetexture" "particle/dlc03plasmaeffect01"
+// }
+"Sprite"
+{
+	$basetexture 	"particle/dlc03plasmaeffect01"
+	$additive 		1
+	$spriterendermode 	5
+	$overbrightfactor 	1.2
+}

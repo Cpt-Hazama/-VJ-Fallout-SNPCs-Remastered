@@ -2,13 +2,31 @@ if (!file.Exists("autorun/vj_base_autorun.lua","LUA")) then return end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.WorldModel					= "models/fallout/weapons/w_plasmacaster.mdl"
 SWEP.PrintName					= "Plasma Caster"
--- SWEP.ID 						= ITEM_VJ_PLASMARIFLE
-SWEP.HoldType 					= "2hh"
+SWEP.ViewModelB							= "models/fallout/weapons/c_plasmacaster.mdl"
+SWEP.AnimationType 						= "2hh"
+SWEP.PHoldType 							= "crossbow"
+SWEP.Slot 								= (SWEP.AnimationType == "1gt" && 4 or SWEP.AnimationType == "1hm" && 0 or SWEP.AnimationType == "2hm" && 0 or SWEP.AnimationType == "2ha" && 2 or SWEP.AnimationType == "2hh" && 3 or SWEP.AnimationType == "2hl" && 4 or SWEP.AnimationType == "2hr" && 2 or SWEP.AnimationType == "1hp" && 1 or SWEP.AnimationType == "1md" && 4) or 1
+SWEP.Weights = {
+	WalkSpeed = 0.75,
+	RunSpeed = 0.75,
+	CrouchSpeed = 0.75,
+	ClimbSpeed = 0.75,
+	JumpPower = 0.75,
+}
+
 SWEP.NPC_NextPrimaryFire 		= 0.3 -- Next time it can use primary fire
 SWEP.NPC_TimeUntilFire	 		= 0 -- How much time until the bullet/projectile is fired?
 SWEP.NPC_TimeUntilFireExtraTimers = {} -- Extra timers, which will make the gun fire again! | The seconds are counted after the self.NPC_TimeUntilFire!
 SWEP.Primary.Damage				= 65 -- Damage
 SWEP.Primary.ClipSize			= 10 -- Max amount of bullets per clip
+SWEP.Primary.Delay						= 0.3
+SWEP.Primary.Automatic					= false
+
+SWEP.AnimTbl_Deploy 					= {ACT_VM_DEPLOY_4}
+SWEP.AnimTbl_Idle 						= {ACT_VM_IDLE_5}
+SWEP.AnimTbl_PrimaryFire 				= {ACT_SLAM_DETONATOR_DRAW}
+SWEP.AnimTbl_Reload 					= {ACT_SLAM_DETONATOR_DETONATE}
+
 SWEP.NPC_ReloadSound			= "vj_fallout/weapons/plasmarifle/plasmarifle_reload.wav"
 SWEP.Primary.Sound				= {
 									"vj_fallout/weapons/plasmacaster/plasmacaster_fire_2d01.wav",
@@ -22,37 +40,60 @@ SWEP.Primary.DistantSound		= {
 								}
 SWEP.PrimaryEffects_MuzzleFlash = false
 ---------------------------------------------------------------------------------------------------------------------------------------------
+SWEP.PrimaryEffects_SpawnDynamicLight = false
+SWEP.Primary.DisableBulletCode	= true
+
+SWEP.WorldModel_CustomPositionAngle 	= Vector(80,5,270)
+SWEP.WorldModel_CustomPositionOrigin 	= Vector(-3.6,0,-1.2)
+---------------------------------------------------------------------------------------------------------------------------------------------
 SWEP.Base 						= "weapon_vj_f3r_base"
 SWEP.Author 					= "Cpt. Hazama"
 SWEP.Contact					= "http://steamcommunity.com/groups/vrejgaming"
 SWEP.Purpose					= "This weapon is made for Players and NPCs"
 SWEP.Instructions				= "Controls are like a regular weapon."
 SWEP.Category					= "VJ Base - Fallout: Remastered"
-	-- Main Settings ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.MadeForNPCsOnly 			= true -- Is tihs weapon meant to be for NPCs only?
-	-- Primary Fire ---------------------------------------------------------------------------------------------------------------------------------------------
-SWEP.Primary.Force				= 1 -- Force applied on the object the bullet hits
-SWEP.Primary.Ammo				= "Pistol" -- Ammo type
-SWEP.PrimaryEffects_SpawnShells = false
-SWEP.PrimaryEffects_SpawnDynamicLight = false
-SWEP.Primary.DisableBulletCode	= true
+SWEP.Spawnable 					= true
+---------------------------------------------------------------------------------------------------------------------------------------------
+function SWEP:CustomOnReload()
+	self:PlayWeaponSoundTimed(self.NPC_ReloadSound,0)
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomBulletSpawnPosition()
-	return self.Owner:EyePos()
+	local owner = self:GetOwner()
+	local att = self:LookupAttachment("muzzle")
+	if att != 0 then
+		local data = self:GetAttachment(att)
+		if data then return data.Pos end
+	end
+	return owner:GetShootPos() +owner:GetAimVector() *20
 end
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function SWEP:CustomOnPrimaryAttack_BeforeShoot()
-	if (CLIENT) then return end
+	if CLIENT then return end
+
+	local owner = self:GetOwner()
 	local projectile = ents.Create("obj_vj_f3r_plasma")
-	projectile:SetPos(self:GetAttachment(1).Pos)
-	projectile:SetAngles((self.Owner:GetEnemy():GetPos() -self.Owner:GetPos()):Angle())
-	projectile:SetOwner(self.Owner)
+	projectile:SetPos(self:CustomBulletSpawnPosition())
+	if owner:IsPlayer() then
+		projectile:SetAngles(owner:GetAimVector():Angle())
+	else
+		local enemy = owner:GetEnemy()
+		if !IsValid(enemy) then projectile:Remove() return true end
+		projectile:SetAngles((enemy:BodyTarget(projectile:GetPos()) -projectile:GetPos()):Angle())
+	end
+	projectile:SetOwner(owner)
+	projectile.DirectDamage = self.Primary.Damage
 	projectile:Spawn()
 	projectile:Activate()
-	projectile.DirectDamage = self.Primary.Damage
 
 	local phy = projectile:GetPhysicsObject()
-	if phy:IsValid() then
-		phy:SetVelocity(self:GetOwner():CalculateProjectile("Line", projectile:GetPos(), self:GetOwner():GetEnemy():GetPos() + self:GetOwner():GetEnemy():OBBCenter(), 1000))
+	if IsValid(phy) then
+		phy:Wake()
+		if owner:IsPlayer() then
+			phy:SetVelocity(owner:GetAimVector() *2000)
+		else
+			local enemy = owner:GetEnemy()
+			phy:SetVelocity(owner:CalculateProjectile("Line", projectile:GetPos(), enemy:GetPos() +enemy:OBBCenter(), 1000))
+		end
 	end
 end

@@ -18,7 +18,7 @@ ENT.ShakeWorldOnDeathRadius = 10000 -- How far the screen shake goes, in world u
 ENT.ShakeWorldOnDeathtDuration = 8 -- How long the screen shake will last, in seconds
 ENT.ShakeWorldOnDeathFrequency = 200 -- The frequency
 ENT.DecalTbl_DeathDecals = {"Scorch"}
-ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
+-- ENT.SoundTbl_Idle = {"weapons/rpg/rocket1.wav"}
 ENT.SoundTbl_OnCollide = {"ambient/explosions/explode_8.wav"}
 ---------------------------------------------------------------------------------------------------------------------------------------------
 function ENT:CustomPhysicsObjectOnInitialize(phys)
@@ -42,13 +42,13 @@ function ENT:DeathEffects(data,phys)
 	-- effectdata:SetScale(1 ^0.65)
 	-- util.Effect("vj_fo3_fatman",effectdata)
 
-	for i = 1,math.random(2,5) do
-		local rand = 20
+	for i = 1,math.random(4,7) do
+		local rand = 60
 		local effectdata = EffectData()
-		effectdata:SetOrigin(data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i)))
+		effectdata:SetOrigin(data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i) *0.2))
 		util.Effect("VJ_Medium_Explosion1",effectdata)
-		ParticleEffect("vj_explosion2",data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i)),Angle(0,0,0),nil)
-		ParticleEffect("vj_mininuke_explosion_fix",data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i)),Angle(0,0,0),nil)
+		ParticleEffect("vj_explosion2",data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i) *0.2),Angle(0,0,0),nil)
+		ParticleEffect("vj_mininuke_explosion_fix",data.HitPos +Vector(math.Rand(-(rand *i),rand *i),math.Rand(-(rand *i),rand *i),math.Rand(rand *i,rand *i) *0.2),Angle(0,0,0),nil)
 	end
 
 	if CLIENT then
